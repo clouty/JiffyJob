@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jiffyjob.nimblylabs.browseCategories.BrowseCategories">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:id="@+id/btnScrollView1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.4">
+
+            <LinearLayout
+                android:id="@+id/btnlinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/btnScrollView2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4">
+
+            <LinearLayout
+                android:id="@+id/btnlinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>
