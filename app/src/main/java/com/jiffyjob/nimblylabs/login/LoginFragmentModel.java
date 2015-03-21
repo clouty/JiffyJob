@@ -15,7 +15,7 @@ public class LoginFragmentModel extends Observable {
         this.gender = gender;
         this.location = location;
         this.userID = userID;
-        this.userProfileImage = userProfileImage;/**/
+        this.userProfileImage = userProfileImage;
     }
 
     /*Properties and variables*/

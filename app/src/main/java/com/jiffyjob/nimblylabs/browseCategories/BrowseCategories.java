@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +31,7 @@ public class BrowseCategories extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_browse_categories, container, false);
         context = view.getContext();
         init();
@@ -43,6 +43,7 @@ public class BrowseCategories extends Fragment {
 
     @Override
     public void onPause() {
+        super.onPause();
         //commit changes here
     }
 

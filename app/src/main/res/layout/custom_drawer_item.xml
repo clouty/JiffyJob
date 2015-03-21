@@ -13,39 +13,56 @@
 
         <LinearLayout
             android:id="@+id/drawerSelection"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/drawer_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical" />
-
-            <TextView
-                android:id="@+id/drawer_itemName"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:textAppearance="?android:attr/textAppearanceListItem"
-                android:textColor="@color/accent_material_light"
-                android:textSize="14dp" />
+                android:layout_marginBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/drawer_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/find_icon" />
+
+                <TextView
+                    android:id="@+id/drawer_itemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="asdasdasdasdads"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:textColor="@color/accent_material_light"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="left"
+                android:layout_marginRight="30dp"
+                android:background="@android:color/holo_green_dark" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/userInfoLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/accent_material_light"
+            android:orientation="horizontal"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            android:background="@color/accent_material_light">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/userImageView"
@@ -56,9 +73,9 @@
                 android:src="@drawable/swagdog2" />
 
             <RelativeLayout
-                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
 
                 <TextView
                     android:id="@+id/nickNameTextView"
@@ -83,7 +100,6 @@
             android:layout_gravity="left"
             android:layout_marginRight="30dp"
             android:background="@android:color/holo_green_dark" />
+
     </LinearLayout>
-
-
 </LinearLayout>
