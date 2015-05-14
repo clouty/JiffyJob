@@ -18,6 +18,7 @@
 
         <!-- ListView、ScrollView、RecyclerView、Other -->
         <ListView
+            android:focusable="true"
             android:id="@+id/listView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

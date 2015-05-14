@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.customui.ImageHelper;
 
 import java.util.List;
@@ -52,8 +53,7 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemObject> {
             drawerSelection.setVisibility(View.GONE);
             userInfoLayout.setVisibility(View.VISIBLE);
             CreateUserInfoView(listItem);
-        }
-        else{
+        } else {
             drawerSelection.setVisibility(View.VISIBLE);
             userInfoLayout.setVisibility(View.GONE);
         }

@@ -21,7 +21,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
-import com.jiffyjob.nimblylabs.main.R;
+import com.jiffyjob.nimblylabs.app.R;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

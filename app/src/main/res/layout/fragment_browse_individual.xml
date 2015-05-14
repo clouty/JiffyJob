@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.13">
+
+            <RelativeLayout
+                android:id="@+id/userInfo_relativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/userImageView"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/swagdog" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/userImageView"
+                    android:layout_toRightOf="@+id/userImageView"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_green"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/companyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userName"
+                    android:layout_toEndOf="@+id/userImageView"
+                    android:layout_toRightOf="@+id/userImageView"
+                    android:text="(Small Text)"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/text_green" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ratingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/userInfo_relativeLayout">
+
+                <ImageView
+                    android:id="@+id/likeImage"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/find_icon" />
+
+                <TextView
+                    android:id="@+id/jobRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/likeImage"
+                    android:layout_toRightOf="@+id/likeImage"
+                    android:text="80%"
+                    android:textColor="#FF000000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/ratingLayout"
+                android:gravity="right">
+
+                <ImageButton
+                    android:id="@+id/favoriteBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/find_icon" />
+
+                <ImageButton
+                    android:id="@+id/shareBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/favoriteBtn"
+                    android:background="#00000000"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/find_icon" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/highlighted_text_material_dark">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <!--Map layout-->
+                <RelativeLayout
+                    android:id="@+id/map_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".26"
+                    android:minHeight="150dp">
+
+                    <fragment
+                        android:id="@+id/map"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+                </RelativeLayout>
+
+                <!--Description 1 and 2-->
+                <RelativeLayout
+                    android:id="@+id/description_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.26">
+
+                    <ImageView
+                        android:id="@+id/descriptionIcon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/find_icon" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/descriptionIcon"
+                        android:text="text description" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/details_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.26">
+
+                    <ImageView
+                        android:id="@+id/descriptionIcon2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/find_icon" />
+
+                    <TextView
+                        android:id="@+id/description2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/descriptionIcon2"
+                        android:text="- Description of job \n- Description of job 1" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/divider_color" />
+
+                <!--Job location and time-->
+                <RelativeLayout
+                    android:id="@+id/jobSummary_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.26">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:orientation="vertical">
+
+                            <!--Calender text-->
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/calenderIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/find_icon" />
+
+                                <TextView
+                                    android:id="@+id/calenderText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/calenderIcon"
+                                    android:maxWidth="150dp"
+                                    android:text="- Calender text" />
+                            </RelativeLayout>
+
+                            <!--Time text-->
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/timeIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/find_icon" />
+
+                                <TextView
+                                    android:id="@+id/timeText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/timeIcon"
+                                    android:maxWidth="150dp"
+                                    android:text="- Time icon text" />
+                            </RelativeLayout>
+
+                            <!--location text-->
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/locationIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/find_icon" />
+
+                                <TextView
+                                    android:id="@+id/locationText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/locationIcon"
+                                    android:maxWidth="150dp"
+                                    android:text="- location icon text" />
+                            </RelativeLayout>
+
+                            <!--payment text-->
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/paymentIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/find_icon" />
+
+                                <TextView
+                                    android:id="@+id/paymentText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/paymentIcon"
+                                    android:maxWidth="150dp"
+                                    android:text="- payment icon text" />
+                            </RelativeLayout>
+
+                            <!--recruitment text-->
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/recruitmentIcon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/find_icon" />
+
+                                <TextView
+                                    android:id="@+id/recruitmentText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_toRightOf="@id/recruitmentIcon"
+                                    android:maxWidth="150dp"
+                                    android:text="- recruitment icon text" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/jobTags"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="0.4"
+                            android:maxWidth="150dp"
+                            android:text="#jobTage1 #jobTag2 #jobTag3" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.13">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="APPLY"
+                android:textColor="@color/text_green" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

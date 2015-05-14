@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jiffyjob.nimblylabs.main.R;
+import com.jiffyjob.nimblylabs.app.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class BrowsePageAdapter extends ArrayAdapter<BrowsePageModel> {
 
         ((TextView) convertView.findViewById(R.id.location)).setText(model.getLocation());
         ((TextView) convertView.findViewById(R.id.role)).setText(model.getRole());
-
+        convertView.setTag(position);
         return convertView;
     }
 

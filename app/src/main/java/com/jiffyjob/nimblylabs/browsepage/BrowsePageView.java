@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.baoyz.widget.PullRefreshLayout;
-import com.jiffyjob.nimblylabs.main.R;
+import com.jiffyjob.nimblylabs.app.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +33,7 @@ public class BrowsePageView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(com.jiffyjob.nimblylabs.main.R.layout.fragment_browse_page, container, false);
+        view = inflater.inflate(R.layout.fragment_browse_page, container, false);
         context = view.getContext();
         init();
         pullToRefreshListenter();
@@ -67,6 +67,7 @@ public class BrowsePageView extends Fragment {
         browsePageAdapter = new BrowsePageAdapter(context, R.layout.browse_page_item, browsePageModelList);
         listView.setAdapter(browsePageAdapter);
         populateListView();
+        listView.setOnItemClickListener(new BrowsePageOnItemClickListener(context, browsePageModelList));
     }
 
     private void populateListView() {

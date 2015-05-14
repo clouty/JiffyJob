@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="circular_transparent_green" type="color">#400e8146</item>
     <item name="text_green" type="color">#FF0e8146</item>
+    <item name="divider_color" type="color">#FFA0A0A0</item>
+    <item name="transparent" type="color">#000e8146</item>
 </resources>

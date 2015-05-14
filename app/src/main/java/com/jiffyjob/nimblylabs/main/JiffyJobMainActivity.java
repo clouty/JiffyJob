@@ -7,12 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.jiffyjob.nimblylabs.PostJob.PostJobStep1View;
+import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.BrowseCategories;
 
 import java.util.ArrayList;
 
 public class JiffyJobMainActivity extends ActionBarActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +59,12 @@ public class JiffyJobMainActivity extends ActionBarActivity {
             //create the default fragment
             BrowseCategories browseCategories = new BrowseCategories();
             browseCategories.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, browseCategories).commit();
 
-            this.getSupportFragmentManager().beginTransaction();
+            PostJobStep1View postJobStep1View = new PostJobStep1View();
+            postJobStep1View.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, postJobStep1View).commit();
         }
     }
-
-
 
 
     @Override

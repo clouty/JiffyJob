@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.jiffyjob.nimblylabs.customui.CircularStepsView
+            android:id="@+id/circularStep1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:circleColor="@color/circular_transparent_green"
+            custom:circleLabel="1"
+            custom:labelColor="#FFFFFFFF" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/dottedline"
+            android:hardwareAccelerated="false"
+            android:layerType="software" />
+
+        <com.jiffyjob.nimblylabs.customui.CircularStepsView
+            android:id="@+id/circularStep2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:circleColor="@color/circular_transparent_green"
+            custom:circleLabel="2"
+            custom:labelColor="#FFFFFFFF" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/dottedline"
+            android:hardwareAccelerated="false"
+            android:layerType="software" />
+
+        <com.jiffyjob.nimblylabs.customui.CircularStepsView
+            android:id="@+id/circularStep3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:circleColor="@color/circular_transparent_green"
+            custom:circleLabel="3"
+            custom:labelColor="#FFFFFFFF" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/dottedline"
+            android:hardwareAccelerated="false"
+            android:layerType="software" />
+
+        <com.jiffyjob.nimblylabs.customui.CircularStepsView
+            android:id="@+id/circularStep4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            custom:circleColor="@color/circular_transparent_green"
+            custom:circleLabel="4"
+            custom:labelColor="#FFFFFFFF" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/countDownMins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4 mintues  "
+            android:textColor="@color/text_green" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="is all you need to post a job! "
+            android:textColor="#FF000000" />
+    </LinearLayout>
+</LinearLayout>

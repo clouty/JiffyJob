@@ -13,10 +13,9 @@ import android.widget.TextView;
 import com.facebook.AppEventsLogger;
 import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
+import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.facebook.FacebookController;
 import com.jiffyjob.nimblylabs.facebook.IFacebookController;
-import com.jiffyjob.nimblylabs.main.R;
 
 import java.util.ArrayList;
 import java.util.Observable;

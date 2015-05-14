@@ -1,0 +1,11 @@
+keytool -list -alias androiddebugkey -keystore C:\Users\{Username}\.android\debug.keystore -storepass android -keypass android
+keytool -list -alias androiddebugkey -keystore C:\Users\ty\.android\debug.keystore -storepass android -keypass android
+
+Key for google services
+Certificate fingerprint (SHA1): DF:72:38:EB:C7:3C:95:04:1C:B9:7E:36:0F:47:A9:DE:
+9B:95:60:86
+
+1. Login -> Google developers console
+2. APIs & auth
+3. Public API access -> create key using above SHA1 key
+https://console.developers.google.com/project/evocative-maker-89208/apiui/credential?authuser=0

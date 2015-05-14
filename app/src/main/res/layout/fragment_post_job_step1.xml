@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/jobTitle"
+        android:layout_weight="0.01"
+        android:hint="Give a job title" />
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Job Category"
+        android:id="@+id/selectionTitle"
+        android:layout_weight="0.01"
+        android:textColor="@color/text_green" />
+
+    <ViewFlipper
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewFlipper"
+        android:layout_weight="0.8">
+
+        <ListView
+            android:id="@+id/jobCategoryList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/selectedCategoryList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/favoriteCategoryList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </ViewFlipper>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Try swipping left and right"
+        android:id="@+id/hintText"
+        android:textColor="@color/divider_color"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.01" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK! That's easy!"
+        android:id="@+id/button"
+        android:textColor="@color/text_green"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.03" />
+
+
+</LinearLayout>

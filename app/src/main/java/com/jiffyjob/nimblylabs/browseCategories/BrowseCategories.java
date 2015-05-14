@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.jiffyjob.nimblylabs.main.R;
+import com.jiffyjob.nimblylabs.app.R;
 
 import java.util.ArrayList;
 import java.util.List;
