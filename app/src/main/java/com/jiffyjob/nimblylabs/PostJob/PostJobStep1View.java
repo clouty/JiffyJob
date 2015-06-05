@@ -1,23 +1,23 @@
-package com.jiffyjob.nimblylabs.PostJob;
+package com.jiffyjob.nimblylabs.postJob;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.SparseBooleanArray;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.jiffyjob.nimblylabs.XmlHelper.XmlJobCategoryHelper;
+import com.jiffyjob.nimblylabs.xmlHelper.XmlJobCategoryHelper;
 import com.jiffyjob.nimblylabs.app.R;
 
 import java.util.ArrayList;
@@ -38,7 +38,6 @@ public class PostJobStep1View extends Fragment {
         context = view.getContext();
         init();
         generateJobCatergoryList();
-        generateSelectedCategoryList();
         return view;
     }
 
@@ -47,28 +46,25 @@ public class PostJobStep1View extends Fragment {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        threshhold = size.x / 2;
+        threshhold = size.x / 3;
 
         XmlJobCategoryHelper xmlHelper = new XmlJobCategoryHelper(context);
         jobList = xmlHelper.parseXML();
 
+        selectionTitle = (TextView) view.findViewById(R.id.selectionTitle);
         button = (Button) view.findViewById(R.id.button);
-        jobCategoryList = (ListView) view.findViewById(R.id.jobCategoryList);
-        selectedCategoryList = (ListView) view.findViewById(R.id.selectedCategoryList);
-        favoriteCategoryList = (ListView) view.findViewById(R.id.favoriteCategoryList);
+        jobCategoryListView = (ListView) view.findViewById(R.id.jobCategoryList);
+        jobCategoryListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        selectedCategoryListView = (ListView) view.findViewById(R.id.selectedCategoryList);
+        selectedCategoryListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        favoriteCategoryListView = (ListView) view.findViewById(R.id.favoriteCategoryList);
         viewFlipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
     }
 
     private void generateJobCatergoryList() {
         ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_checked, jobList);
-        jobCategoryList.setAdapter(arrayAdapter);
-        jobCategoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, position + "", Toast.LENGTH_SHORT).show();
-            }
-        });
-        jobCategoryList.setOnTouchListener(new View.OnTouchListener() {
+        jobCategoryListView.setAdapter(arrayAdapter);
+        jobCategoryListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent touchevent) {
                 onTouchFlipperEvent(v, touchevent);
@@ -78,14 +74,16 @@ public class PostJobStep1View extends Fragment {
     }
 
     private void generateSelectedCategoryList() {
-        List<String> testList = new ArrayList<String>();
-        testList.add("TESTING");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_checked, testList);
-        selectedCategoryList.setAdapter(arrayAdapter);
-        selectedCategoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ArrayAdapter arrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_checked, selectedJobList);
+        selectedCategoryListView.setAdapter(arrayAdapter);
+        for (int i = 0; i < selectedCategoryListView.getCount(); i++) {
+            selectedCategoryListView.setItemChecked(i, true);
+        }
+        selectedCategoryListView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, position + "", Toast.LENGTH_SHORT).show();
+            public boolean onTouch(View v, MotionEvent touchevent) {
+                onTouchFlipperEvent(v, touchevent);
+                return false;
             }
         });
         arrayAdapter.notifyDataSetChanged();
@@ -93,7 +91,6 @@ public class PostJobStep1View extends Fragment {
 
     private void onTouchFlipperEvent(View view, MotionEvent touchevent) {
         switch (touchevent.getAction()) {
-
             case MotionEvent.ACTION_DOWN:
                 lastX = touchevent.getX();
                 break;
@@ -103,10 +100,11 @@ public class PostJobStep1View extends Fragment {
 
                 // Handling left to right screen swap.
                 if (Math.abs(movedDis) > threshhold && movedDis > 0) {
-
-                    // If there aren't any other children, just break.
-                    if (viewFlipper.getDisplayedChild() == 0)
+                    updateTitleName(viewFlipper.getDisplayedChild() - 1);
+                    // If it's the first item, just break.
+                    if (viewFlipper.getDisplayedChild() == 0) {
                         break;
+                    }
 
                     // Next screen comes in from left.
                     viewFlipper.setInAnimation(context, R.anim.slide_in_from_left);
@@ -119,10 +117,11 @@ public class PostJobStep1View extends Fragment {
 
                 // Handling right to left screen swap.
                 if (Math.abs(movedDis) > threshhold && movedDis < 0) {
-
-                    // If there is a child (to the left), kust break.
-                    if (viewFlipper.getDisplayedChild() == 1)
+                    updateTitleName(viewFlipper.getDisplayedChild() + 1);
+                    // Last item to be displayed, break
+                    if (viewFlipper.getDisplayedChild() == 1) {
                         break;
+                    }
 
                     // Next screen comes in from right.
                     viewFlipper.setInAnimation(context, R.anim.slide_in_from_right);
@@ -136,14 +135,37 @@ public class PostJobStep1View extends Fragment {
         }
     }
 
+    private void updateTitleName(int index) {
+        if (index == 0) {
+            selectionTitle.setText("Job Categories");
+        }
+        if (index == 1) {
+            selectionTitle.setText("Selected job categories");
+            updateSelectedJobList();
+            generateSelectedCategoryList();
+        }
+    }
+
+    private void updateSelectedJobList() {
+        selectedJobList.clear();
+        SparseBooleanArray sparseBooleanArray = jobCategoryListView.getCheckedItemPositions();
+        for (int i = 0; i < jobCategoryListView.getCount(); i++) {
+            if (sparseBooleanArray.get(i)) {
+                selectedJobList.add(jobList.get(i));
+            }
+        }
+    }
+
+    private TextView selectionTitle;
     private float threshhold = 50;
     private float lastX;
-    private List<String> jobList = new ArrayList<String>();
+    private List<String> jobList = new ArrayList<>();
+    private List<String> selectedJobList = new ArrayList<>();
     private ViewFlipper viewFlipper;
     private Button button;
-    private ListView jobCategoryList;
-    private ListView selectedCategoryList;
-    private ListView favoriteCategoryList;
+    private ListView jobCategoryListView;
+    private ListView selectedCategoryListView;
+    private ListView favoriteCategoryListView;
     private View view;
     private Context context;
 }

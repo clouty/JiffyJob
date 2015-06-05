@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.XmlHelper;
+package com.jiffyjob.nimblylabs.xmlHelper;
 
 import android.content.Context;
 

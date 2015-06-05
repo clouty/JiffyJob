@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.LocationService;
+package com.jiffyjob.nimblylabs.locationService;
 
 import android.app.Activity;
 import android.content.Context;

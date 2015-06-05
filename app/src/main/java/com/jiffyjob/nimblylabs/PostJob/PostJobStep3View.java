@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.PostJob;
+package com.jiffyjob.nimblylabs.postJob;
 
 import android.content.Context;
 import android.location.Address;

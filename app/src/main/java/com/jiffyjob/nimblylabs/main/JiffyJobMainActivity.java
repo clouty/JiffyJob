@@ -7,9 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.jiffyjob.nimblylabs.PostJob.PostJobStep1View;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.BrowseCategories;
+import com.jiffyjob.nimblylabs.registration.RegisterView;
 
 import java.util.ArrayList;
 
@@ -60,12 +60,11 @@ public class JiffyJobMainActivity extends ActionBarActivity {
             BrowseCategories browseCategories = new BrowseCategories();
             browseCategories.setArguments(getIntent().getExtras());
 
-            PostJobStep1View postJobStep1View = new PostJobStep1View();
-            postJobStep1View.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, postJobStep1View).commit();
+            RegisterView postJobContent = new RegisterView();
+            postJobContent.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, postJobContent).commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

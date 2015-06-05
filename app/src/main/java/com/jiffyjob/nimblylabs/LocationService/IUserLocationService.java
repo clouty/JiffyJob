@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.LocationService;
+package com.jiffyjob.nimblylabs.locationService;
 
 /**
  * Created by NimblyLabs on 25/3/2015.
