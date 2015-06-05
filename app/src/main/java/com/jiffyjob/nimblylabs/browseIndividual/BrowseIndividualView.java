@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.jiffyjob.nimblylabs.app.R;
 
 /**
+ * TEST COMMENT FOR GITHUB, 5/6/2015
  * Created by NimblyLabs on 22/3/2015.
  */
 public class BrowseIndividualView extends Fragment implements OnMapReadyCallback {
