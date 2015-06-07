@@ -1,7 +1,9 @@
 package com.jiffyjob.nimblylabs.httpServices;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,6 +27,10 @@ import java.util.List;
  * Created by NimblyLabs on 31/5/2015.
  */
 public class RegisterPostService extends AsyncTask<String, Void, String> {
+
+    public RegisterPostService(Context context) {
+        this.context = context;
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -60,7 +66,8 @@ public class RegisterPostService extends AsyncTask<String, Void, String> {
                 while ((line = reader.readLine()) != null) {
                     sb.append(line + "\n");
                 }
-                String text = sb.toString();
+                result = sb.toString();
+
             } else {
                 //Closes the connection.
                 response.getEntity().getContent().close();
@@ -82,6 +89,14 @@ public class RegisterPostService extends AsyncTask<String, Void, String> {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+    }
+
+    private Context context;
     private List<String> registerList = new ArrayList<>();
     private InputStream is = null;
+    private String result = "";
 }

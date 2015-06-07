@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.BrowseCategories;
-import com.jiffyjob.nimblylabs.registration.RegisterView;
+import com.jiffyjob.nimblylabs.login.LoginFragmentView;
 
 import java.util.ArrayList;
 
@@ -20,24 +20,31 @@ public class JiffyJobMainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiffy_job_main);
 
-        Init();
-        PopulateDrawerItems();
+        init();
+        populateDrawerItems();
+        createFragment(savedInstanceState);
         // Set the adapter for the list view
         mDrawerList.setAdapter(new DrawerItemAdapter(this, R.layout.custom_drawer_item, drawerItems));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this));
-
-        CreateFragment(savedInstanceState);
     }
 
-    private void Init() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LoginFragmentView fragment = new LoginFragmentView();
+        fragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+    }
+
+    private void init() {
         this.setTitle("JiffyJob");
         menuItems = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
     }
 
-    private void PopulateDrawerItems() {
+    private void populateDrawerItems() {
         drawerItems = new ArrayList<DrawerItemObject>();
 
         drawerItems.add(new DrawerItemObject());//create userInfo
@@ -50,7 +57,7 @@ public class JiffyJobMainActivity extends ActionBarActivity {
     }
 
     //default fragment should be loaded in here
-    private void CreateFragment(Bundle savedInstanceState) {
+    private void createFragment(Bundle savedInstanceState) {
         if (findViewById(R.id.fragment_container) != null) {
             // restored from a previous state
             if (savedInstanceState != null) {
@@ -59,10 +66,6 @@ public class JiffyJobMainActivity extends ActionBarActivity {
             //create the default fragment
             BrowseCategories browseCategories = new BrowseCategories();
             browseCategories.setArguments(getIntent().getExtras());
-
-            RegisterView postJobContent = new RegisterView();
-            postJobContent.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, postJobContent).commit();
         }
     }
 
@@ -91,7 +94,6 @@ public class JiffyJobMainActivity extends ActionBarActivity {
     }
 
     private ArrayList<DrawerItemObject> drawerItems;
-
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] menuItems;

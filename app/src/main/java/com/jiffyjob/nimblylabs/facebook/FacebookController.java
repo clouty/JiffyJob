@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.facebook.AppEventsLogger;
 import com.facebook.Request;
@@ -35,20 +36,23 @@ import java.util.Observer;
 /**
  * Created by NimblyLabs on 7/2/2015.
  */
-public class FacebookController extends Observable implements IFacebookController{
-    /**Class required facebook login activity view, permission for facebook, creation bundle of activity.<br/>
+public class FacebookController extends Observable implements IFacebookController {
+    /**
+     * Class required facebook login activity view, permission for facebook, creation bundle of activity.<br/>
      * Observer are to be added to Facebook controller.<br/>
      * By setting setUserProfileBitmap and setGraphUser will notify observers.
-     * */
-    public FacebookController(Activity activity, Bundle savedInstanceState, ArrayList<String> permissionArrays)
-    {
-        this.context = activity.getApplicationContext();
-        this.permissionArrays = permissionArrays;
-        this.fbLoginBtn = (LoginButton) activity.findViewById(R.id.fbAuthButton);
-        uiHelper = new UiLifecycleHelper(activity, statusCallback);
-        uiHelper.onCreate(savedInstanceState);
-
-        fbButtonInit();
+     */
+    public FacebookController(Context context, View view, Bundle savedInstanceState, ArrayList<String> permissionArrays) {
+        try {
+            this.context = context;
+            this.permissionArrays = permissionArrays;
+            this.fbLoginBtn = (LoginButton) view.findViewById(R.id.fbAuthButton);
+            uiHelper = new UiLifecycleHelper((Activity) context, statusCallback);
+            uiHelper.onCreate(savedInstanceState);
+            fbButtonInit();
+        } catch (ClassCastException e) {
+            Log.e(getClass().getSimpleName(), e.getMessage());
+        }
     }
 
     //use to find hashkey
@@ -69,7 +73,9 @@ public class FacebookController extends Observable implements IFacebookControlle
         }
     }
 
-    /**Setting user avatar to a imageView, requires userID & imageView*/
+    /**
+     * Setting user avatar to a imageView, requires userID & imageView
+     */
     public synchronized void downloadAvatar(final String USER_ID) {
         AsyncTask<Void, Void, Bitmap> task = new AsyncTask<Void, Void, Bitmap>() {
             @Override
@@ -77,7 +83,7 @@ public class FacebookController extends Observable implements IFacebookControlle
                 URL fbAvatarUrl = null;
                 Bitmap fbAvatarBitmap = null;
                 try {
-                    fbAvatarUrl = new URL("https://graph.facebook.com/"+USER_ID+"/picture?type=large");
+                    fbAvatarUrl = new URL("https://graph.facebook.com/" + USER_ID + "/picture?type=large");
                     fbAvatarBitmap = BitmapFactory.decodeStream(fbAvatarUrl.openConnection().getInputStream());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -96,12 +102,12 @@ public class FacebookController extends Observable implements IFacebookControlle
         task.execute();
     }
 
-    public void onPause(){
+    public void onPause() {
         AppEventsLogger.deactivateApp(this.context);
         uiHelper.onPause();
     }
 
-    public void onResume(){
+    public void onResume() {
         AppEventsLogger.activateApp(this.context);
         Session session = Session.getActiveSession();
         if (session != null) {
@@ -110,7 +116,7 @@ public class FacebookController extends Observable implements IFacebookControlle
         uiHelper.onResume();
     }
 
-    public void onDestory(){
+    public void onDestory() {
         uiHelper.onDestroy();
     }
 
@@ -128,7 +134,7 @@ public class FacebookController extends Observable implements IFacebookControlle
     }
 
 
-    private void fbButtonInit(){
+    private void fbButtonInit() {
         this.fbLoginBtn.setReadPermissions(permissionArrays);
         this.fbLoginBtn.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
             @Override
@@ -171,20 +177,26 @@ public class FacebookController extends Observable implements IFacebookControlle
     public GraphUser getGraphUser() {
         return graphUser;
     }
-    public void setGraphUser(GraphUser graphUser){
+
+    public void setGraphUser(GraphUser graphUser) {
         this.graphUser = graphUser;
         setChanged();
         notifyObservers();
     }
+
     public Bitmap getUserProfileBitmap() {
         return userProfileBitmap;
     }
+
     public void setUserProfileBitmap(Bitmap userProfileBitmap) {
         this.userProfileBitmap = userProfileBitmap;
         setChanged();
         notifyObservers();
     }
-    /**To check is facebook session is active, default is closed*/
+
+    /**
+     * To check is facebook session is active, default is closed
+     */
     public SessionState getSessionState() {
         return sessionState;
     }
