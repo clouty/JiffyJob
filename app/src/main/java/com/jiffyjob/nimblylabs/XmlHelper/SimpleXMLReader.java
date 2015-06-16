@@ -2,8 +2,6 @@ package com.jiffyjob.nimblylabs.xmlHelper;
 
 import android.content.Context;
 
-import com.jiffyjob.nimblylabs.app.R;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,15 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by NimblyLabs on 8/4/2015.
+ * Created by NimblyLabs on 13/6/2015.
+ * This reader only reads simple xml tree, that doesn't have multiple child in a single node
  */
-public class XmlJobCategoryHelper {
-    public XmlJobCategoryHelper(Context context) {
+public class SimpleXMLReader {
+    public SimpleXMLReader(Context context, int rawXMLResource) {
         try {
             XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
             myParser = xmlFactoryObject.newPullParser();
 
-            InputStream inputStream = context.getResources().openRawResource(R.raw.jobcategory);
+            InputStream inputStream = context.getResources().openRawResource(rawXMLResource);
             myParser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             myParser.setInput(inputStream, null);
         } catch (XmlPullParserException e) {
@@ -34,7 +33,7 @@ public class XmlJobCategoryHelper {
         int event;
         String text = null;
 
-        jobTypeList = new ArrayList<String>();
+        resultList = new ArrayList<String>();
         try {
             event = myParser.getEventType();
             while (event != XmlPullParser.END_DOCUMENT) {
@@ -48,7 +47,7 @@ public class XmlJobCategoryHelper {
 
                     case XmlPullParser.END_TAG:
                         if (name.equals("job")) {
-                            jobTypeList.add(text);
+                            resultList.add(text);
                         }
                         break;
                 }
@@ -57,9 +56,9 @@ public class XmlJobCategoryHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return jobTypeList;
+        return resultList;
     }
 
-    private List<String> jobTypeList = null;
+    private List<String> resultList = null;
     private XmlPullParser myParser = null;
 }

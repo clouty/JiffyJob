@@ -1,24 +1,16 @@
 package com.jiffyjob.nimblylabs.postJob;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jiffyjob.nimblylabs.app.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PostJobHostView.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PostJobHostView#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PostJobHostView extends Fragment {
     public PostJobHostView() {
         // Required empty public constructor
@@ -47,7 +39,7 @@ public class PostJobHostView extends Fragment {
         PostJobStep3View postJobStep3View = new PostJobStep3View();
         postJobStep3View.setArguments(this.getActivity().getIntent().getExtras());
 
-        FragmentManager manager = this.getActivity().getSupportFragmentManager();
+        FragmentManager manager = this.getActivity().getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.circularFragmentView, postJobCircularView, PostJobCircularView.class.getSimpleName());
         transaction.add(R.id.postJobStepView, postJobStep3View, PostJobStep3View.class.getSimpleName());

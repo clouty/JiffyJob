@@ -1,20 +1,18 @@
 package com.jiffyjob.nimblylabs.main;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.BrowseCategories;
-import com.jiffyjob.nimblylabs.login.LoginFragmentView;
 
 import java.util.ArrayList;
 
-public class JiffyJobMainActivity extends ActionBarActivity {
-
+public class JiffyJobMainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +30,9 @@ public class JiffyJobMainActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        LoginFragmentView fragment = new LoginFragmentView();
+        BrowseCategories fragment = new BrowseCategories();
         fragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
     }
 
     private void init() {
@@ -48,12 +46,12 @@ public class JiffyJobMainActivity extends ActionBarActivity {
         drawerItems = new ArrayList<DrawerItemObject>();
 
         drawerItems.add(new DrawerItemObject());//create userInfo
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "Browse jobs"));
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "Post a job"));
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "Manage"));
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "Discovery preferences"));
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "App settings"));
-        drawerItems.add(new DrawerItemObject(R.drawable.find_icon, "Contact us"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_search, "Browse jobs"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_post, "Post a job"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_manage, "Manage"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_preferences, "Preferences"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_settings, "App settings"));
+        drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_contact, "Contact us"));
     }
 
     //default fragment should be loaded in here

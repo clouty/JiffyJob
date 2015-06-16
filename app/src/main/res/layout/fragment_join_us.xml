@@ -1,0 +1,214 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_white"
+    tools:context="com.jiffyjob.nimblylabs.joinUsFragmentView.JoinUsFragmentView">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <!--debug login-->
+            <LinearLayout
+                android:id="@+id/userDetailsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/userProfileImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="name" />
+
+                <TextView
+                    android:id="@+id/gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="gender" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="location" />
+            </LinearLayout>
+
+            <!-- Top display-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JiffyJob" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Where great jobs are discovered" />
+            </LinearLayout>
+
+            <!-- main content-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical">
+                <!--Facebook login and forget pw-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <com.facebook.widget.LoginButton
+                        android:id="@+id/fbAuthButton"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        facebook:confirm_logout="true"
+                        facebook:fetch_user_info="true" />
+                </RelativeLayout>
+
+                <!--Divider-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="5dp"
+                        android:background="@drawable/dividerline" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Or" />
+
+                    <View
+                        android:layout_width="100dp"
+                        android:layout_height="5dp"
+                        android:background="@drawable/dividerline" />
+                </LinearLayout>
+
+                <!--Login-->
+                <RelativeLayout
+                    android:id="@+id/login_overall_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/loginLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp">
+
+                        <EditText
+                            android:id="@+id/emailET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:ems="12"
+                            android:hint="Email"
+                            android:inputType="textEmailAddress" />
+
+                        <EditText
+                            android:id="@+id/passwordET"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/emailET"
+                            android:layout_centerHorizontal="true"
+                            android:ems="12"
+                            android:hint="Password"
+                            android:inputType="textPassword" />
+
+                        <Button
+                            android:id="@+id/joinUsBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_below="@id/passwordET"
+                            android:layout_margin="5dp"
+                            android:layout_weight="0.5"
+                            android:background="@color/background_orange"
+                            android:text="Join us"
+                            android:textColor="@color/text_white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/errorMsg"
+                            style="@android:style/TextAppearance.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="error msg"
+                            android:textColor="@color/red"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/loginTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/scrollView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/transparent"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="Registered already? Login"
+                    android:textColor="@color/text_green"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!--Terms and condition-->
+            <WebView
+                android:id="@+id/termsWebView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/transparent" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

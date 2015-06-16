@@ -1,9 +1,9 @@
 package com.jiffyjob.nimblylabs.postJob;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.SparseBooleanArray;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -17,8 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.jiffyjob.nimblylabs.xmlHelper.XmlJobCategoryHelper;
 import com.jiffyjob.nimblylabs.app.R;
+import com.jiffyjob.nimblylabs.xmlHelper.XmlJobCategoryHelper;
 
 import java.util.ArrayList;
 import java.util.List;

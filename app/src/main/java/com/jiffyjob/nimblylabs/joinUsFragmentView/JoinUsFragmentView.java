@@ -1,16 +1,16 @@
-package com.jiffyjob.nimblylabs.login;
+package com.jiffyjob.nimblylabs.joinUsFragmentView;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AppEventsLogger;
 import com.facebook.model.GraphPlace;
 import com.facebook.model.GraphUser;
@@ -30,12 +32,23 @@ import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.facebook.FacebookController;
 import com.jiffyjob.nimblylabs.facebook.IFacebookController;
 import com.jiffyjob.nimblylabs.httpServices.RegisterPostService;
+import com.jiffyjob.nimblylabs.loginFragmentView.LoginFragmentView;
+import com.nineoldandroids.animation.Animator;
 
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class LoginFragmentView extends Fragment implements Observer {
+public class JoinUsFragmentView extends Fragment implements Observer {
+    public synchronized static JoinUsFragmentView getInstance() {
+        if (joinUsFragmentView == null) {
+            joinUsFragmentView = new JoinUsFragmentView();
+            return joinUsFragmentView;
+        } else {
+            return joinUsFragmentView;
+        }
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -44,10 +57,10 @@ public class LoginFragmentView extends Fragment implements Observer {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_login_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_join_us, container, false);
         context = view.getContext();
-        final LoginFragmentModel model = new LoginFragmentModel();
-        LoginFragmentController loginFragmentController = new LoginFragmentController(this, model);
+        final JoinUsFragmentModel model = new JoinUsFragmentModel();
+        JoinUsFragmentController loginFragmentController = new JoinUsFragmentController(this, model);
         model.addObserver(loginFragmentController);
 
         init();
@@ -67,8 +80,8 @@ public class LoginFragmentView extends Fragment implements Observer {
         emailET = (EditText) view.findViewById(R.id.emailET);
         passwordET = (EditText) view.findViewById(R.id.passwordET);
         errorMsgTV = (TextView) view.findViewById(R.id.errorMsg);
-        createBtn = (Button) view.findViewById(R.id.createBtn);
-        loginBtn = (Button) view.findViewById(R.id.loginBtn);
+        joinUsBtn = (Button) view.findViewById(R.id.joinUsBtn);
+        loginTV = (TextView) view.findViewById(R.id.loginTV);
 
         //facebook login
         nameTextView = (TextView) view.findViewById(R.id.name);
@@ -117,22 +130,43 @@ public class LoginFragmentView extends Fragment implements Observer {
             }
         });
 
-        createBtn.setOnTouchListener(new View.OnTouchListener() {
+        joinUsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
                 Toast.makeText(context, "Registering...", Toast.LENGTH_SHORT).show();
                 submitRegistration();
-                //TODO: check for register result, maybe repeat or fail creation
-                return true;
             }
         });
 
-        loginBtn.setOnTouchListener(new View.OnTouchListener() {
+        loginTV.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Toast.makeText(context, "Logging in...", Toast.LENGTH_SHORT).show();
-                //TODO: login and procesed to main view;
-                return true;
+            public void onClick(View v) {
+                final FragmentTransaction fragTransaction = activity.getFragmentManager().beginTransaction();
+                fragTransaction.replace(R.id.fragment_container, LoginFragmentView.getInstance());
+                YoYo.with(Techniques.Hinge)
+                        .withListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                fragTransaction.commit();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        })
+                        .duration(700)
+                        .playOn(view.findViewById(R.id.scrollView));
             }
         });
     }
@@ -230,7 +264,7 @@ public class LoginFragmentView extends Fragment implements Observer {
     }
 
     //Facebook UI variables
-    private String TAG = "LoginFragmentView";
+    private String TAG = "JoinUsFragmentView";
     private ArrayList<String> permissionArrays = new ArrayList<String>();
     private IFacebookController fbController;
 
@@ -255,6 +289,7 @@ public class LoginFragmentView extends Fragment implements Observer {
         return userProfileImageView;
     }
 
+    private static JoinUsFragmentView joinUsFragmentView = null;
     private Activity activity;
     private Context context;
     private View view;
@@ -265,7 +300,8 @@ public class LoginFragmentView extends Fragment implements Observer {
     private EditText emailET;
     private EditText passwordET;
     private TextView errorMsgTV;
-    private Button createBtn, loginBtn;
+    private Button joinUsBtn;
+    private TextView loginTV;
 
     private WebView termsWebView;
     private View userDetailView;

@@ -1,13 +1,12 @@
 package com.jiffyjob.nimblylabs.browseCategories;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -47,24 +46,23 @@ public class BrowseCategories extends Fragment {
         //commit changes here
     }
 
-    private enum btnEnum { fnbBtn, officeBtn, hotelBtn, mediaBtn, entertainmentBtn, serviceBtn, saleBtn, healthCareBtn };
+    private enum btnEnum {fnbBtn, officeBtn, hotelBtn, mediaBtn, entertainmentBtn, serviceBtn, saleBtn, healthCareBtn}
 
     private void init() {
-        CreateTouchListener();
+        createOnClickListener();
         btnlinearLayout1 = (LinearLayout) view.findViewById(R.id.btnlinearLayout1);
         btnlinearLayout2 = (LinearLayout) view.findViewById(R.id.btnlinearLayout2);
     }
 
     //all buttons re-use a single listener
-    private void CreateTouchListener(){
-        btnOnTouchListener = new View.OnTouchListener(){
+    private void createOnClickListener() {
+        btnOnTouchListener = new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View v) {
                 //loop through buttons and identify using tags
-                btnEnum btnTag = (btnEnum)view.getTag();
-                String text = "onTouch button "+btnTag.toString();
-                Toast.makeText(context,text,Toast.LENGTH_SHORT).show();
-                return true;
+                btnEnum btnTag = (btnEnum) v.getTag();
+                String text = "onTouch button " + btnTag.toString();
+                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -73,7 +71,7 @@ public class BrowseCategories extends Fragment {
         int margin = 20;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(margin*2, 0, margin, margin);
+        params.setMargins(margin * 2, 0, margin, margin);
 
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.find_icon);
         ImageButton fnbBtn = new ImageButton(context);
@@ -82,7 +80,7 @@ public class BrowseCategories extends Fragment {
         fnbBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         fnbBtn.setLayoutParams(params);
         fnbBtn.setTag(btnEnum.fnbBtn);
-        fnbBtn.setOnTouchListener(btnOnTouchListener);
+        fnbBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(fnbBtn);
 
         ImageButton officeBtn = new ImageButton(context);
@@ -91,7 +89,7 @@ public class BrowseCategories extends Fragment {
         officeBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         officeBtn.setLayoutParams(params);
         officeBtn.setTag(btnEnum.officeBtn);
-        officeBtn.setOnTouchListener(btnOnTouchListener);
+        officeBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(officeBtn);
 
         ImageButton hotelBtn = new ImageButton(context);
@@ -100,7 +98,7 @@ public class BrowseCategories extends Fragment {
         hotelBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         hotelBtn.setLayoutParams(params);
         hotelBtn.setTag(btnEnum.hotelBtn);
-        hotelBtn.setOnTouchListener(btnOnTouchListener);
+        hotelBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(hotelBtn);
 
         ImageButton mediaBtn = new ImageButton(context);
@@ -109,7 +107,7 @@ public class BrowseCategories extends Fragment {
         mediaBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mediaBtn.setLayoutParams(params);
         mediaBtn.setTag(btnEnum.mediaBtn);
-        mediaBtn.setOnTouchListener(btnOnTouchListener);
+        mediaBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(mediaBtn);
 
         //implement selector in xml to set imagebuton behavior
@@ -128,7 +126,7 @@ public class BrowseCategories extends Fragment {
         entertainmentBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         entertainmentBtn.setLayoutParams(params2);
         entertainmentBtn.setTag(btnEnum.entertainmentBtn);
-        entertainmentBtn.setOnTouchListener(btnOnTouchListener);
+        entertainmentBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(entertainmentBtn);
 
         ImageButton serviceBtn = new ImageButton(context);
@@ -137,7 +135,7 @@ public class BrowseCategories extends Fragment {
         serviceBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         serviceBtn.setLayoutParams(params2);
         serviceBtn.setTag(btnEnum.serviceBtn);
-        serviceBtn.setOnTouchListener(btnOnTouchListener);
+        serviceBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(serviceBtn);
 
         ImageButton saleBtn = new ImageButton(context);
@@ -146,7 +144,7 @@ public class BrowseCategories extends Fragment {
         saleBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         saleBtn.setLayoutParams(params2);
         saleBtn.setTag(btnEnum.saleBtn);
-        saleBtn.setOnTouchListener(btnOnTouchListener);
+        saleBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(saleBtn);
 
         ImageButton healthCareBtn = new ImageButton(context);
@@ -155,7 +153,7 @@ public class BrowseCategories extends Fragment {
         healthCareBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         healthCareBtn.setLayoutParams(params2);
         healthCareBtn.setTag(btnEnum.healthCareBtn);
-        healthCareBtn.setOnTouchListener(btnOnTouchListener);
+        healthCareBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(healthCareBtn);
 
         btnlinearLayout2.addView(entertainmentBtn);
@@ -164,7 +162,7 @@ public class BrowseCategories extends Fragment {
         btnlinearLayout2.addView(healthCareBtn);
     }
 
-    private View.OnTouchListener btnOnTouchListener;
+    private View.OnClickListener btnOnTouchListener;
     private List<ImageButton> imageButtonList = new ArrayList<ImageButton>();
     private View view;
     private Context context;

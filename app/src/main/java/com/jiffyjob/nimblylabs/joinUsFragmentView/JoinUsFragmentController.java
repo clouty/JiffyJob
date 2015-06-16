@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.login;
+package com.jiffyjob.nimblylabs.joinUsFragmentView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -6,9 +6,9 @@ import java.util.Observer;
 /**
  * Created by NimblyLabs on 29/1/2015.
  */
-public class LoginFragmentController implements Observer {
+public class JoinUsFragmentController implements Observer {
 
-    public LoginFragmentController(LoginFragmentView view, LoginFragmentModel model) {
+    public JoinUsFragmentController(JoinUsFragmentView view, JoinUsFragmentModel model) {
         this.view = view;
         this.model = model;
     }
@@ -24,6 +24,6 @@ public class LoginFragmentController implements Observer {
     }
 
     /*Variables and properties*/
-    private LoginFragmentView view;
-    private LoginFragmentModel model;
+    private JoinUsFragmentView view;
+    private JoinUsFragmentModel model;
 }

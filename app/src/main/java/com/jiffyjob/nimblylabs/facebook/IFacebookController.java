@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.facebook.model.GraphUser;
-import com.jiffyjob.nimblylabs.login.LoginFragmentView;
 
-import java.util.Observable;
 import java.util.Observer;
 
 /**

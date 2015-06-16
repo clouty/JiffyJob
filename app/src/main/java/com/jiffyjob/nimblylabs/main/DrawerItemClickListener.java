@@ -1,9 +1,9 @@
 package com.jiffyjob.nimblylabs.main;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browsepage.BrowsePageView;
+import com.jiffyjob.nimblylabs.updateBasicInfo.UpdateBasicInfo;
 
 
 /**
@@ -28,9 +29,12 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
         if (position == 0) {
             TextView nickNameTextView = (TextView) view.findViewById(R.id.nickNameTextView);
             Toast.makeText(context, "Position:" + position + " Name:" + nickNameTextView.getText(), Toast.LENGTH_SHORT).show();
+            createUpdateBasicInfo(view, position);
         } else {
             switch (position){
                 case 1: CreateBrowsePagViewFragment(view, position);
+                    break;
+                case 2:
                     break;
                 default: break;
             }
@@ -47,11 +51,20 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
         updateFragment(browsePageView, "Browse page");
     }
 
+    private void createUpdateBasicInfo(View view, int position){
+        TextView drawer_itemName = (TextView) view.findViewById(R.id.drawer_itemName);
+        Toast.makeText(context, "Position:" + position + " Name:" + drawer_itemName.getText(), Toast.LENGTH_SHORT).show();
+
+        UpdateBasicInfo updateBasicInfo = new UpdateBasicInfo();
+        updateBasicInfo.setArguments(((Activity) context).getIntent().getExtras());
+        updateFragment(updateBasicInfo, "User info");
+    }
+
     //update other fragment and set title
-    private void updateFragment(android.support.v4.app.Fragment fragment, String title) {
+    private void updateFragment(Fragment fragment, String title) {
         ((Activity) context).setTitle(title);
 
-        FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, fragment);

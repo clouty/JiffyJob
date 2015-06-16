@@ -1,8 +1,8 @@
 package com.jiffyjob.nimblylabs.postJob;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +10,7 @@ import android.view.ViewGroup;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.customui.CircularStepsView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PostJobCircularView.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PostJobCircularView#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PostJobCircularView extends Fragment {
-
-    public PostJobCircularView() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

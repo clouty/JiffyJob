@@ -47,6 +47,12 @@
         <activity
             android:name="com.jiffyjob.nimblylabs.main.JiffyJobMainActivity"
             android:label="@string/title_activity_jiffy_job_main">
+           
+        </activity>
+
+        <activity
+            android:name="com.jiffyjob.nimblylabs.BeforeLoginActivity"
+            android:label="@string/title_activity_jiffy_job_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

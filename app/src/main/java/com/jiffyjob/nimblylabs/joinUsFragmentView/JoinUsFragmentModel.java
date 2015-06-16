@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.login;
+package com.jiffyjob.nimblylabs.joinUsFragmentView;
 
 import android.graphics.Bitmap;
 
@@ -7,10 +7,10 @@ import java.util.Observable;
 /**
  * Created by NimblyLabs on 29/1/2015.
  */
-public class LoginFragmentModel extends Observable {
-    public LoginFragmentModel(){}
+public class JoinUsFragmentModel extends Observable {
+    public JoinUsFragmentModel(){}
 
-    public LoginFragmentModel(String name, String gender, String location, String userID, Bitmap userProfileImage) {
+    public JoinUsFragmentModel(String name, String gender, String location, String userID, Bitmap userProfileImage) {
         this.name = name;
         this.gender = gender;
         this.location = location;

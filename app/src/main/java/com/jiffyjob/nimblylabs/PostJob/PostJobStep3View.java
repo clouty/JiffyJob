@@ -1,10 +1,10 @@
 package com.jiffyjob.nimblylabs.postJob;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
