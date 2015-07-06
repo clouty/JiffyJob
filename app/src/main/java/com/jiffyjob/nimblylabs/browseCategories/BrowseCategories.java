@@ -1,7 +1,10 @@
 package com.jiffyjob.nimblylabs.browseCategories;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jiffyjob.nimblylabs.app.R;
+import com.jiffyjob.nimblylabs.browsepage.BrowsePageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +67,11 @@ public class BrowseCategories extends Fragment {
                 btnEnum btnTag = (btnEnum) v.getTag();
                 String text = "onTouch button " + btnTag.toString();
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                context.getApplicationContext();
+                BrowsePageView browsePageView = new BrowsePageView();
+                ((Activity) context).getIntent().putExtra("Cat", btnTag.toString());
+                browsePageView.setArguments(((Activity) context).getIntent().getExtras());
+                updateFragment(browsePageView, "Browse Page View");
             }
         };
     }
@@ -160,6 +169,18 @@ public class BrowseCategories extends Fragment {
         btnlinearLayout2.addView(serviceBtn);
         btnlinearLayout2.addView(saleBtn);
         btnlinearLayout2.addView(healthCareBtn);
+    }
+
+    private void updateFragment(Fragment fragment, String title) {
+        ((Activity) context).setTitle(title);
+
+        FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
     }
 
     private View.OnClickListener btnOnTouchListener;

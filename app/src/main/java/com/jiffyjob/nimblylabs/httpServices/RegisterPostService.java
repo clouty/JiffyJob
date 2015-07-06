@@ -67,7 +67,7 @@ public class RegisterPostService extends AsyncTask<String, Void, String> {
                     sb.append(line + "\n");
                 }
                 result = sb.toString();
-
+                System.out.println(result);
             } else {
                 //Closes the connection.
                 response.getEntity().getContent().close();

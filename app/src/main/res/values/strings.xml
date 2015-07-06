@@ -20,6 +20,18 @@
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
 
+    <!-- Categories-->
+    <string name ="cat_fnb">F&amp;B</string>
+    <string name ="cat_sales">Sales</string>
+    <string name = "cat_office">Office</string>
+    <string name = "cat_entertainment">Entertainment</string>
+    <string name = "cat_media">Media</string>
+    <string name = "cat_health">Health</string>
+    <string name = "cat_service">Service</string>
+    <string name = "cat_hotel">Hotels</string>
+    <string name = "cat_logistics">Logistics</string>
+    <string name = "cat_arts">Artss</string>
+
     <!-- Navigation drawer items -->
     <string-array name="nav_drawer_items">
         <item>Browse jobs</item>

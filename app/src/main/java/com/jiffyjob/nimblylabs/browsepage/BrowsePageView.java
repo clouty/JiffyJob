@@ -7,27 +7,38 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.jiffyjob.nimblylabs.app.R;
+import com.jiffyjob.nimblylabs.commonUtilities.ASyncResponse;
+import com.jiffyjob.nimblylabs.httpServices.AllJobService;
+import com.jiffyjob.nimblylabs.httpServices.CatJobService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 
 /**
  * Created by NimblyLabs on 10/3/2015.
  */
-public class BrowsePageView extends Fragment {
+public class BrowsePageView extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,18 +82,69 @@ public class BrowsePageView extends Fragment {
     }
 
     private void populateListView() {
-        Date[] startEndTime = {
+        final Date[] startEndTime = {
                 Calendar.getInstance().getTime(), Calendar.getInstance().getTime()};
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.swagdog2);
+        final Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.swagdog2);
         String message = "Looking for software engineer to develop cutting edge technology, looking for innovative individual that has passion in mobile programming.";
-        BrowsePageModel model = new BrowsePageModel(new Date(), startEndTime, "Woodlands, Cause way point", "Developer", message, "The Verge", "(Google Inc)", bitmap, "80%");
-        browsePageModelList.add(model);
-        browsePageModelList.add(model);
-        browsePageModelList.add(model);
-        browsePageModelList.add(model);
-        browsePageModelList.add(model);
+        String cat="";
+        if (getArguments() == null || !getArguments().containsKey("Cat")) {
+            AllJobService allJobService = new AllJobService(context, new ASyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    try {
+                        JSONArray jsonArray = new JSONArray(output);
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject element = (JSONObject) jsonArray.get(i);
+                            String desc = element.getString("JobDescription");
+                            String location = element.getString("LocationID");
+                            String company = element.getString("CreatorUserID");
+                            BrowsePageModel model = new BrowsePageModel(new Date(), startEndTime, location, "Software Developer", desc, "The Verge", company, bitmap, "80%");
+
+                            browsePageModelList.add(model);
+                        }
+                    } catch (JSONException j) {
+                        System.out.println("JSONObject Error" + j.getMessage());
+                    }
+
+                    browsePageAdapter.notifyDataSetChanged();
+                }
+            });
+            allJobService.execute();
+        } else {
+            cat = getArguments().getString("Cat");
+            //generate models using http://www.nimblylabs.com/jiffyjobs_webservice/jobs/fetchcategoryjob.php
+            CatJobService catJobService = new CatJobService(context, "Sales", new ASyncResponse() {
+                @Override
+                public void processFinish(String output) {
+                    try {
+                        Log.i("Json", output);
+                        JSONArray jsonArray = new JSONArray(output);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject element = (JSONObject) jsonArray.get(i);
+                            String desc = element.getString("JobDescription");
+                            String location = element.getString("LocationID");
+                            String company = element.getString("CreatorUserID");
+                            BrowsePageModel model = new BrowsePageModel(new Date(), startEndTime, location, "Software Developer", desc, "The Verge", company, bitmap, "80%");
+
+                            browsePageModelList.add(model);
+
+                        }
+                    } catch (JSONException j) {
+                        Log.e(this.getClass().getSimpleName(), j.getMessage());
+                    }
+
+                    browsePageAdapter.notifyDataSetChanged();
+                }
+            });
+            catJobService.execute();
+            //
+        }
+
+
         browsePageAdapter.notifyDataSetChanged();
     }
+
 
     private class BackgroundAsyncTask extends AsyncTask<String, Integer, Long> {
 
@@ -110,4 +172,5 @@ public class BrowsePageView extends Fragment {
     private ListView listView;
     private ArrayList<BrowsePageModel> browsePageModelList;
     private BrowsePageAdapter browsePageAdapter;
+    private AllJobService allJobService;
 }
