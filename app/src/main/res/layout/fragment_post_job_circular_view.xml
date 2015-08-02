@@ -15,7 +15,7 @@
             android:id="@+id/circularStep1"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            custom:circleColor="@color/circular_transparent_green"
+            custom:circleColor="@color/circular_green"
             custom:circleLabel="1"
             custom:labelColor="#FFFFFFFF" />
 

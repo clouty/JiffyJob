@@ -115,7 +115,7 @@ public class LoginFragmentView extends Fragment {
 
                             }
                         })
-                        .duration(700)
+                        .duration(Utilities.getAnimationSlow())
                         .playOn(view.findViewById(R.id.scrollView));
             }
         });

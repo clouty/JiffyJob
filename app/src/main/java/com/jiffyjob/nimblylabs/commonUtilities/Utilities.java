@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
  * Created by NimblyLabs on 1/6/2015.
  */
 public class Utilities {
+
+
     public static String readHtml(Context context, int resourceId) {
         InputStream inputStream = context.getResources().openRawResource(resourceId);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -75,4 +77,45 @@ public class Utilities {
 
         private TextView textView = null;
     }
+
+    public static int countWords(String s) {
+        int wordCount = 0;
+
+        boolean word = false;
+        int endOfLine = s.length() - 1;
+
+        for (int i = 0; i < s.length(); i++) {
+            // if the char is a letter, word = true.
+            if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
+                word = true;
+                // if char isn't a letter and there have been letters before,
+                // counter goes up.
+            } else if (!Character.isLetter(s.charAt(i)) && word) {
+                wordCount++;
+                word = false;
+                // last word of String; if it doesn't end with a non letter, it
+                // wouldn't count without this.
+            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
+                wordCount++;
+            }
+        }
+        return wordCount;
+    }
+
+    private static int animationFast = 300;
+
+    public static int getAnimationSlow() {
+        return animationSlow;
+    }
+
+    public static int getAnimationFast() {
+        return animationFast;
+    }
+
+    public static int getAnimationNormal() {
+        return animationNormal;
+    }
+
+    private static int animationNormal = 500;
+    private static int animationSlow = 700;
 }

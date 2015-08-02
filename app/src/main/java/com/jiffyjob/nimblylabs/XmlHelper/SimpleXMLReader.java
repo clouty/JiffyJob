@@ -46,7 +46,7 @@ public class SimpleXMLReader {
                         break;
 
                     case XmlPullParser.END_TAG:
-                        if (name.equals("job")) {
+                        if (name != null && !text.contains("\n")) {
                             resultList.add(text);
                         }
                         break;

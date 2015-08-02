@@ -31,7 +31,7 @@ import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.facebook.FacebookController;
 import com.jiffyjob.nimblylabs.facebook.IFacebookController;
-import com.jiffyjob.nimblylabs.httpServices.RegisterPostService;
+import com.jiffyjob.nimblylabs.httpServices.RegisterUserService;
 import com.jiffyjob.nimblylabs.loginFragmentView.LoginFragmentView;
 import com.nineoldandroids.animation.Animator;
 
@@ -165,7 +165,7 @@ public class JoinUsFragmentView extends Fragment implements Observer {
 
                             }
                         })
-                        .duration(700)
+                        .duration(Utilities.getAnimationSlow())
                         .playOn(view.findViewById(R.id.scrollView));
             }
         });
@@ -186,7 +186,7 @@ public class JoinUsFragmentView extends Fragment implements Observer {
         if (isEmailValid && !emailET.getText().toString().isEmpty()) {
             registerArray[0] = emailET.getText().toString();
             registerArray[1] = passwordET.getText().toString();
-            RegisterPostService registerPostService = new RegisterPostService(context);
+            RegisterUserService registerPostService = new RegisterUserService(context);
             registerPostService.execute(registerArray);
         }
     }

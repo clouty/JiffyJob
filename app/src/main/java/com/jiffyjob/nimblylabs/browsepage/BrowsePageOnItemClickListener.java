@@ -35,14 +35,17 @@ public class BrowsePageOnItemClickListener implements AdapterView.OnItemClickLis
 
     private void updateFragment(Fragment fragment, String title) {
         ((Activity) context).setTitle(title);
+        FragmentTransaction fragTransaction = ((Activity) context).getFragmentManager().beginTransaction();
+        Fragment curFragment = ((Activity) context).getFragmentManager().findFragmentById(R.id.fragment_container);
+        if (!(curFragment instanceof BrowseIndividualView)) {
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            fragTransaction.addToBackStack(null);
+            fragTransaction.replace(R.id.fragment_container, fragment);
 
-        FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        // Commit the transaction
-        transaction.commit();
+            // Commit the transaction
+            fragTransaction.commit();
+        }
     }
 
     private ArrayList<BrowsePageModel> browsePageModelList = null;

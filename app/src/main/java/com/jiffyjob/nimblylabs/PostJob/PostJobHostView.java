@@ -36,13 +36,13 @@ public class PostJobHostView extends Fragment {
         PostJobCircularView postJobCircularView = new PostJobCircularView();
         postJobCircularView.setArguments(this.getActivity().getIntent().getExtras());
 
-        PostJobStep3View postJobStep3View = new PostJobStep3View();
-        postJobStep3View.setArguments(this.getActivity().getIntent().getExtras());
+        PostJobStep1View postJobStep1View = new PostJobStep1View();
+        postJobStep1View.setArguments(this.getActivity().getIntent().getExtras());
 
         FragmentManager manager = this.getActivity().getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.circularFragmentView, postJobCircularView, PostJobCircularView.class.getSimpleName());
-        transaction.add(R.id.postJobStepView, postJobStep3View, PostJobStep3View.class.getSimpleName());
+        transaction.add(R.id.postJobStepView, postJobStep1View, PostJobStep1View.class.getSimpleName());
         transaction.commit();
     }
 

@@ -37,7 +37,7 @@
             android:layout_height="56dp"
             android:layout_weight="0.2"
             android:background="@color/transparent"
-            android:padding="10dp"
+            android:padding="12dp"
             android:scaleType="fitCenter"
             android:src="@drawable/tick" />
     </LinearLayout>
@@ -69,7 +69,7 @@
         android:layout_below="@id/infoTV"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <Spinner
@@ -77,13 +77,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ListView
-            android:id="@+id/interestListView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:divider="#00FFCC00"
-            android:dividerHeight="0dp"
-            android:focusable="true" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What's your interest?"
+                android:textColor="@color/text_green"
+                android:textSize="12sp" />
+
+            <ListView
+                android:id="@+id/interestListView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/border"
+                android:divider="#00FFCC00"
+                android:dividerHeight="0dp"
+                android:focusable="true" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -117,6 +132,17 @@
                 android:layout_toLeftOf="@+id/textView"
                 android:layout_toStartOf="@+id/textView"
                 android:text="0" />
+
+            <TextView
+                android:id="@+id/errorMsgTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/descriptionET"
+                android:layout_toLeftOf="@id/wordCountTV"
+                android:text="ErrorMsg"
+                android:textColor="@color/red"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

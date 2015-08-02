@@ -3,6 +3,7 @@ package com.jiffyjob.nimblylabs.customui;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
@@ -64,7 +65,7 @@ public class CircularStepsView extends View {
         circlePaint.setColor(labelColor);
         //set text properties
         circlePaint.setTextAlign(Paint.Align.CENTER);
-        circlePaint.setTextSize(30);
+        circlePaint.setTextSize(40);
         if (widthMode == MeasureSpec.AT_MOST) {
             canvas.drawText(circleText, radius, radius + 12, circlePaint);
         } else {
@@ -121,7 +122,9 @@ public class CircularStepsView extends View {
     }
 
     public void setCircleColor(int circleColor) {
-        this.circleColor = circleColor;
+        String colorStr = getResources().getString(circleColor);
+        this.circleColor = Color.parseColor(colorStr);
+        this.postInvalidate();
     }
 
     public int getLabelColor() {

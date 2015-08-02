@@ -1,6 +1,7 @@
 package com.jiffyjob.nimblylabs.browseIndividual;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,15 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
         context = view.getContext();
         init();
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.map);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
     }
 
     private void init() {

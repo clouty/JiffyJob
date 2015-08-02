@@ -26,9 +26,9 @@ import java.util.List;
 /**
  * Created by NimblyLabs on 31/5/2015.
  */
-public class RegisterPostService extends AsyncTask<String, Void, String> {
+public class RegisterUserService extends AsyncTask<String, Void, String> {
 
-    public RegisterPostService(Context context) {
+    public RegisterUserService(Context context) {
         this.context = context;
     }
 
@@ -92,6 +92,7 @@ public class RegisterPostService extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        //TODO: notify account successfully created, redirect user to main page
         Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
     }
 

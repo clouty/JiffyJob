@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browsepage.BrowsePageView;
+import com.jiffyjob.nimblylabs.postJob.PostJobHostView;
 import com.jiffyjob.nimblylabs.updateBasicInfo.UpdateBasicInfo;
 
 
@@ -31,18 +32,21 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
             Toast.makeText(context, "Position:" + position + " Name:" + nickNameTextView.getText(), Toast.LENGTH_SHORT).show();
             createUpdateBasicInfo(view, position);
         } else {
-            switch (position){
-                case 1: CreateBrowsePagViewFragment(view, position);
+            switch (position) {
+                case 1:
+                    createBrowsePagViewFragment(view, position);
                     break;
                 case 2:
+                    createPostJobViewFragment(view, position);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
 
     //methods to create all fragments
-    private void CreateBrowsePagViewFragment(View view, int position){
+    private void createBrowsePagViewFragment(View view, int position) {
         TextView drawer_itemName = (TextView) view.findViewById(R.id.drawer_itemName);
         Toast.makeText(context, "Position:" + position + " Name:" + drawer_itemName.getText(), Toast.LENGTH_SHORT).show();
 
@@ -51,13 +55,19 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
         updateFragment(browsePageView, "Browse page");
     }
 
-    private void createUpdateBasicInfo(View view, int position){
+    private void createUpdateBasicInfo(View view, int position) {
         TextView drawer_itemName = (TextView) view.findViewById(R.id.drawer_itemName);
         Toast.makeText(context, "Position:" + position + " Name:" + drawer_itemName.getText(), Toast.LENGTH_SHORT).show();
 
         UpdateBasicInfo updateBasicInfo = new UpdateBasicInfo();
         updateBasicInfo.setArguments(((Activity) context).getIntent().getExtras());
         updateFragment(updateBasicInfo, "User info");
+    }
+
+    private void createPostJobViewFragment(View view, int position) {
+        PostJobHostView postJobHostView = new PostJobHostView();
+        postJobHostView.setArguments(((Activity) context).getIntent().getExtras());
+        updateFragment(postJobHostView, "Post a job");
     }
 
     //update other fragment and set title

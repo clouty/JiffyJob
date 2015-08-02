@@ -1,6 +1,7 @@
 package com.jiffyjob.nimblylabs.main;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -30,9 +31,12 @@ public class JiffyJobMainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        BrowseCategories fragment = new BrowseCategories();
-        fragment.setArguments(getIntent().getExtras());
-        getFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            BrowseCategories browseCategories = new BrowseCategories();
+            browseCategories.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, browseCategories).commit();
+        }
     }
 
     private void init() {
@@ -43,7 +47,7 @@ public class JiffyJobMainActivity extends Activity {
     }
 
     private void populateDrawerItems() {
-        drawerItems = new ArrayList<DrawerItemObject>();
+        drawerItems = new ArrayList<>();
 
         drawerItems.add(new DrawerItemObject());//create userInfo
         drawerItems.add(new DrawerItemObject(R.drawable.xhdpi_search, "Browse jobs"));
