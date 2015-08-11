@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -91,6 +92,8 @@ public class PostJobStep3View extends Fragment {
             EventBus.getDefault().registerSticky(this);
         }
         currentLocale = getResources().getConfiguration().locale;
+        payoutSwitch = (Switch) view.findViewById(R.id.payoutSwitch);
+        payoutSwitchTV = (TextView) view.findViewById(R.id.payoutSwitchTV);
         autocomplete_location = (AutoCompleteTextView) view.findViewById(R.id.autocomplete_location);
         searchLocationBtn = (ImageButton) view.findViewById(R.id.searchBtn);
         startDateTime = (EditText) view.findViewById(R.id.startDateTime);
@@ -159,17 +162,16 @@ public class PostJobStep3View extends Fragment {
             }
         });
 
-    /*    view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
+        payoutSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getKeyCode() == KeyEvent.ACTION_UP) {
-                    updatePostJobModel();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    payoutSwitchTV.setText("Hour");
+                } else {
+                    payoutSwitchTV.setText("Day");
                 }
-                return false;
             }
-        });*/
+        });
     }
 
     private void startDateTimePickerInit() {
@@ -325,6 +327,8 @@ public class PostJobStep3View extends Fragment {
                 postJobModel.setPayout(payout);
             }
 
+            postJobModel.setPayoutType(payoutSwitch.isChecked());
+
             postJobModel.setIsBoostPost(boostPostcb.isChecked());
         } catch (ParseException e) {
             Toast.makeText(context, "Error saving information", Toast.LENGTH_SHORT).show();
@@ -358,6 +362,8 @@ public class PostJobStep3View extends Fragment {
     private Locale currentLocale;
     private List<Address> addressList = new ArrayList<>();
     private Address selectedAddress = null;
+    private Switch payoutSwitch;
+    private TextView payoutSwitchTV;
     private TextView readMoreTV;
     private Button submitBtn;
     private CheckBox boostPostcb;

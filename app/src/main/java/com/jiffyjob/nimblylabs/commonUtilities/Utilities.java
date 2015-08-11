@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
  */
 public class Utilities {
 
-
     public static String readHtml(Context context, int resourceId) {
         InputStream inputStream = context.getResources().openRawResource(resourceId);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -114,6 +113,12 @@ public class Utilities {
 
     public static int getAnimationNormal() {
         return animationNormal;
+    }
+
+    public static int getDp(Context context, int dps) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        int pixels = (int) (dps * scale + 0.5f);
+        return pixels;
     }
 
     private static int animationNormal = 500;

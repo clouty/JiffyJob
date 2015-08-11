@@ -3,9 +3,8 @@ package com.jiffyjob.nimblylabs.httpServices;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.jiffyjob.nimblylabs.commonUtilities.ASyncResponse;
+import com.jiffyjob.nimblylabs.commonUtilities.IASyncResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -14,23 +13,18 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by NimblyLabs on 31/5/2015.
  */
 public class AllJobService extends AsyncTask<String, Void, String> {
 
-    public AllJobService(Context context, ASyncResponse asyncResponse) {
+    public AllJobService(Context context, IASyncResponse asyncResponse) {
         this.delegate = asyncResponse;
         this.context = context;
     }
@@ -81,10 +75,9 @@ public class AllJobService extends AsyncTask<String, Void, String> {
         delegate.processFinish(result);
     }
 
-
     private Context context;
     private InputStream is = null;
     private String result = "";
-    public ASyncResponse delegate = null;
+    public IASyncResponse delegate = null;
 }
 

@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.browsepage;
+package com.jiffyjob.nimblylabs.browsePage;
 
 import android.graphics.Bitmap;
 

@@ -64,6 +64,7 @@
             android:layout_height="150dp"
             android:divider="#00FFCC00"
             android:dividerHeight="0dp"
+            android:fadeScrollbars="false"
             android:focusable="true"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbars="vertical" />
@@ -86,8 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:ems="4"
-                android:maxLength="2"
                 android:hint="minAge"
+                android:maxLength="2"
                 android:text="16"
                 android:textAppearance="?android:textAppearanceSmall" />
 
@@ -103,8 +104,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="4"
-                android:maxLength="2"
                 android:hint="maxAge"
+                android:maxLength="2"
                 android:textAppearance="?android:textAppearanceSmall" />
 
             <LinearLayout
@@ -126,8 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:ems="3"
-                    android:maxLength="2"
                     android:hint="pax"
+                    android:maxLength="2"
                     android:text="1"
                     android:textAppearance="?android:textAppearanceSmall" />
             </LinearLayout>

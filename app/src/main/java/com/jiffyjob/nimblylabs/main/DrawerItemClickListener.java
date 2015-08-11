@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jiffyjob.nimblylabs.app.R;
-import com.jiffyjob.nimblylabs.browsepage.BrowsePageView;
+import com.jiffyjob.nimblylabs.browsePage.BrowsePageView;
 import com.jiffyjob.nimblylabs.postJob.PostJobHostView;
 import com.jiffyjob.nimblylabs.updateBasicInfo.UpdateBasicInfo;
 

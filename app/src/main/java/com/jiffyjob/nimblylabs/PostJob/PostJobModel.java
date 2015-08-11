@@ -125,6 +125,14 @@ public class PostJobModel {
         this.jobTitle = jobTitle;
     }
 
+    public boolean isPayoutType() {
+        return payoutType;
+    }
+
+    public void setPayoutType(boolean payoutType) {
+        this.payoutType = payoutType;
+    }
+
     private String jobTitle;
     private Bitmap userImage;
     private List<String> jobCategories;
@@ -136,6 +144,7 @@ public class PostJobModel {
     private Calendar startTime;
     private Calendar endTime;
     private double payout;
+    private boolean payoutType;
     private boolean isBoostPost;
     private boolean isAgreedToTerms;
 }

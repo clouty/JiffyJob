@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.jiffyjob.nimblylabs.commonUtilities.ASyncResponse;
+import com.jiffyjob.nimblylabs.commonUtilities.IASyncResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -21,15 +21,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by NimblyLabs on 31/5/2015.
  */
 public class CatJobService extends AsyncTask<String, Void, String> {
 
-    public CatJobService(Context context,String category, ASyncResponse asyncResponse ) {
+    public CatJobService(Context context,String category, IASyncResponse asyncResponse ) {
         this.delegate = asyncResponse;
         this.context = context;
         this.category = category;
@@ -96,6 +94,6 @@ public class CatJobService extends AsyncTask<String, Void, String> {
     private InputStream is = null;
     private String category = "";
     private String result = "";
-    public ASyncResponse delegate = null;
+    public IASyncResponse delegate = null;
 }
 

@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +18,19 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jiffyjob.nimblylabs.app.R;
-import com.jiffyjob.nimblylabs.browsepage.BrowsePageView;
+import com.jiffyjob.nimblylabs.browsePage.BrowsePageView;
+import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class BrowseCategories extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -38,24 +40,37 @@ public class BrowseCategories extends Fragment {
         view = inflater.inflate(R.layout.fragment_browse_categories, container, false);
         context = view.getContext();
         init();
+        initFeatureJob();
         generateCategoriesImageBtn();
 
-        // Inflate the layout for this fragment
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        //commit changes here
+    private void init() {
+        categoriesLeftLayout = (LinearLayout) view.findViewById(R.id.categoriesLeftLayout);
+        categoriesRightLayout = (LinearLayout) view.findViewById(R.id.categoriesRightLayout);
+        createOnClickListener();
     }
 
-    private enum btnEnum {fnbBtn, officeBtn, hotelBtn, mediaBtn, entertainmentBtn, serviceBtn, saleBtn, healthCareBtn}
+    private void initFeatureJob() {
+        ViewPager viewpager = (ViewPager) view.findViewById(R.id.featureJobVP);
+        CircleIndicator circleIndicator = (CircleIndicator) view.findViewById(R.id.featureJobCI);
+        fetchFeatureJobUrl();
+        if (viewPagerAdapter == null) {
+            viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), urlList);
+            viewpager.setOffscreenPageLimit(0);
+        }
+        viewPagerAdapter.notifyDataSetChanged();
+        viewpager.setAdapter(viewPagerAdapter);
+        viewpager.setCurrentItem(0);
+        circleIndicator.setViewPager(viewpager);
+    }
 
-    private void init() {
-        createOnClickListener();
-        btnlinearLayout1 = (LinearLayout) view.findViewById(R.id.btnlinearLayout1);
-        btnlinearLayout2 = (LinearLayout) view.findViewById(R.id.btnlinearLayout2);
+    private void fetchFeatureJobUrl() {
+        urlList.clear();
+        urlList.add("http://square.github.io/picasso/static/sample.png");
+        urlList.add("http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg");
+        urlList.add("http://assets3.parliament.uk/iv/main-large//ImageVault/Images/id_7382/scope_0/ImageVaultHandler.aspx.jpg");
     }
 
     //all buttons re-use a single listener
@@ -77,10 +92,10 @@ public class BrowseCategories extends Fragment {
     }
 
     private void generateCategoriesImageBtn() {
+        int dpWidth = Utilities.getDp(context, 48);
         int margin = 20;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(margin * 2, 0, margin, margin);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpWidth);
+        params.setMargins(0, 0, margin, margin);
 
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.find_icon);
         ImageButton fnbBtn = new ImageButton(context);
@@ -120,14 +135,13 @@ public class BrowseCategories extends Fragment {
         imageButtonList.add(mediaBtn);
 
         //implement selector in xml to set imagebuton behavior
-        btnlinearLayout1.addView(fnbBtn);
-        btnlinearLayout1.addView(officeBtn);
-        btnlinearLayout1.addView(hotelBtn);
-        btnlinearLayout1.addView(mediaBtn);
+        categoriesLeftLayout.addView(fnbBtn);
+        categoriesLeftLayout.addView(officeBtn);
+        categoriesLeftLayout.addView(hotelBtn);
+        categoriesLeftLayout.addView(mediaBtn);
 
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        params2.setMargins(0, 0, margin * 2, margin);
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpWidth);
+        params2.setMargins(0, 0, 0, margin);
 
         ImageButton entertainmentBtn = new ImageButton(context);
         entertainmentBtn.setImageBitmap(bitmap);
@@ -165,10 +179,10 @@ public class BrowseCategories extends Fragment {
         healthCareBtn.setOnClickListener(btnOnTouchListener);
         imageButtonList.add(healthCareBtn);
 
-        btnlinearLayout2.addView(entertainmentBtn);
-        btnlinearLayout2.addView(serviceBtn);
-        btnlinearLayout2.addView(saleBtn);
-        btnlinearLayout2.addView(healthCareBtn);
+        categoriesRightLayout.addView(entertainmentBtn);
+        categoriesRightLayout.addView(serviceBtn);
+        categoriesRightLayout.addView(saleBtn);
+        categoriesRightLayout.addView(healthCareBtn);
     }
 
     private void updateFragment(Fragment fragment, String title) {
@@ -177,16 +191,21 @@ public class BrowseCategories extends Fragment {
         FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
+        transaction.replace(R.id.fragment_container, fragment);
+
         // Commit the transaction
         transaction.commit();
     }
 
+    private enum btnEnum {fnbBtn, officeBtn, hotelBtn, mediaBtn, entertainmentBtn, serviceBtn, saleBtn, healthCareBtn}
+
+    private List<String> urlList = new ArrayList<>();
+    private ViewPagerAdapter viewPagerAdapter;
     private View.OnClickListener btnOnTouchListener;
     private List<ImageButton> imageButtonList = new ArrayList<ImageButton>();
     private View view;
     private Context context;
-    private LinearLayout btnlinearLayout1;
-    private LinearLayout btnlinearLayout2;
+    private LinearLayout categoriesLeftLayout;
+    private LinearLayout categoriesRightLayout;
 }
