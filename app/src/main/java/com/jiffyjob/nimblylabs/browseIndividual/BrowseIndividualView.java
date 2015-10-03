@@ -101,12 +101,11 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
      */
     private static final int duration = 10;
     private GoogleMap googleMap;
-    private CameraPosition cameraPosition =
-            new CameraPosition.Builder().target(new LatLng(-33.87365, 151.20689))
-                    .zoom(15.5f)
-                    .bearing(0)
-                    .tilt(25)
-                    .build();
+    private CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(-33.87365, 151.20689))
+                                            .zoom(15.5f)
+                                            .bearing(0)
+                                            .tilt(25)
+                                            .build();
     private View view;
     private Context context;
 }

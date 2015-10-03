@@ -7,6 +7,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by NimblyLabs on 10/8/2015.
  */

@@ -51,7 +51,7 @@
         <item>@drawable/find_icon</item>
     </array>
 
-    <string name="title_activity_jiffy_job_main">JiffyJobMainActivity</string>
+    <string name="title_activity_jiffy_job_main">JiffyJob</string>
     <string name="title_activity_browse_catergories">browseCatergories</string>
 
 </resources>

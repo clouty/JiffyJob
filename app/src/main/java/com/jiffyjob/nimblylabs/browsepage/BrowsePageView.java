@@ -38,16 +38,14 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_browse_page, container, false);
         context = view.getContext();
         init();
         pullToRefreshListenter();
-        getAllJobsFromService();
+        populateListView();
         return view;
     }
 
@@ -59,6 +57,7 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
     @Override
     public void processFinish(String output) {
         try {
+            pullRefreshLayout.setRefreshing(false);
             JSONArray jsonArray = new JSONArray(output);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -75,7 +74,7 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
             @Override
             public void onRefresh() {
                 // start refresh
-                new BackgroundAsyncTask().execute();
+                populateListView();
             }
         });
     }
@@ -91,13 +90,12 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
         browsePageModelList = new ArrayList<BrowsePageModel>();
         browsePageAdapter = new BrowsePageAdapter(context, R.layout.browse_page_item, browsePageModelList);
         listView.setAdapter(browsePageAdapter);
-        populateListView();
         listView.setOnItemClickListener(new BrowsePageOnItemClickListener(context, browsePageModelList));
     }
 
     private void populateListView() {
-        final Date[] startEndTime = {
-                Calendar.getInstance().getTime(), Calendar.getInstance().getTime()};
+        pullRefreshLayout.setRefreshing(true);
+        final Date[] startEndTime = {Calendar.getInstance().getTime(), Calendar.getInstance().getTime()};
         final Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.swagdog2);
         String message = "Looking for software engineer to develop cutting edge technology, looking for innovative individual that has passion in mobile programming.";
         String cat = "";
@@ -120,8 +118,8 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
                     } catch (JSONException j) {
                         System.out.println("JSONObject Error" + j.getMessage());
                     }
-
                     browsePageAdapter.notifyDataSetChanged();
+                    pullRefreshLayout.setRefreshing(false);
                 }
             });
             allJobService.execute();
@@ -140,39 +138,25 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
                             String location = element.getString("LocationID");
                             String company = element.getString("CreatorUserID");
                             BrowsePageModel model = new BrowsePageModel(new Date(), startEndTime, location, "Software Developer", desc, "The Verge", company, bitmap, "80%");
-
                             browsePageModelList.add(model);
-
                         }
                     } catch (JSONException j) {
                         Log.e(this.getClass().getSimpleName(), j.getMessage());
                     }
-
                     browsePageAdapter.notifyDataSetChanged();
+                    pullRefreshLayout.setRefreshing(false);
                 }
             });
             catJobService.execute();
-            //
         }
-
-
         browsePageAdapter.notifyDataSetChanged();
     }
-
-    private void getAllJobsFromService() {
-        new AllJobService(context, this).execute();
-    }
-
 
     private class BackgroundAsyncTask extends AsyncTask<String, Integer, Long> {
 
         @Override
         protected Long doInBackground(String... params) {
-            try {
-                Thread.sleep(3 * 1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //populateListView();
             return null;
         }
 
@@ -180,7 +164,6 @@ public class BrowsePageView extends Fragment implements IASyncResponse {
         protected void onPostExecute(Long aLong) {
             super.onPostExecute(aLong);
             pullRefreshLayout.setRefreshing(false);
-            //handler.sendEmptyMessage(0);
         }
     }
 

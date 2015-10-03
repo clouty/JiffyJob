@@ -58,7 +58,7 @@ public class LoginFragmentView extends Fragment {
         passwordET = (EditText) view.findViewById(R.id.passwordET);
         loginBtn = (Button) view.findViewById(R.id.loginBtn);
         forgetPwBtn = (Button) view.findViewById(R.id.forgetPwBtn);
-        backBtn = (Button) view.findViewById(R.id.backBtn);
+        //backBtn = (Button) view.findViewById(R.id.backBtn);
 
         //terms and agreement
         String htmlStr = Utilities.readHtml(context, R.raw.terms_and_agreement);

@@ -6,7 +6,7 @@
     <item name="text_white" type="color">#FFFFFFFF</item>
     <item name="background_orange" type="color">#FFFFA64D</item>
     <item name="divider_color" type="color">#FFA0A0A0</item>
-    <item name="lightgrey" type="color">#FFD0D0D0</item>
+    <item name="lightgrey" type="color">#FFdedede</item>
     <item name="hashtag_background" type="color">#FFD3D3D3</item>
     <item name="transparent" type="color">#000e8146</item>
 </resources>

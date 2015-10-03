@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/JiffyJob.iml" filepath="$PROJECT_DIR$/JiffyJob.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/PullRefresh/PullRefresh.iml" filepath="$PROJECT_DIR$/library/PullRefresh/PullRefresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>

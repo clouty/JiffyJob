@@ -21,13 +21,15 @@
             android:orientation="vertical">
 
             <TextView
-                style="@android:style/TextAppearance.Large"
+                style="@android:style/TextAppearance.DeviceDefault.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Welcome back!" />
+                android:text="Welcome back!"
+                android:textStyle="bold" />
 
             <TextView
+                style="@android:style/TextAppearance.DeviceDefault.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -78,10 +80,11 @@
                 <TextView
                     android:id="@+id/errorMsg"
                     style="@android:style/TextAppearance.Small"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="error msg"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:text=""
                     android:textColor="@color/red"
                     android:visibility="gone" />
 
@@ -90,35 +93,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/loginBtn"
-                    android:layout_marginLeft="80dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
                     android:background="@null"
                     android:text="Forget password?"
                     android:textColor="@color/text_green" />
             </RelativeLayout>
-
-            <Button
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/scrollView"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="30dp"
-                android:background="@color/transparent"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="Back"
-                android:textColor="@color/text_green" />
-
-            <!--Terms and condition-->
-            <WebView
-                android:id="@+id/termsWebView"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom"
-                android:background="@color/transparent" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

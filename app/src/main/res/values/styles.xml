@@ -4,4 +4,8 @@
     <style name="MainAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="miniRatingBar">
+
+    </style>
 </resources>

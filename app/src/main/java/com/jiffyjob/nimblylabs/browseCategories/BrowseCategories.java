@@ -57,7 +57,7 @@ public class BrowseCategories extends Fragment {
         CircleIndicator circleIndicator = (CircleIndicator) view.findViewById(R.id.featureJobCI);
         fetchFeatureJobUrl();
         if (viewPagerAdapter == null) {
-            viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), urlList);
+            viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), urlList);
             viewpager.setOffscreenPageLimit(0);
         }
         viewPagerAdapter.notifyDataSetChanged();

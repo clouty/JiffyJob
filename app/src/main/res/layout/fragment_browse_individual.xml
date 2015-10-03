@@ -28,7 +28,7 @@
                     android:src="@drawable/swagdog" />
 
                 <TextView
-                    android:id="@+id/userName"
+                    android:id="@+id/userNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -44,7 +44,7 @@
                     android:id="@+id/companyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/userName"
+                    android:layout_below="@+id/userNameTV"
                     android:layout_toEndOf="@+id/userImageView"
                     android:layout_toRightOf="@+id/userImageView"
                     android:text="(Small Text)"
