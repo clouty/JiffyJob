@@ -6,17 +6,17 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/titleLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="0dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="0.9"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/titleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -25,8 +25,10 @@
             android:textColor="@color/primary_text_default_material_light" />
 
         <TextView
+            android:id="@+id/subTitleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/titleTV"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:text="Job Information"
@@ -34,8 +36,11 @@
             android:textColor="@color/text_green" />
 
         <LinearLayout
+            android:id="@+id/scopeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_below="@id/subTitleTV"
             android:layout_gravity="right"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -61,17 +66,21 @@
         <ListView
             android:id="@+id/scopeListView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
+            android:layout_below="@id/scopeLayout"
             android:divider="#00FFCC00"
             android:dividerHeight="0dp"
             android:fadeScrollbars="false"
             android:focusable="true"
+            android:maxHeight="140dp"
             android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbars="vertical" />
 
         <LinearLayout
+            android:id="@+id/numericLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/scopeListView"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
@@ -88,6 +97,7 @@
                 android:layout_marginLeft="10dp"
                 android:ems="4"
                 android:hint="minAge"
+                android:inputType="number"
                 android:maxLength="2"
                 android:text="16"
                 android:textAppearance="?android:textAppearanceSmall" />
@@ -105,6 +115,7 @@
                 android:layout_height="wrap_content"
                 android:ems="4"
                 android:hint="maxAge"
+                android:inputType="number"
                 android:maxLength="2"
                 android:textAppearance="?android:textAppearanceSmall" />
 
@@ -122,12 +133,13 @@
                     android:textColor="@color/text_green" />
 
                 <EditText
-                    android:id="@+id/hiringPax"
+                    android:id="@+id/totalPax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:ems="3"
                     android:hint="pax"
+                    android:inputType="number"
                     android:maxLength="2"
                     android:text="1"
                     android:textAppearance="?android:textAppearanceSmall" />
@@ -137,10 +149,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/numericLayout"
             android:layout_gravity="right"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/hashTagET"
@@ -160,43 +174,64 @@
                 android:src="@drawable/xhdpi_add" />
         </LinearLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbars="vertical">
-
-            <com.wefika.flowlayout.FlowLayout
-                android:id="@+id/hashTagFL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:gravity="start|top">
-
-            </com.wefika.flowlayout.FlowLayout>
-        </ScrollView>
-
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/minEduTV"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Separate each tag with comma. (Eg: #IT, #Sales)"
-            android:textColor="@color/text_green"
-            android:textSize="12sp" />
+            android:layout_below="@+id/numericLayout"
+            android:layout_marginTop="5dp"
+            android:maxHeight="100dp"
+            android:text="Min education level"
+            android:textColor="@color/text_green" />
 
-    </LinearLayout>
+        <ListView
+            android:id="@+id/selectedEduListView"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_below="@+id/minEduTV"
+            android:visibility="visible">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.1"
-        android:gravity="bottom">
+        </ListView>
 
         <Button
-            android:id="@+id/submitBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/selectReqEduBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I'm done! Next!"
+            android:layout_below="@+id/selectedEduListView"
+            android:layout_centerHorizontal="true"
+            android:text="Select Required Education"
             android:textColor="@color/text_green" />
-    </LinearLayout>
+
+        <!--   <ScrollView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:scrollbarAlwaysDrawVerticalTrack="true"
+               android:scrollbars="vertical">
+
+               <com.wefika.flowlayout.FlowLayout
+                   android:id="@+id/hashTagFL"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:background="@drawable/border"
+                   android:gravity="start|top">
+
+               </com.wefika.flowlayout.FlowLayout>
+           </ScrollView>
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Separate each tag with comma. (Eg: #IT, #Sales)"
+               android:textColor="@color/text_green"
+               android:textSize="12sp" />-->
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.1"
+        android:text="I'm done! Next!"
+        android:textColor="@color/text_green" />
 </LinearLayout>

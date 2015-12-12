@@ -65,12 +65,12 @@ public class CircularStepsView extends View {
         circlePaint.setColor(labelColor);
         //set text properties
         circlePaint.setTextAlign(Paint.Align.CENTER);
-        circlePaint.setTextSize(40);
+        circlePaint.setTextSize(50);
         if (widthMode == MeasureSpec.AT_MOST) {
-            canvas.drawText(circleText, radius, radius + 12, circlePaint);
+            canvas.drawText(circleText, radius, radius + 14, circlePaint);
         } else {
             //draw the text using the string attribute and chosen properties
-            canvas.drawText(circleText, widthSize / 2, (widthSize / 2) + 12, circlePaint);
+            canvas.drawText(circleText, widthSize / 2, (widthSize / 2) + 14, circlePaint);
         }
     }
 

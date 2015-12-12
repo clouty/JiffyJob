@@ -21,15 +21,20 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.widget.LoginButton;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.JoinUsFragmentView;
 import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.LoginFragmentView;
 import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.UserInfoModel;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
+import com.jiffyjob.nimblylabs.httpServices.FacebookRegisterService;
+import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Created by NimblyLabs on 13/6/2015.
@@ -68,17 +73,6 @@ public class BeforeLoginActivity extends Activity {
         super.onResume();
         // If the access token is available already assign it.
         updateAccessToken(AccessToken.getCurrentAccessToken());
-
-        if (accessToken != null) {
-            //getting user information, call only after user login
-            new GraphRequest(accessToken, "me/?fields=id,name,location,email,picture,gender,education"
-                    , null, HttpMethod.GET, new GraphRequest.Callback() {
-                @Override
-                public void onCompleted(GraphResponse graphResponse) {
-
-                }
-            }).executeAsync();
-        }
     }
 
     private void init() {
@@ -114,23 +108,56 @@ public class BeforeLoginActivity extends Activity {
         });
     }
 
+    //Facebook permission
     private void setPermissionArrays() {
         //facebook permission
         permissionArrays.add("public_profile");
         permissionArrays.add("user_birthday");
         permissionArrays.add("user_location");
-        permissionArrays.add("user_photos");
         permissionArrays.add("email");
         permissionArrays.add("user_education_history");
     }
 
+    //Facebook accessToken
     private void updateAccessToken(AccessToken accessToken) {
-        if (accessToken == null) {
-            //TODO: no token available
-        } else {
-            //token updated
-            this.accessToken = accessToken;
+        this.accessToken = accessToken;
+        if (accessToken != null) {
+            FacebookRegisterService facebookRegisterService = new FacebookRegisterService(this);
+            //getting user information, call only after user login
+            GraphRequest request = GraphRequest.newMeRequest(
+                    accessToken,
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+                            fbRegister(object);
+                            startMainActivity();
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,first_name,last_name,email,birthday,location,picture,gender,education");
+            request.setParameters(parameters);
+            request.executeAsync();
         }
+    }
+
+    private void fbRegister(JSONObject jsonObject) {
+        try {
+            FacebookRegisterService facebookRegisterService = new FacebookRegisterService(this);
+            String userID = jsonObject.getString("id");
+            Hashtable<String, String> dictionary = new Hashtable<>();
+            dictionary.put("userID", userID);
+            dictionary.put("tokenString", this.accessToken.getToken());
+            facebookRegisterService.execute(dictionary);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startMainActivity() {
+        Intent myIntent = new Intent(BeforeLoginActivity.this, JiffyJobMainActivity.class);
+        BeforeLoginActivity.this.startActivity(myIntent);
     }
 
     private void updateFragment(boolean isjoinUs) {
@@ -165,7 +192,7 @@ public class BeforeLoginActivity extends Activity {
         }
     }
 
-    private void setTermsAndAgreedment(){
+    private void setTermsAndAgreedment() {
         String htmlStr = Utilities.readHtml(this, R.raw.terms_and_agreement);
         termsWebView = (WebView) this.findViewById(R.id.termsWebView);
         termsWebView.setWebViewClient(new WebViewClient());

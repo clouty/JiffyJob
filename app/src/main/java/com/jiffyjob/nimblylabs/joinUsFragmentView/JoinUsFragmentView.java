@@ -225,7 +225,7 @@ public class JoinUsFragmentView extends Fragment implements Observer {
             registerArray[0] = emailET.getText().toString();
             registerArray[1] = passwordET.getText().toString();
             RegisterUserService registerPostService = new RegisterUserService(context);
-            registerPostService.execute(registerArray);
+            /*registerPostService.execute(registerArray);*/
         }
     }
 

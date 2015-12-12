@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.postJob.PostJobEvents;
+package com.jiffyjob.nimblylabs.postJob.postJobEvents;
 
 /**
  * Created by NimblyLabs on 25/7/2015.

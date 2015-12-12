@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.jiffyjob.nimblylabs.app.R;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -20,32 +22,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.util.Hashtable;
 
 /**
  * Created by NimblyLabs on 31/5/2015.
  */
-public class RegisterUserService extends AsyncTask<String, Void, String> {
+public class RegisterUserService extends AsyncTask<Hashtable<String, String>, Void, String> {
 
     public RegisterUserService(Context context) {
         this.context = context;
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        for (String para : params) {
-            registerList.add(para);
-        }
+    protected String doInBackground(Hashtable<String, String>... params) {
         // Create a new HttpClient and Post Header
+        String urlString = context.getResources().getString(R.string.facebook_login_service);
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://nimblylabs.com/jiffyjobs_webservice/users/insertuser.php");
+        HttpPost httppost = new HttpPost(urlString);
 
         try {
             // Add your data
-            JSONObject data = new JSONObject();
-            data.put("Email", registerList.get(0));
-            data.put("Password", registerList.get(1));
+            JSONObject data = getQuery(params[0]);
 
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(data);
@@ -73,8 +71,6 @@ public class RegisterUserService extends AsyncTask<String, Void, String> {
                 response.getEntity().getContent().close();
                 throw new IOException(statusLine.getReasonPhrase());
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         } catch (ClientProtocolException e) {
             Log.e(this.getClass().getSimpleName(), e.getMessage());
         } catch (IOException e) {
@@ -96,8 +92,19 @@ public class RegisterUserService extends AsyncTask<String, Void, String> {
         Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
     }
 
+    private JSONObject getQuery(Hashtable<String, String> params) throws UnsupportedEncodingException {
+        JSONObject jsonMsg = new JSONObject();
+        try {
+            for (String key : params.keySet()) {
+                jsonMsg.put(key, params.get(key));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonMsg;
+    }
+
     private Context context;
-    private List<String> registerList = new ArrayList<>();
     private InputStream is = null;
     private String result = "";
 }

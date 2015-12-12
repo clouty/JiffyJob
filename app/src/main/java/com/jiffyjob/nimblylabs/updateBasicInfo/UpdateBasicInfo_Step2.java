@@ -77,7 +77,7 @@ public class UpdateBasicInfo_Step2 extends Fragment {
     }
 
     private void populateQualification() {
-        SimpleXMLReader simpleXMLReader = new SimpleXMLReader(context, R.raw.qualitfication);
+        SimpleXMLReader simpleXMLReader = new SimpleXMLReader(context, R.raw.qualitfication_sg);
         qualificationList = simpleXMLReader.parseXML();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, qualificationList);
         qualificationSpinner.setAdapter(dataAdapter);

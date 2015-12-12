@@ -45,13 +45,15 @@
 
         <activity
             android:name="com.jiffyjob.nimblylabs.main.JiffyJobMainActivity"
-            android:label="@string/title_activity_jiffy_job_main">
+            android:label="@string/title_activity_jiffy_job_main"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity
             android:name="com.jiffyjob.nimblylabs.BeforeLoginActivity"
-            android:label="@string/title_activity_jiffy_job_main">
+            android:label="@string/title_activity_jiffy_job_main"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,7 +66,5 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
     </application>
-
 </manifest>

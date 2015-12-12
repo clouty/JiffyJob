@@ -25,14 +25,19 @@ public class BrowsePageAdapter extends ArrayAdapter<BrowsePageModel> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         BrowsePageModel model = getItem(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.browse_page_item_v2, null);
+        }
+        ((TextView) convertView.findViewById(R.id.userNameTV)).setText(model.getCreatorName());
+        ((TextView) convertView.findViewById(R.id.companyNameTV)).setText(model.getCreatorCompanyName());
+        ((TextView) convertView.findViewById(R.id.titleTV)).setText(model.getTitle());
 
-        convertView = inflater.inflate(R.layout.browse_page_item_v2, null);
-        ((TextView) convertView.findViewById(R.id.userNameTV)).setText(model.getUserName());
-        ((TextView) convertView.findViewById(R.id.companyNameTV)).setText(model.getCompanyName());
-        ((TextView) convertView.findViewById(R.id.titleTV)).setText(model.getMessage());
-        ((ImageView) convertView.findViewById(R.id.userImageView)).setImageBitmap(model.getProfileImage());
+        ((ImageView) convertView.findViewById(R.id.jobCatergoryImage)).setImageDrawable(model.getJobLogo());
+        ((ImageView) convertView.findViewById(R.id.userImageView)).setImageDrawable(model.getCreatorProfileImage());
+        ((ImageView) convertView.findViewById(R.id.jobCatergoryImage)).setImageDrawable(model.getCreatorProfileImage());
+
+        ((TextView) convertView.findViewById(R.id.jobPaxTV)).setText(model.getJobPax());
         RatingBar ratingBar = ((RatingBar) convertView.findViewById(R.id.jobRating));
         ratingBar.setMax(5);
         String ratingStr = model.getJobRating().replace("%", "");
@@ -48,7 +53,7 @@ public class BrowsePageAdapter extends ArrayAdapter<BrowsePageModel> {
         }
 
         SimpleDateFormat myFormat = new SimpleDateFormat("dd-MMM");
-        String formattedDate = myFormat.format(model.getDate());
+        String formattedDate = myFormat.format(model.getJobDate());
         ((TextView) convertView.findViewById(R.id.date)).setText(formattedDate);
 
         ((TextView) convertView.findViewById(R.id.location)).setText(model.getLocation());

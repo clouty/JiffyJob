@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiffyjob.nimblylabs.app.R;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.ScopeItemEvent;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.ScopeItemEvent;
 
 import java.util.List;
 

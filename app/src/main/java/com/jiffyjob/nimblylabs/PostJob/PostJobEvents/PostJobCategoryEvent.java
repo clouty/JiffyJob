@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.postJob.PostJobEvents;
+package com.jiffyjob.nimblylabs.postJob.postJobEvents;
 
 import java.util.List;
 

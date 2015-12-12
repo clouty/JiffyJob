@@ -1,4 +1,4 @@
-package com.jiffyjob.nimblylabs.postJob.PostJobEvents;
+package com.jiffyjob.nimblylabs.postJob.postJobEvents;
 
 import com.jiffyjob.nimblylabs.postJob.PostJobModel;
 

@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,8 +33,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep3Event;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep4Event;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep3Event;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep4Event;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -105,15 +106,11 @@ public class PostJobStep3View extends Fragment {
     }
 
     private void initEvent() {
-        autocomplete_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        autocomplete_location.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedAddress = addressList.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+                //TODO: change date time between US and rest of countries
             }
         });
 
@@ -121,21 +118,27 @@ public class PostJobStep3View extends Fragment {
             @Override
             public void onClick(View v) {
                 String locationStr = autocomplete_location.getText().toString();
-                doSearch(locationStr);
+                doLocationSearch(locationStr);
             }
         });
 
-        startDateTime.setOnClickListener(new View.OnClickListener() {
+        startDateTime.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                startDateTimePickerInit();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!isEditDateTimeOpen) {
+                    startDateTimePickerInit();
+                }
+                return true;
             }
         });
 
-        endDateTime.setOnClickListener(new View.OnClickListener() {
+        endDateTime.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                endDateTimePickerInit();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!isEditDateTimeOpen) {
+                    endDateTimePickerInit();
+                }
+                return true;
             }
         });
 
@@ -175,6 +178,7 @@ public class PostJobStep3View extends Fragment {
     }
 
     private void startDateTimePickerInit() {
+        isEditDateTimeOpen = true;
         final Calendar myCalendar = Calendar.getInstance(currentLocale);
         final DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -199,6 +203,12 @@ public class PostJobStep3View extends Fragment {
         };
 
         startTimePickerDialog = new TimePickerDialog(context, startTimeSetListener, 10, 00, false);
+        startTimePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                isEditDateTimeOpen = false;
+            }
+        });
         startDatePickerDialog = new DatePickerDialog(context, startDateSetListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
@@ -213,6 +223,7 @@ public class PostJobStep3View extends Fragment {
     }
 
     private void endDateTimePickerInit() {
+        isEditDateTimeOpen = true;
         final Calendar myCalendar = Calendar.getInstance(currentLocale);
         final DatePickerDialog.OnDateSetListener endDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -237,6 +248,12 @@ public class PostJobStep3View extends Fragment {
         };
 
         endTimePickerDialog = new TimePickerDialog(context, endTimeSetListener, 10, 00, false);
+        endTimePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                isEditDateTimeOpen = false;
+            }
+        });
         endDatePickerDialog = new DatePickerDialog(context, endDateSetListener,
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
@@ -250,7 +267,7 @@ public class PostJobStep3View extends Fragment {
         endDatePickerDialog.show();
     }
 
-    private void doSearch(String query) {
+    private void doLocationSearch(String query) {
         try {
             addressList = geocoder.getFromLocationName(query, maxResults);
             if (addressList == null || addressList.isEmpty()) {
@@ -258,8 +275,14 @@ public class PostJobStep3View extends Fragment {
             } else {
                 locationNameList.clear();
                 for (Address address : addressList) {
-                    String locationAddress = address.getCountryName() + " " + address.getFeatureName() + " " + address.getAdminArea();
-                    locationNameList.add(locationAddress);
+                    String addressStr = "";
+                    for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                        addressStr += address.getAddressLine(i);
+                        if (i < address.getMaxAddressLineIndex() - 1) {
+                            addressStr += ", ";
+                        }
+                    }
+                    locationNameList.add(addressStr);
                 }
                 adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, locationNameList);
                 autocomplete_location.setAdapter(adapter);
@@ -306,6 +329,7 @@ public class PostJobStep3View extends Fragment {
         try {
             if (selectedAddress != null) {
                 postJobModel.setAddress(selectedAddress);
+                postJobModel.setSalaryCurrencyCode(selectedAddress.getCountryCode());
             }
 
             if (!startDateTime.getText().toString().isEmpty()) {
@@ -327,7 +351,7 @@ public class PostJobStep3View extends Fragment {
                 postJobModel.setPayout(payout);
             }
 
-            postJobModel.setPayoutType(payoutSwitch.isChecked());
+            postJobModel.setSalaryTypeDaily(payoutSwitch.isChecked());
 
             postJobModel.setIsBoostPost(boostPostcb.isChecked());
         } catch (ParseException e) {
@@ -357,8 +381,11 @@ public class PostJobStep3View extends Fragment {
 
     private DatePickerDialog startDatePickerDialog, endDatePickerDialog;
     private TimePickerDialog startTimePickerDialog, endTimePickerDialog;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+    private final SimpleDateFormat dmyDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+    private final SimpleDateFormat mdyDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
+    private boolean isEditDateTimeOpen = false;
     private Locale currentLocale;
     private List<Address> addressList = new ArrayList<>();
     private Address selectedAddress = null;

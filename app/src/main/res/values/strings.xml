@@ -41,7 +41,6 @@
         <item>App settings</item>
         <item>Contact us</item>
     </string-array>
-
     <array name="nav_drawer_icons">
         <item>@drawable/find_icon</item>
         <item>@drawable/find_icon</item>
@@ -54,4 +53,8 @@
     <string name="title_activity_jiffy_job_main">JiffyJob</string>
     <string name="title_activity_browse_catergories">browseCatergories</string>
 
+    <!--URL Strings-->
+    <string name="facebook_login_service">http://nimblylabs.com/jjws/users/fblogin.php</string>
+    <string name="postJob_service">http://nimblylabs.com/jjws/jobs/insertjob.php</string>
+    <string name="queryJob_service">http://nimblylabs.com/jjws/jobs/showjob.php</string>
 </resources>

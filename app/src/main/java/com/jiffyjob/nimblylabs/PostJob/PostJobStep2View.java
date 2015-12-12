@@ -8,21 +8,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep2Event;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep3Event;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.ScopeItemEvent;
-import com.wefika.flowlayout.FlowLayout;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobReqEduEvent;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep2Event;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep3Event;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.ScopeItemEvent;
+import com.jiffyjob.nimblylabs.xmlHelper.SimpleXMLReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,7 @@ public class PostJobStep2View extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_post_job_step2, container, false);
         context = view.getContext();
+        generateEduList();
         init();
         initEvents();
         return view;
@@ -72,19 +73,21 @@ public class PostJobStep2View extends Fragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().registerSticky(this);
         }
+        selectReqEduBtn = (Button) view.findViewById(R.id.selectReqEduBtn);
         submitBtn = (Button) view.findViewById(R.id.submitBtn);
         scopeET = (EditText) view.findViewById(R.id.scopeET);
-        hashTagET = (EditText) view.findViewById(R.id.hashTagET);
         addScopeBtn = (ImageButton) view.findViewById(R.id.addScopeBtn);
-        addHashTagBtn = (ImageButton) view.findViewById(R.id.addHashTagBtn);
         scopeListView = (ListView) view.findViewById(R.id.scopeListView);
+        selectedEduListView = (ListView) view.findViewById(R.id.selectedEduListView);
         fromAge = (EditText) view.findViewById(R.id.fromAge);
         toAge = (EditText) view.findViewById(R.id.toAge);
-        hiringPax = (EditText) view.findViewById(R.id.hiringPax);
-        hashTagFL = (FlowLayout) view.findViewById(R.id.hashTagFL);
+        hiringPax = (EditText) view.findViewById(R.id.totalPax);
 
         scopeArrayAdapter = new PostJobStep2ScopeAdapter(context, R.layout.fragment_post_job_step2_item, scopeList);
         scopeListView.setAdapter(scopeArrayAdapter);
+
+        reqEduArrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, minReqEduList);
+        selectedEduListView.setAdapter(reqEduArrayAdapter);
     }
 
     private void initEvents() {
@@ -104,11 +107,11 @@ public class PostJobStep2View extends Fragment {
             }
         });
 
-        addHashTagBtn.setOnClickListener(new View.OnClickListener() {
+        selectReqEduBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String hashStr = hashTagET.getText().toString();
-                addHashTag(hashStr);
+                PostJobStep2ReqEduView reqEduView = PostJobStep2ReqEduView.getInstance();
+                reqEduView.show(getFragmentManager(), reqEduView.getClass().getSimpleName());
             }
         });
     }
@@ -116,38 +119,6 @@ public class PostJobStep2View extends Fragment {
     private void addScope() {
         scopeList.add(scopeET.getText().toString());
         scopeArrayAdapter.notifyDataSetChanged();
-    }
-
-    private void addHashTag(final String hashStr) {
-        hashTagList.add(hashStr);
-        createHashTagView(hashStr);
-    }
-
-    private void createHashTagView(final String hashStr) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View convertView = inflater.inflate(R.layout.fragment_post_job_step2_hashtag, null);
-        TextView itemTV = (TextView) convertView.findViewById(R.id.hashTagTV);
-        ImageView crossImageView = (ImageView) convertView.findViewById(R.id.crossBtn);
-
-        convertView.getTag(hashTagList.indexOf(hashStr));
-        itemTV.setText("#" + hashStr);
-        crossImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateHashtag(hashTagList.indexOf(hashStr));
-            }
-        });
-
-        convertView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        FlowLayout.LayoutParams params = new FlowLayout.LayoutParams(convertView.getMeasuredWidth(), convertView.getMeasuredHeight());
-        params.setMargins(5, 5, 10, 5);
-        convertView.setLayoutParams(params);
-        hashTagFL.addView(convertView);
-    }
-
-    private void updateHashtag(int position) {
-        hashTagList.remove(position);
-        hashTagFL.removeViewAt(position);
     }
 
     private void updatePostJobModel() {
@@ -161,25 +132,33 @@ public class PostJobStep2View extends Fragment {
 
         postJobModel.setMinAge(minAge);
         postJobModel.setMaxAge(maxAge);
-        postJobModel.setHiringPax(pax);
-        postJobModel.setHashtags(hashTagList);
+        postJobModel.setTotalPax(pax);
     }
 
     //Use when user press back and update UI to current postJobModel variables
     private void updateUI() {
-        if (postJobModel.getJobScopes() != null && postJobModel.getHashtags() != null) {
+        if (postJobModel.getJobScopes() != null && postJobModel.getRequiredEducation() != -1) {
             scopeList = postJobModel.getJobScopes();
-            hashTagList = postJobModel.getHashtags();
+            minReqEduList.clear();
+            minReqEduList.add(educationList.get(postJobModel.getRequiredEducation()));
             fromAge.setText(postJobModel.getMinAge() + "");
             toAge.setText(postJobModel.getMaxAge() + "");
-            hiringPax.setText(postJobModel.getHiringPax() + "");
+            hiringPax.setText(postJobModel.getTotalPax() + "");
 
-            hashTagFL.getChildCount();
-            for (String item : hashTagList) {
-                createHashTagView(item);
-            }
             scopeArrayAdapter = new PostJobStep2ScopeAdapter(context, R.layout.fragment_post_job_step2_item, scopeList);
             scopeListView.setAdapter(scopeArrayAdapter);
+
+            reqEduArrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, minReqEduList);
+            selectedEduListView.setAdapter(reqEduArrayAdapter);
+            if (minReqEduList.size() > 0) {
+                selectedEduListView.setVisibility(View.VISIBLE);
+                selectReqEduBtn.setText("Edit required education");
+                reqEduArrayAdapter.notifyDataSetChanged();
+            } else {
+                selectedEduListView.setVisibility(View.GONE);
+                selectReqEduBtn.setText("Add required education");
+            }
+
         }
     }
 
@@ -211,17 +190,42 @@ public class PostJobStep2View extends Fragment {
         scopeArrayAdapter.notifyDataSetChanged();
     }
 
+    public void onEvent(PostJobReqEduEvent eventModel) {
+        if (eventModel.getReqEducation() != null && !eventModel.getReqEducation().isEmpty()) {
+            minReqEduList.clear();
+            minReqEduList.add(eventModel.getReqEducation());
+            int eduIndex = educationList.indexOf(minReqEduList.get(0));
+            postJobModel.setRequiredEducation(eduIndex);
+            reqEduArrayAdapter = new ArrayAdapter(context, android.R.layout.simple_list_item_1, minReqEduList);
+            selectedEduListView.setAdapter(reqEduArrayAdapter);
+            selectedEduListView.setVisibility(View.VISIBLE);
+            selectReqEduBtn.setText("Edit required education");
+        } else if (eventModel.getReqEducation() != null && eventModel.getReqEducation().isEmpty()) {
+            minReqEduList.clear();
+            postJobModel.setRequiredEducation(-1);
+            selectedEduListView.setVisibility(View.GONE);
+            selectReqEduBtn.setText("Add required education");
+        }
+        reqEduArrayAdapter.notifyDataSetChanged();
+    }
+
+    private void generateEduList() {
+        SimpleXMLReader simpleXMLReader = new SimpleXMLReader(context, R.raw.qualitfication_global);
+        educationList = simpleXMLReader.parseXML();
+    }
+
     private PostJobStep2ScopeAdapter scopeArrayAdapter;
+    private ArrayAdapter<String> reqEduArrayAdapter;
     private List<String> scopeList = new ArrayList<>();
-    private List<String> hashTagList = new ArrayList<>();
+    private List<String> minReqEduList = new ArrayList<>();
+    private List<String> educationList = new ArrayList<>();
 
     private PostJobModel postJobModel;
     private View view = null;
     private Context context;
-    private EditText scopeET, hashTagET;
-    private Button submitBtn;
-    private ImageButton addScopeBtn, addHashTagBtn;
-    private ListView scopeListView;
+    private EditText scopeET;
+    private Button submitBtn, selectReqEduBtn;
+    private ImageButton addScopeBtn;
+    private ListView scopeListView, selectedEduListView;
     private EditText fromAge = null, toAge = null, hiringPax = null;
-    private FlowLayout hashTagFL;
 }

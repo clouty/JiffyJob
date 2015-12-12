@@ -13,12 +13,12 @@ public class PostJobModel {
     public PostJobModel() {
     }
 
-    public Bitmap getUserImage() {
-        return userImage;
+    public Bitmap getUserPhotos() {
+        return userPhotos;
     }
 
-    public void setUserImage(Bitmap userImage) {
-        this.userImage = userImage;
+    public void setUserPhotos(Bitmap userPhotos) {
+        this.userPhotos = userPhotos;
     }
 
     public List<String> getJobCategories() {
@@ -53,21 +53,22 @@ public class PostJobModel {
         this.maxAge = maxAge;
     }
 
-    public int getHiringPax() {
-        return hiringPax;
+    public int getTotalPax() {
+        return totalPax;
     }
 
-    public void setHiringPax(int hiringPax) {
-        this.hiringPax = hiringPax;
+    public void setTotalPax(int totalPax) {
+        this.totalPax = totalPax;
     }
 
-    public List<String> getHashtags() {
-        return hashtags;
+    public int getRequiredEducation() {
+        return requiredEducation;
     }
 
-    public void setHashtags(List<String> hashtags) {
-        this.hashtags = hashtags;
+    public void setRequiredEducation(int requiredEducation) {
+        this.requiredEducation = requiredEducation;
     }
+
 
     public Address getAddress() {
         return address;
@@ -125,26 +126,73 @@ public class PostJobModel {
         this.jobTitle = jobTitle;
     }
 
-    public boolean isPayoutType() {
-        return payoutType;
+    public String getSalaryCurrencyCode() {
+        return salaryCurrencyCode;
     }
 
-    public void setPayoutType(boolean payoutType) {
-        this.payoutType = payoutType;
+    public void setSalaryCurrencyCode(String salaryCurrencyCode) {
+        this.salaryCurrencyCode = salaryCurrencyCode;
+    }
+
+    public boolean isSalaryTypeDaily() {
+        return isSalaryTypeDaily;
+    }
+
+    public void setSalaryTypeDaily(boolean salaryTypeDaily) {
+        this.isSalaryTypeDaily = salaryTypeDaily;
+    }
+
+    public boolean isGenericPhotoType() {
+        return isGenericPhotoType;
+    }
+
+    public void setIsGenericPhotoType(boolean isGenericPhotoType) {
+        this.isGenericPhotoType = isGenericPhotoType;
+    }
+
+    //extended properties
+    public String getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(String creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
     }
 
     private String jobTitle;
-    private Bitmap userImage;
+    private Bitmap userPhotos;
     private List<String> jobCategories;
     private List<String> jobScopes;
     private int minAge, maxAge;
-    private int hiringPax;
-    private List<String> hashtags;
+    private int totalPax;
+    private int requiredEducation = -1;
     private Address address;
     private Calendar startTime;
     private Calendar endTime;
+    private String salaryCurrencyCode;
     private double payout;
-    private boolean payoutType;
+    private boolean isSalaryTypeDaily;
     private boolean isBoostPost;
     private boolean isAgreedToTerms;
+    private boolean isGenericPhotoType;
+    //extended properties
+    private String creatorUserId = "1";// to be provide when login and store in device
+    private String userType = "0"; //0 normal user, 1 corp user
+    private String uniqueKey;
 }

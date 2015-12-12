@@ -18,8 +18,13 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep4Event;
+import com.jiffyjob.nimblylabs.httpServices.PostJobService;
+import com.jiffyjob.nimblylabs.jsonUtil.IJsonBuilder;
+import com.jiffyjob.nimblylabs.postJob.jsonBuilder.PostJobJsonBuilder;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep4Event;
 import com.nineoldandroids.animation.Animator;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,6 +108,7 @@ public class PostJobStep4View extends Fragment {
             @Override
             public void onClick(View v) {
                 updatePostJobModel();
+                postJobToServer();
             }
         });
 
@@ -154,7 +160,7 @@ public class PostJobStep4View extends Fragment {
         summaryLayout.addView(ageView);
 
         //hiring pax
-        String hiringPaxStr = postJobModel.getHiringPax() + "";
+        String hiringPaxStr = postJobModel.getTotalPax() + "";
         View hiringPaxView = layoutInflater.inflate(R.layout.fragment_post_job_step4_item, null);
         TextView hiringTitleTV = (TextView) hiringPaxView.findViewById(R.id.titleTV);
         TextView hiringContentTV = (TextView) hiringPaxView.findViewById(R.id.contentTV);
@@ -162,19 +168,6 @@ public class PostJobStep4View extends Fragment {
         hiringContentTV.setText(hiringPaxStr);
         hiringPaxView.setBackgroundColor(getResources().getColor(R.color.circular_transparent_green));
         summaryLayout.addView(hiringPaxView);
-
-        //hashtags
-        List<String> hashTagList = postJobModel.getHashtags();
-        View hashTagView = layoutInflater.inflate(R.layout.fragment_post_job_step4_item, null);
-        TextView hashTagTV = (TextView) hashTagView.findViewById(R.id.titleTV);
-        TextView hashTagContentTV = (TextView) hashTagView.findViewById(R.id.contentTV);
-        hashTagTV.setText("Hash tags");
-        content = "";
-        for (String item : hashTagList) {
-            content += String.format("#%s \n", item);
-        }
-        hashTagContentTV.setText(content);
-        summaryLayout.addView(hashTagView);
 
         //address
         View addressView = layoutInflater.inflate(R.layout.fragment_post_job_step4_item, null);
@@ -191,13 +184,13 @@ public class PostJobStep4View extends Fragment {
         addressView.setBackgroundColor(getResources().getColor(R.color.circular_transparent_green));
         summaryLayout.addView(addressView);
 
-        //Starttime
+        //Start time
         View startEndView = layoutInflater.inflate(R.layout.fragment_post_job_step4_item, null);
         TextView startEndTitleTV = (TextView) startEndView.findViewById(R.id.titleTV);
         TextView endContentTV = (TextView) startEndView.findViewById(R.id.contentTV);
         Date startTime = postJobModel.getStartTime().getTime();
         Date endTime = postJobModel.getEndTime().getTime();
-        String startEndStr = String.format("%s\n%s", dateFormat.format(startTime), dateFormat.format(endTime));
+        String startEndStr = String.format("%s\n%s", dmyDateFormat.format(startTime), dmyDateFormat.format(endTime));
         startEndTitleTV.setText("Start-End date");
         endContentTV.setText(startEndStr);
         summaryLayout.addView(startEndView);
@@ -232,16 +225,25 @@ public class PostJobStep4View extends Fragment {
         postJobModel.setIsAgreedToTerms(agreedTermscb.isChecked());
     }
 
+    private void postJobToServer() {
+        IJsonBuilder postJobJsonBuilder = new PostJobJsonBuilder(context);
+        postJobJSON = postJobJsonBuilder.getJSON(postJobModel);
+        PostJobService postJobService = new PostJobService(context);
+        postJobService.execute(postJobJSON);
+    }
+
     //All event handlers are written here
     public void onEvent(PostJobStep4Event eventModel) {
         postJobModel = eventModel.getPostJobModel();
     }
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+    private final SimpleDateFormat dmyDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+    private final SimpleDateFormat mdyDateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
     private LinearLayout summaryLayout;
     private WebView termsWebView;
     private CheckBox agreedTermscb;
     private PostJobModel postJobModel;
+    private JSONObject postJobJSON;
     private Button submitBtn;
     private View view;
     private Context context;

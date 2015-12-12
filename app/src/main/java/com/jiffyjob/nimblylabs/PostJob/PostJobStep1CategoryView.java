@@ -13,7 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jiffyjob.nimblylabs.app.R;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobCategoryEvent;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobCategoryEvent;
 import com.jiffyjob.nimblylabs.xmlHelper.XmlJobCategoryHelper;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class PostJobStep1CategoryView extends DialogFragment {
         topNaviTitle = (TextView) view.findViewById(R.id.topNaviTitle);
         backBtn = (ImageButton) view.findViewById(R.id.backBtn);
         acceptBtn = (ImageButton) view.findViewById(R.id.acceptBtn);
-        initEvent();
+        initListeners();
 
         topNaviTitle.setText("Select job categories");
         XmlJobCategoryHelper xmlHelper = new XmlJobCategoryHelper(context);
@@ -65,7 +65,7 @@ public class PostJobStep1CategoryView extends DialogFragment {
         this.setCancelable(true);
     }
 
-    private void initEvent() {
+    private void initListeners() {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

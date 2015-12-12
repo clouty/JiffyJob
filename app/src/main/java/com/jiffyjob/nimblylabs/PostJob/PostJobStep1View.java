@@ -20,8 +20,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobCategoryEvent;
-import com.jiffyjob.nimblylabs.postJob.PostJobEvents.PostJobStep2Event;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobCategoryEvent;
+import com.jiffyjob.nimblylabs.postJob.postJobEvents.PostJobStep2Event;
 import com.jiffyjob.nimblylabs.xmlHelper.XmlJobCategoryHelper;
 
 import java.util.ArrayList;
@@ -97,6 +97,7 @@ public class PostJobStep1View extends Fragment {
                 proceedToNextFragment();
             }
         });
+
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +115,7 @@ public class PostJobStep1View extends Fragment {
     private void updatePostJobModel() {
         postJobModel.setJobTitle(jobTitle.getText().toString());
         if (addImageBtn.getDrawable() != null) {
-            postJobModel.setUserImage(((BitmapDrawable) addImageBtn.getDrawable()).getBitmap());
+            postJobModel.setUserPhotos(((BitmapDrawable) addImageBtn.getDrawable()).getBitmap());
         }
         postJobModel.setJobCategories(selectedJobList);
     }
