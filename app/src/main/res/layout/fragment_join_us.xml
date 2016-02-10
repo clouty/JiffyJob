@@ -1,21 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/text_white"
-    android:padding="5dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:background="@color/transparent"
     tools:context="com.jiffyjob.nimblylabs.joinUsFragmentView.JoinUsFragmentView">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
@@ -60,7 +60,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@android:style/TextAppearance.DeviceDefault.Small"
+                    style="@style/TextAppearance.Grey.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -68,7 +68,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    style="@android:style/TextAppearance.DeviceDefault.Small"
+                    style="@style/TextAppearance.Grey.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -91,6 +91,7 @@
 
                         <EditText
                             android:id="@+id/emailET"
+                            style="@style/TextAppearance.Grey.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
@@ -102,6 +103,7 @@
 
                         <EditText
                             android:id="@+id/passwordET"
+                            style="@style/TextAppearance.Grey.Medium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/emailET"
@@ -119,7 +121,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="0.5"
-                            android:background="@color/background_orange"
+                            android:background="@drawable/btn_state_orange_textbtn"
                             android:text="Join us"
                             android:textColor="@color/text_white"
                             android:textSize="16sp" />

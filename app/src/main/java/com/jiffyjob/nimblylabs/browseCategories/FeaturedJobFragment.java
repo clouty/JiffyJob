@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jiffyjob.nimblylabs.app.R;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by NimblyLabs on 10/8/2015.
@@ -34,9 +33,9 @@ public class FeaturedJobFragment extends Fragment {
     }
 
     private void init() {
-        if (featureUrlStr == null) return;
+        /*if (featureUrlStr == null) return;
         featureJobImage = (ImageView) view.findViewById(R.id.featureJobImage);
-        Picasso.with(context).load(featureUrlStr).into(featureJobImage);
+        Picasso.with(context).load(featureUrlStr).into(featureJobImage);*/
     }
 
     private static FeaturedJobFragment featuredJobFragment = null;

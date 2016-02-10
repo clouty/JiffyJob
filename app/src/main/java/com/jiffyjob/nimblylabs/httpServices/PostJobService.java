@@ -25,7 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class PostJobService extends AsyncTask<JSONObject, Integer, String> {
     public PostJobService(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.urlString = context.getResources().getString(R.string.postJob_service);
     }
 

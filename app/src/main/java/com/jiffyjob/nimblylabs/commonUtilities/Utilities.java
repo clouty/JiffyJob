@@ -100,9 +100,7 @@ public class Utilities {
         }
         return wordCount;
     }
-
-    private static int animationFast = 300;
-
+    
     public static int getAnimationSlow() {
         return animationSlow;
     }
@@ -121,6 +119,7 @@ public class Utilities {
         return pixels;
     }
 
+    private static int animationFast = 300;
     private static int animationNormal = 500;
     private static int animationSlow = 700;
 }

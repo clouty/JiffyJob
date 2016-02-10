@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/text_white"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:background="@color/background_green"
+    android:gravity="center_vertical">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/iconLayer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.475"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:gravity="center">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"
+            android:id="@+id/gifIV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="310dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/complete_job"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/mainLogoIV"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:background="@color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/jiffyjobfull" />
 
         <TextView
-            style="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:id="@+id/sloganTV"
+            style="@style/TextAppearance.Black.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/mainLogoIV"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
             android:text="Where great jobs are discovered."
-            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
         <TextView
-            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:id="@+id/subSloganTV"
+            style="@style/TextAppearance.Black.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/sloganTV"
             android:gravity="center_horizontal"
-            android:text="Empowered yourself and experience million possibilities that you've never imagined."
-            android:textColor="@android:color/black" />
+            android:text="Empowered yourself and experience million possibilities that you've never imagined." />
 
         <LinearLayout
+            android:id="@+id/buttonsLayout"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_below="@+id/subSloganTV"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:minHeight="30dp"
             android:orientation="horizontal">
 
             <Button
@@ -66,36 +78,41 @@
                 android:text="LOG IN"
                 android:textColor="@color/text_green" />
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.475"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/fragment_container"
+        <RelativeLayout
+            android:id="@+id/fragmentLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/buttonsLayout"
+            android:background="@drawable/loginbgleft"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/fbAuthButton"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal" />
-    </LinearLayout>
+            </LinearLayout>
 
-    <!--Terms and condition-->
-    <WebView
-        android:id="@+id/termsWebView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.05"
-        android:background="@color/transparent" />
-</LinearLayout>
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fbAuthButton"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_container"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="bottom|center_horizontal" />
+
+            <!--Terms and condition-->
+            <WebView
+                android:id="@+id/termsWebView"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/fbAuthButton"
+                android:background="@color/text_white" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+

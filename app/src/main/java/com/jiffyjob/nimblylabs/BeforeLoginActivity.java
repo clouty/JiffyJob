@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -25,7 +28,6 @@ import com.facebook.login.widget.LoginButton;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.JoinUsFragmentView;
 import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.LoginFragmentView;
-import com.jiffyjob.nimblylabs.beforeLoginFragmentViews.UserInfoModel;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.httpServices.FacebookRegisterService;
 import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
@@ -71,6 +73,7 @@ public class BeforeLoginActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         // If the access token is available already assign it.
         updateAccessToken(AccessToken.getCurrentAccessToken());
     }
@@ -81,6 +84,16 @@ public class BeforeLoginActivity extends Activity {
         fbLoginBtn.setReadPermissions(permissionArrays);
         loginBtn = (Button) this.findViewById(R.id.loginBtn);
         signupBtn = (Button) this.findViewById(R.id.signupBtn);
+
+        ImageView gifIV = (ImageView) this.findViewById(R.id.gifIV);
+        gifIV.setAlpha(0.35f);
+        Glide.with(this)
+                .load(R.drawable.citybg3)
+                .asGif()
+                .fitCenter()
+                .placeholder(R.drawable.citybg3)
+                .into(gifIV);
+
         initListener();
         setTermsAndAgreedment();
     }
@@ -162,28 +175,27 @@ public class BeforeLoginActivity extends Activity {
 
     private void updateFragment(boolean isjoinUs) {
         try {
-            int childCount = ((LinearLayout) this.findViewById(R.id.fragment_container)).getChildCount();
-            Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
+            Fragment loginFragment = getFragmentManager().findFragmentByTag(loginTag);
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-
-            fragmentTransaction.setCustomAnimations(R.animator.slide_in_from_left, R.animator.slide_out_to_left, 0, 0);
-
+            RelativeLayout fragmentLayout = (RelativeLayout) findViewById(R.id.fragmentLayout);
             if (!isjoinUs) {
                 LoginFragmentView loginFragmentView = LoginFragmentView.getInstance();
-                if (childCount == 0) {
-                    fragmentTransaction.add(R.id.fragment_container, loginFragmentView, LoginFragmentView.class.getSimpleName()).commit();
+                fragmentLayout.setBackgroundResource(R.drawable.loginbgright);
+                if (loginFragment == null) {
+                    fragmentTransaction.add(R.id.fragment_container, loginFragmentView, loginTag).commit();
                 } else {
-                    if (!(fragment instanceof LoginFragmentView)) {
-                        fragmentTransaction.replace(R.id.fragment_container, loginFragmentView).commit();
+                    if (!(loginFragment instanceof LoginFragmentView)) {
+                        fragmentTransaction.replace(R.id.fragment_container, loginFragmentView, loginTag).commit();
                     }
                 }
             } else {
                 JoinUsFragmentView joinUsFragmentView = JoinUsFragmentView.getInstance();
-                if (childCount == 0) {
-                    fragmentTransaction.add(R.id.fragment_container, joinUsFragmentView, JoinUsFragmentView.class.getSimpleName()).commit();
+                fragmentLayout.setBackgroundResource(R.drawable.loginbgleft);
+                if (loginFragment == null) {
+                    fragmentTransaction.add(R.id.fragment_container, joinUsFragmentView, loginTag).commit();
                 } else {
-                    if (!(fragment instanceof JoinUsFragmentView)) {
-                        fragmentTransaction.replace(R.id.fragment_container, joinUsFragmentView).commit();
+                    if (!(loginFragment instanceof JoinUsFragmentView)) {
+                        fragmentTransaction.replace(R.id.fragment_container, joinUsFragmentView, loginTag).commit();
                     }
                 }
             }
@@ -219,8 +231,6 @@ public class BeforeLoginActivity extends Activity {
         termsWebView.getSettings().setSupportMultipleWindows(true);
     }
 
-    private UserInfoModel userInfoModel = new UserInfoModel();
-
     //facebook parameters
     private AccessToken accessToken;
     private AccessTokenTracker accessTokenTracker;
@@ -232,4 +242,6 @@ public class BeforeLoginActivity extends Activity {
     private Button signupBtn;
     private Button loginBtn;
     private WebView termsWebView;
+
+    private final String loginTag = "LoginTag";
 }

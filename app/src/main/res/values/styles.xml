@@ -5,7 +5,58 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="miniRatingBar">
+    <!--Size of text-->
+    <style name="TextAppearance.Green.Small" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/text_green</item>
+    </style>
 
+    <style name="TextAppearance.Green.Medium" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/text_green</item>
+    </style>
+
+    <style name="TextAppearance.Green.Large" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/text_green</item>
+    </style>
+
+    <style name="TextAppearance.Black.Small" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="TextAppearance.Black.Medium" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="TextAppearance.Black.Large" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="TextAppearance.Grey.Small" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
+    <style name="TextAppearance.Grey.Medium" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
+    <style name="TextAppearance.Grey.Large" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:textColor">@color/text_grey</item>
     </style>
 </resources>

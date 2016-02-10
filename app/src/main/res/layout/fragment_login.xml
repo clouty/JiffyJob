@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:background="@color/text_white"
+    android:layout_gravity="center_vertical"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                style="@android:style/TextAppearance.DeviceDefault.Small"
+                style="@style/TextAppearance.Grey.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -29,7 +30,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                style="@android:style/TextAppearance.DeviceDefault.Small"
+                style="@style/TextAppearance.Grey.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -45,6 +46,7 @@
 
                 <EditText
                     android:id="@+id/emailET"
+                    style="@style/TextAppearance.Grey.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -56,6 +58,7 @@
 
                 <EditText
                     android:id="@+id/passwordET"
+                    style="@style/TextAppearance.Grey.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/emailET"
@@ -72,7 +75,7 @@
                     android:layout_alignStart="@+id/emailET"
                     android:layout_below="@+id/passwordET"
                     android:layout_margin="5dp"
-                    android:background="@color/text_green"
+                    android:background="@drawable/btn_state_green_textbtn"
                     android:text="Login"
                     android:textColor="@color/text_white"
                     android:textSize="16sp" />

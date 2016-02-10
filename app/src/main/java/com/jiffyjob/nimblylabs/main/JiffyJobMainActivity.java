@@ -35,7 +35,9 @@ public class JiffyJobMainActivity extends Activity {
         if (fragment == null) {
             BrowseCategories browseCategories = new BrowseCategories();
             browseCategories.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, browseCategories).commit();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, browseCategories, FRAG_CONTAINER_TAG)
+                    .commit();
         }
     }
 
@@ -66,17 +68,15 @@ public class JiffyJobMainActivity extends Activity {
                 return;
             }
             //create the default fragment
-            BrowseCategories browseCategories = new BrowseCategories();
-            browseCategories.setArguments(getIntent().getExtras());
+/*            BrowseCategories browseCategories = new BrowseCategories();
+            browseCategories.setArguments(getIntent().getExtras());*/
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.menu_jiffy_job_main, menu);
-
         return true;
     }
 
@@ -86,12 +86,10 @@ public class JiffyJobMainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,4 +97,5 @@ public class JiffyJobMainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] menuItems;
+    public static String FRAG_CONTAINER_TAG = "mainFragContainer";
 }

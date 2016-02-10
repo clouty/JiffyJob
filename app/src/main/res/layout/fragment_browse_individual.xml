@@ -1,351 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_green">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/topContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="0.13">
+            android:id="@+id/userInfo_relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/userIV"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/swagdog" />
+
+            <TextView
+                android:id="@+id/userNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/userIV"
+                android:layout_toRightOf="@+id/userIV"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/text_green"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/companyNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userNameTV"
+                android:layout_toEndOf="@+id/userIV"
+                android:layout_toRightOf="@+id/userIV"
+                android:text="(Small Text)"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/text_green" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/companyNameTV"
+                android:layout_toRightOf="@id/userIV" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/ratingLayout"
+            android:gravity="right">
+
+            <ImageButton
+                android:id="@+id/shareBtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:src="@drawable/btn_state_share_dark" />
+
+            <ImageButton
+                android:id="@+id/favoriteBtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/shareBtn"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:src="@drawable/btn_state_favorite_dark" />
+
+            <TextView
+                android:id="@+id/creationDateTV"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/shareBtn"
+                android:gravity="right"
+                android:text="Created days ago"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--Map layout-->
+    <RelativeLayout
+        android:id="@+id/map_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topContent">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
+    </RelativeLayout>
+
+    <!--Description 1 and 2-->
+    <LinearLayout
+        android:id="@+id/listViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomContent"
+        android:layout_below="@id/map_layout"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/descriptionTV"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="Job title" />
+
+        <ListView
+            android:id="@+id/jobScopeLV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <LinearLayout
+            android:id="@+id/jobSummary_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/divider_color" />
+
+            <!--Calender text-->
             <RelativeLayout
-                android:id="@+id/userInfo_relativeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/userImageView"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/swagdog" />
+                    android:id="@+id/calenderIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_event_note_green_48dp" />
 
                 <TextView
-                    android:id="@+id/userNameTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_toEndOf="@+id/userImageView"
-                    android:layout_toRightOf="@+id/userImageView"
-                    android:text="Medium Text"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/text_green"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/companyName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/userNameTV"
-                    android:layout_toEndOf="@+id/userImageView"
-                    android:layout_toRightOf="@+id/userImageView"
-                    android:text="(Small Text)"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/text_green" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/ratingLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/userInfo_relativeLayout">
-
-                <ImageView
-                    android:id="@+id/likeImage"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="#00000000"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/find_icon" />
-
-                <TextView
-                    android:id="@+id/jobRating"
+                    android:id="@+id/calenderTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/likeImage"
-                    android:layout_toRightOf="@+id/likeImage"
-                    android:text="80%"
-                    android:textColor="#FF000000" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/calenderIcon"
+                    android:text="Calender text" />
             </RelativeLayout>
 
+            <!--Time text-->
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/ratingLayout"
-                android:gravity="right">
+                android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:id="@+id/favoriteBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="#00000000"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/find_icon" />
+                <ImageView
+                    android:id="@+id/timeIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_schedule_green_48dp" />
 
-                <ImageButton
-                    android:id="@+id/shareBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/favoriteBtn"
-                    android:background="#00000000"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/find_icon" />
+                <TextView
+                    android:id="@+id/timeTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/timeIcon"
+                    android:text="Time icon text" />
             </RelativeLayout>
-        </RelativeLayout>
 
-        <ScrollView
+            <!--location text-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/locationIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_place_green_48dp" />
+
+                <TextView
+                    android:id="@+id/locationTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/locationIcon"
+                    android:text="Location icon text" />
+            </RelativeLayout>
+
+            <!--payment text-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/paymentIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_attach_money_green_48dp" />
+
+                <TextView
+                    android:id="@+id/paymentTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/paymentIcon"
+                    android:text="Payment icon text" />
+            </RelativeLayout>
+
+            <!--recruitment text-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/recruitmentIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_group_green_48dp" />
+
+                <TextView
+                    android:id="@+id/recruitmentTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/recruitmentIcon"
+                    android:text="Recruitment icon text" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/applyBtn"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/highlighted_text_material_dark">
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/jobSummary_layout"
+            android:background="@drawable/btn_state_green_textbtn"
+            android:text="APPLY"
+            android:textColor="@color/text_white" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="vertical">
-
-                <!--Map layout-->
-                <RelativeLayout
-                    android:id="@+id/map_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".26"
-                    android:minHeight="150dp">
-
-                    <fragment
-                        android:id="@+id/map"
-                        class="com.google.android.gms.maps.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-                </RelativeLayout>
-
-                <!--Description 1 and 2-->
-                <RelativeLayout
-                    android:id="@+id/description_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.26">
-
-                    <ImageView
-                        android:id="@+id/descriptionIcon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/find_icon" />
-
-                    <TextView
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/descriptionIcon"
-                        android:text="text description" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/details_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.26">
-
-                    <ImageView
-                        android:id="@+id/descriptionIcon2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/find_icon" />
-
-                    <TextView
-                        android:id="@+id/description2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/descriptionIcon2"
-                        android:text="- Description of job \n- Description of job 1" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/divider_color" />
-
-                <!--Job location and time-->
-                <RelativeLayout
-                    android:id="@+id/jobSummary_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="0.26">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:orientation="vertical">
-
-                            <!--Calender text-->
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/calenderIcon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/find_icon" />
-
-                                <TextView
-                                    android:id="@+id/calenderText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@id/calenderIcon"
-                                    android:maxWidth="150dp"
-                                    android:text="- Calender text" />
-                            </RelativeLayout>
-
-                            <!--Time text-->
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/timeIcon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/find_icon" />
-
-                                <TextView
-                                    android:id="@+id/timeText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@id/timeIcon"
-                                    android:maxWidth="150dp"
-                                    android:text="- Time icon text" />
-                            </RelativeLayout>
-
-                            <!--location text-->
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/locationIcon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/find_icon" />
-
-                                <TextView
-                                    android:id="@+id/locationText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@id/locationIcon"
-                                    android:maxWidth="150dp"
-                                    android:text="- location icon text" />
-                            </RelativeLayout>
-
-                            <!--payment text-->
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/paymentIcon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/find_icon" />
-
-                                <TextView
-                                    android:id="@+id/paymentText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@id/paymentIcon"
-                                    android:maxWidth="150dp"
-                                    android:text="- payment icon text" />
-                            </RelativeLayout>
-
-                            <!--recruitment text-->
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/recruitmentIcon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/find_icon" />
-
-                                <TextView
-                                    android:id="@+id/recruitmentText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_toRightOf="@id/recruitmentIcon"
-                                    android:maxWidth="150dp"
-                                    android:text="- recruitment icon text" />
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/jobTags"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="0.4"
-                            android:maxWidth="150dp"
-                            android:text="#jobTage1 #jobTag2 #jobTag3" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0.13">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="APPLY"
-                android:textColor="@color/text_green" />
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

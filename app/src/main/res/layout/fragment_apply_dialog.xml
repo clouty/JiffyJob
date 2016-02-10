@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_green"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/selfIntroLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="almost done..."
+            android:textColor="@color/text_green" />
+
+        <EditText
+            android:id="@+id/selfIntroET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:gravity="top"
+            android:hint="Introduce yourself and tell us why you are interested!"
+            android:minHeight="150dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/selfIntroET"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/errorTV"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:text="Error message"
+                android:textColor="@color/text_red"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/wordCountTV"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="0/50" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/resultDialogLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:background="@color/background_green"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/tickIV"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:scaleType="center"
+            android:src="@drawable/tick_green" />
+
+        <TextView
+            android:id="@+id/submitTV"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tickIV"
+            android:gravity="center_horizontal"
+            android:text="Your request has been submitted."
+            android:textColor="@color/text_green" />
+
+        <TextView
+            android:id="@+id/notificationTV"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submitTV"
+            android:gravity="center_horizontal"
+            android:text="You will be alert through notifications on the job status by the employer."
+            android:textColor="@color/grey_text" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/applyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_state_green_textbtn"
+        android:text="Apply"
+        android:textColor="@color/text_white" />
+</LinearLayout>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_132451">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_green"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:id="@+id/confirmJobLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/activejobIV"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/active_jobs" />
+
+                <TextView
+                    android:id="@+id/confirmTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activejobIV"
+                    android:layout_centerHorizontal="true"
+                    android:text="Confirmed Jobs"
+                    android:textColor="@color/text_green" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/totalJobTV1"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@color/text_green"
+                    android:textSize="80sp" />
+
+                <TextView
+                    android:id="@+id/totalJobTV2"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/totalJobTV1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="right"
+                    android:text="Jobs"
+                    android:textColor="@color/text_green"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/jobInfo"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/totalJobTV1"
+                    android:text="X jobs this week"
+                    android:textColor="@color/grey" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/centerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topLayout"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/shadow_132451">
+
+            <RelativeLayout
+                android:id="@+id/pendingJobLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_yellow"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/pending_job">
+
+                    <TextView
+                        android:id="@+id/pendingIconTV"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:gravity="bottom"
+                        android:paddingLeft="62dp"
+                        android:text="5"
+                        android:textColor="@color/background_yellow"
+                        android:textSize="40sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/pendingTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center_horizontal"
+                    android:text="Pending Jobs"
+                    android:textColor="@color/text_yellow" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/shadow_132451">
+
+            <RelativeLayout
+                android:id="@+id/rejectedJobLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_red"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/rejected_job">
+
+                    <TextView
+                        android:id="@+id/rejectedIconTV"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:gravity="bottom"
+                        android:paddingLeft="65dp"
+                        android:text="5"
+                        android:textColor="@color/background_red"
+                        android:textSize="40sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/rejectedTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center_horizontal"
+                    android:text="Pending Jobs"
+                    android:textColor="@color/text_red" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/centerLayout"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@drawable/shadow_132451">
+
+            <RelativeLayout
+                android:id="@+id/completedJobLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_grey"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/complete_job">
+
+                    <TextView
+                        android:id="@+id/completedIconTV"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:gravity="bottom"
+                        android:paddingLeft="66dp"
+                        android:text="5"
+                        android:textColor="@color/background_grey"
+                        android:textSize="40sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/completedTV"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center_horizontal"
+                    android:text="Pending Jobs"
+                    android:textColor="@color/text_grey" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

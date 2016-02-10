@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="prefs_name">JiffyJobPrefs</string>
     <string name="app_name">JiffyJob</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -55,6 +55,7 @@
 
     <!--URL Strings-->
     <string name="facebook_login_service">http://nimblylabs.com/jjws/users/fblogin.php</string>
+    <string name="jobApply_service">http://www.nimblylabs.com/jjws/applications/newJobApplication.php</string>
     <string name="postJob_service">http://nimblylabs.com/jjws/jobs/insertjob.php</string>
     <string name="queryJob_service">http://nimblylabs.com/jjws/jobs/showjob.php</string>
 </resources>

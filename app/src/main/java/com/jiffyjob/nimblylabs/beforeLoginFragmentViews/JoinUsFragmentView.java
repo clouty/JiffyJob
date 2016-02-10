@@ -8,12 +8,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by NimblyLabs on 27/9/2015.
@@ -40,10 +45,18 @@ public class JoinUsFragmentView extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_join_us, null ,false);
+        view = inflater.inflate(R.layout.fragment_join_us, null, false);
         init();
         initListeners();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        YoYo.with(Techniques.SlideInLeft)
+                .duration(Utilities.getAnimationNormal())
+                .playOn(view);
     }
 
     private void init() {

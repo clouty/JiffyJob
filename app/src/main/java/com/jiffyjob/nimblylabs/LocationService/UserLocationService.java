@@ -2,7 +2,7 @@ package com.jiffyjob.nimblylabs.locationService;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,8 +14,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
-import de.greenrobot.event.EventBus;
+import com.jiffyjob.nimblylabs.app.R;
 
 /**
  * Created by NimblyLabs on 25/3/2015.
@@ -23,7 +22,7 @@ import de.greenrobot.event.EventBus;
 public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, IUserLocationService {
     /**
-     * Note: Service will post event
+     * Note:
      * Retrieving user location through GoogleApiClient, create the class and call connectAPIClient()<br/>
      * To check on user location after application resumes call onResume()<br/>To stop service call onStop()
      *
@@ -58,7 +57,13 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
 
     @Override
     public void onResume() {
-        checkPlayServices();
+        if (checkPlayServices()) {
+            String locationProvider = LocationManager.NETWORK_PROVIDER;
+            Location location = locationManager.getLastKnownLocation(locationProvider);
+            if (location != null) {
+                setUserLocation(location);
+            }
+        }
     }
 
     @Override
@@ -77,11 +82,11 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
     //Google service API call back methods
     @Override
     public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            GeocoderService geocoderService = new GeocoderService(context);
-            Address address = geocoderService.getAddress(mLastLocation.getLongitude(), mLastLocation.getLatitude());
-            EventBus.getDefault().post(new LocationUpdatedEvent(address));
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (location != null && mLastLocation != null) {
+            if (isBetterLocation(location, mLastLocation)) {
+                setUserLocation(location);
+            }
         } else {
             Toast.makeText(context, "Couldn't get the location. Make sure location is enabled on the device", Toast.LENGTH_LONG).show();
         }
@@ -123,10 +128,7 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
             public void onLocationChanged(Location location) {
                 boolean isBetter = isBetterLocation(location, mLastLocation);
                 if (isBetter) {
-                    mLastLocation = location;
-                    GeocoderService geocoderService = new GeocoderService(context);
-                    Address address = geocoderService.getAddress(mLastLocation.getLongitude(), mLastLocation.getLatitude());
-                    EventBus.getDefault().post(new LocationUpdatedEvent(address));
+                    setUserLocation(location);
                 }
             }
 
@@ -197,6 +199,15 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
             return provider2 == null;
         }
         return provider1.equals(provider2);
+    }
+
+    private void setUserLocation(Location location) {
+        mLastLocation = location;
+        SharedPreferences settings = context.getSharedPreferences(String.valueOf(R.string.prefs_name), 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat("lat", (float) mLastLocation.getLatitude());
+        editor.putFloat("long", (float) mLastLocation.getLongitude());
+        editor.apply();
     }
 
     private LocationListener locationListener = null;

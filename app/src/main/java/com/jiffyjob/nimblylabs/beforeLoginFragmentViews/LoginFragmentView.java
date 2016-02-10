@@ -3,6 +3,7 @@ package com.jiffyjob.nimblylabs.beforeLoginFragmentViews;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,8 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
+import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by NimblyLabs on 27/9/2015.
@@ -45,6 +51,14 @@ public class LoginFragmentView extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        YoYo.with(Techniques.SlideInLeft)
+                .duration(Utilities.getAnimationNormal())
+                .playOn(view);
+    }
+
     private void init() {
         emailET = (EditText) view.findViewById(R.id.emailET);
         passwordET = (EditText) view.findViewById(R.id.passwordET);
@@ -57,7 +71,8 @@ public class LoginFragmentView extends Fragment {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent MainActivity = new Intent(context, JiffyJobMainActivity.class);
+                context.startActivity(MainActivity);
             }
         });
 

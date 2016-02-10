@@ -34,7 +34,7 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
         } else {
             switch (position) {
                 case 1:
-                    createBrowsePagViewFragment(view, position);
+                    createBrowsePageViewFragment(view, position);
                     break;
                 case 2:
                     createPostJobViewFragment(view, position);
@@ -46,7 +46,7 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
     }
 
     //methods to create all fragments
-    private void createBrowsePagViewFragment(View view, int position) {
+    private void createBrowsePageViewFragment(View view, int position) {
         TextView drawer_itemName = (TextView) view.findViewById(R.id.drawer_itemName);
         Toast.makeText(context, "Position:" + position + " Name:" + drawer_itemName.getText(), Toast.LENGTH_SHORT).show();
 
@@ -73,11 +73,10 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
     //update other fragment and set title
     private void updateFragment(Fragment fragment, String title) {
         ((Activity) context).setTitle(title);
-
         FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment, JiffyJobMainActivity.FRAG_CONTAINER_TAG);
         transaction.addToBackStack(null);
         // Commit the transaction
         transaction.commit();
