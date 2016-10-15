@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.Green.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DATES" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/startDateRL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/startDayTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01"
+                    android:textSize="60sp" />
+
+                <TextView
+                    android:id="@+id/startMonthTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/startDayTV"
+                    android:text="Month"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/startYearTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/startMonthTV"
+                    android:layout_toEndOf="@+id/startDayTV"
+                    android:text="Year"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/TextAppearance.Green.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical"
+                android:text="TO" />
+
+            <RelativeLayout
+                android:id="@+id/endDateRL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/endDayTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01"
+                    android:textSize="60sp" />
+
+                <TextView
+                    android:id="@+id/endMonthTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/endDayTV"
+                    android:text="Month"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/endYearTV"
+                    style="@style/TextAppearance.Green.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/endMonthTV"
+                    android:layout_toEndOf="@+id/endDayTV"
+                    android:text="Year"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.Green.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="COUNTRY" />
+
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/distanceTV"
+                    style="@style/TextAppearance.Green.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DISTANCE" />
+
+                <TextView
+                    android:id="@+id/distanceRangeTV"
+                    style="@style/TextAppearance.Green.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="0km - 100km" />
+            </RelativeLayout>
+
+            <com.appyvet.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/distanceRangeBar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                custom:connectingLineColor="@color/jj_green"
+                custom:pinColor="@color/jj_green"
+                custom:pinMaxFont="10sp"
+                custom:pinRadius="10dp"
+                custom:rangeBarColor="@color/jj_green"
+                custom:selectorColor="@color/jj_green"
+                custom:selectorSize="8dp"
+                custom:textColor="@color/text_white"
+                custom:tickColor="@color/jj_green"
+                custom:tickEnd="100"
+                custom:tickInterval="1"
+                custom:tickStart="0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/payoutTV"
+                    style="@style/TextAppearance.Green.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAYOUT RANGE" />
+
+                <TextView
+                    android:id="@+id/payoutRangeTV"
+                    style="@style/TextAppearance.Green.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="$0 - $100" />
+            </RelativeLayout>
+
+            <com.appyvet.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/payoutRangeBar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                custom:connectingLineColor="@color/jj_green"
+                custom:pinColor="@color/jj_green"
+                custom:pinMaxFont="10sp"
+                custom:pinRadius="10dp"
+                custom:rangeBarColor="@color/jj_green"
+                custom:selectorColor="@color/jj_green"
+                custom:selectorSize="8dp"
+                custom:textColor="@color/text_white"
+                custom:tickColor="@color/jj_green"
+                custom:tickEnd="100"
+                custom:tickInterval="1"
+                custom:tickStart="0" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

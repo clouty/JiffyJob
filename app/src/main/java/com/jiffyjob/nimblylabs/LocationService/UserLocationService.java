@@ -1,12 +1,17 @@
 package com.jiffyjob.nimblylabs.locationService;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,16 +35,14 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
      * @param isListeningForUpdates continuously received updates (per 30 mins)
      * @throws InstantiationException throws exception if context is null.
      */
-    public UserLocationService(Context context, boolean isListeningForUpdates) throws InstantiationException {
-        if (context == null) {
-            throw new InstantiationException("Context in UserLocationService cannot be null");
-        }
+    public UserLocationService(@NonNull Context context, boolean isListeningForUpdates) throws InstantiationException {
         this.context = context;
         this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
         if (isListeningForUpdates) {
             initListeners();
-            this.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                this.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            }
         }
 
         if (checkPlayServices()) {
@@ -59,9 +62,12 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
     public void onResume() {
         if (checkPlayServices()) {
             String locationProvider = LocationManager.NETWORK_PROVIDER;
-            Location location = locationManager.getLastKnownLocation(locationProvider);
-            if (location != null) {
-                setUserLocation(location);
+            showAccessLocationPermission();
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Location location = locationManager.getLastKnownLocation(locationProvider);
+                if (location != null) {
+                    setUserLocation(location);
+                }
             }
         }
     }
@@ -70,7 +76,9 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
     public void onStop() {
         mGoogleApiClient.disconnect();
         if (locationListener != null) {
-            this.locationManager.removeUpdates(locationListener);
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                this.locationManager.removeUpdates(locationListener);
+            }
         }
     }
 
@@ -82,8 +90,9 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
     //Google service API call back methods
     @Override
     public void onConnected(Bundle bundle) {
+        showAccessLocationPermission();
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location != null && mLastLocation != null) {
+        if (location != null) {
             if (isBetterLocation(location, mLastLocation)) {
                 setUserLocation(location);
             }
@@ -189,6 +198,21 @@ public class UserLocationService implements GoogleApiClient.ConnectionCallbacks,
             return true;
         }
         return false;
+    }
+
+    private void showAccessLocationPermission() {
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                //Show permission explanation dialog...
+                Toast.makeText(context, "App requires to access location to get jobs near you.", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 8);
+            } else {
+                //Never ask again selected, or device policy prohibits the app from having that permission.
+                //So, disable that feature, or fall back to another situation...
+                Toast.makeText(context, "Unable to access location, please enable access location it in setting.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     /**

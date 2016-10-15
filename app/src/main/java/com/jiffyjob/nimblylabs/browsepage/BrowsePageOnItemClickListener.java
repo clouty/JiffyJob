@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseIndividual.BrowseIndividualView;
+import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
 
 import java.util.ArrayList;
 
@@ -40,9 +41,8 @@ public class BrowsePageOnItemClickListener implements AdapterView.OnItemClickLis
         if (!(curFragment instanceof BrowseIndividualView)) {
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack so the user can navigate back
-            fragTransaction.addToBackStack(null);
-            fragTransaction.replace(R.id.fragment_container, fragment);
-
+            /*fragTransaction.addToBackStack(null);*/
+            fragTransaction.replace(R.id.fragment_container, fragment, JiffyJobMainActivity.FRAG_CONTAINER_TAG);
             // Commit the transaction
             fragTransaction.commit();
         }

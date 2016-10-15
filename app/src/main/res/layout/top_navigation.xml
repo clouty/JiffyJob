@@ -2,40 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/topMenu"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:layout_height="40dp"
+    android:background="@color/jj_green"
+    android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/backBtn"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:id="@+id/hamburgerBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
-        android:background="@color/transparent"
-        android:padding="15dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/left_arrow" />
+        android:background="@drawable/ripple_green"
+        android:paddingBottom="8dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="8dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/hamburger_white" />
 
-    <TextView
-        android:id="@+id/topNaviTitle"
-        style="@android:style/TextAppearance.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="0.8"
-        android:text="Basic info"
-        android:textColor="@color/text_green" />
+    <RelativeLayout
+        android:id="@+id/navigationRL"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
 
-    <ImageButton
-        android:id="@+id/acceptBtn"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
-        android:background="@color/transparent"
-        android:padding="15dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/tick" />
 </LinearLayout>

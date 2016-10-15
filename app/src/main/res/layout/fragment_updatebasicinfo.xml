@@ -93,8 +93,8 @@
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/swagdog" />
+            android:scaleType="centerInside"
+            android:src="@drawable/jiffyjob" />
 
         <TextView
             android:id="@+id/userImageViewGuide"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:text="Error email"
-                android:textColor="@color/red"
+                android:textColor="@color/text_red"
                 android:visibility="gone" />
 
             <EditText
@@ -198,7 +198,7 @@
                 android:layout_below="@id/radioGender"
                 android:layout_marginTop="10dp"
                 android:text="ErrorMsg"
-                android:textColor="@color/red"
+                android:textColor="@color/text_red"
                 android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>

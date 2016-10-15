@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_green"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/selectionTV"
+            style="@style/TextAppearance.Black.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="A"
+            android:textColor="@color/text_white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/contentTV"
+            style="@style/TextAppearance.Black.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/selectionTV"
+            android:text="Questionair answer"
+            android:textColor="@color/text_white" />
+    </RelativeLayout>
+</RelativeLayout>

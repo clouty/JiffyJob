@@ -4,7 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -12,6 +16,8 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,6 +123,26 @@ public class Utilities {
         float scale = context.getResources().getDisplayMetrics().density;
         int pixels = (int) (dps * scale + 0.5f);
         return pixels;
+    }
+
+    /**
+     * Get key hash which is unique to developer machine
+     * @param context
+     */
+    public static void getKeyHash_debug(Context context) {
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo("com.jiffyjob.nimblylabs.app", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private static int animationFast = 300;

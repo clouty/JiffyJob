@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_transparent_grey">
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/mainLogoIV"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@color/transparent"
+        android:paddingEnd="40dp"
+        android:paddingStart="40dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/jiffyjobs_fulllogo_white" />
+
+    <RelativeLayout
+        android:id="@+id/connectLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/connectBtn"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ripple_green"
+            android:text="Connect"
+            android:textColor="@color/text_white"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/loginBtnLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_transparent_grey"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fbAuthButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/linkedinBtn"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@drawable/ripple_blue"
+                    android:text="Sign in with LinkedIn"
+                    android:textColor="@color/text_white"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/linkedin_icon" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/devLoginBtn"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/ripple_green"
+                android:text="Dev Sign in"
+                android:textColor="@color/text_white"
+                android:textSize="13sp" />
+
+            <!--Terms and condition-->
+            <TextView
+                android:id="@+id/termsTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:textColor="@color/text_white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/loading_layout" />
+</RelativeLayout>

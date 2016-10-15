@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <links>
-    <link type="gPhotos">http://www.nimblylabs.com/jjws/gphotos/</link>
+    <link questionType="gPhotos">http://www.nimblylabs.com/jjws/gphotos/</link>
 </links>

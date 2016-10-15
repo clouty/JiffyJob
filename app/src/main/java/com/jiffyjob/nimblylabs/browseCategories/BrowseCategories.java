@@ -2,210 +2,333 @@ package com.jiffyjob.nimblylabs.browseCategories;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
-import com.jiffyjob.nimblylabs.browsePage.BrowsePageView;
+import com.jiffyjob.nimblylabs.browseCategories.Event.ShowStarredEvent;
+import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
+import com.jiffyjob.nimblylabs.browseIndividual.Event.JobModelStickyEvent;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
+import com.jiffyjob.nimblylabs.database.DBHelper;
+import com.jiffyjob.nimblylabs.httpServices.FeatureJobService;
+import com.jiffyjob.nimblylabs.httpServices.RetrofitJiffyAPI;
+import com.jiffyjob.nimblylabs.locationService.GeocoderService;
+import com.jiffyjob.nimblylabs.locationService.UserLocationService;
+import com.jiffyjob.nimblylabs.topNavigation.BrowseTopNaviFragment;
+import com.jiffyjob.nimblylabs.topNavigation.TopNaviController;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
-import me.relex.circleindicator.CircleIndicator;
+import de.greenrobot.event.EventBus;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class BrowseCategories extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().registerSticky(this);
+        lastScrollPreference = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+        dbHelper = new DBHelper(getActivity(), DBHelper.DATABASE_JOB, null, DBHelper.DATABASE_VERSION);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.close();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        view = inflater.inflate(R.layout.fragment_browse_categories, container, false);
-        context = view.getContext();
-        init();
-        initFeatureJob();
-        generateCategoriesImageBtn();
-
-        return view;
+        return inflater.inflate(R.layout.fragment_browse_categories, container, false);
     }
 
-    private void init() {
-        categoriesLeftLayout = (LinearLayout) view.findViewById(R.id.categoriesLeftLayout);
-        categoriesRightLayout = (LinearLayout) view.findViewById(R.id.categoriesRightLayout);
-        createOnClickListener();
+    @Override
+    public void onStart() {
+        super.onStart();
+        Activity activity = getActivity();
+        DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawers();
+        initBrowseJob();
+        updateStarred();
+        YoYo.with(Techniques.SlideInUp)
+                .duration(Utilities.getAnimationFast())
+                .playOn(getView());
     }
 
-    private void initFeatureJob() {
-        ViewPager viewpager = (ViewPager) view.findViewById(R.id.featureJobVP);
-        CircleIndicator circleIndicator = (CircleIndicator) view.findViewById(R.id.featureJobCI);
-        fetchFeatureJobUrl();
-        if (viewPagerAdapter == null) {
-            viewPagerAdapter = new ViewPagerAdapter(getFragmentManager(), urlList);
-            viewpager.setOffscreenPageLimit(0);
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().removeAllStickyEvents();
+        new UpdateDbAsync().execute();
+        //Log.e(BrowseCategories.class.getSimpleName(), "UpdateDbAsync, modelList: " + modelList.size());
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        lastScrollPreference.edit().putInt(LAST_SCROLL_POSITION, 0).apply();
+        super.onDestroy();
+    }
+
+    private void initBrowseJob() {
+        try {
+            userLocationService = new UserLocationService(getActivity(), true);
+            userLocationService.connectAPIClient();
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Error starting user location service.", Toast.LENGTH_SHORT).show();
         }
-        viewPagerAdapter.notifyDataSetChanged();
-        viewpager.setAdapter(viewPagerAdapter);
-        viewpager.setCurrentItem(0);
-        circleIndicator.setViewPager(viewpager);
+
+        View view = getView();
+        if (view != null) {
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layoutManager);
+
+            recyclerViewAdapter = new RecyclerViewAdapter();
+            recyclerViewAdapter.setItems(modelList);
+            recyclerView.setAdapter(recyclerViewAdapter);
+
+            pullRefreshLayout = (PullRefreshLayout) view.findViewById(R.id.pullRefreshLayout);
+            pullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+            pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    callShowJob();
+                }
+            });
+
+            //Control pullRefresh only active when displaying first item
+            recyclerView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    int index = layoutManager.findFirstCompletelyVisibleItemPosition();
+                    if (index == 0) {
+                        pullRefreshLayout.setEnabled(true);
+                    } else {
+                        pullRefreshLayout.setEnabled(false);
+                    }
+                }
+            });
+
+            fetchJobs();
+            /*if (modelList.size() == 0) {
+                fetchJobs();
+            }*/
+            int lastPos = lastScrollPreference.getInt(LAST_SCROLL_POSITION, 0);
+            recyclerView.scrollToPosition(lastPos);
+        }
     }
 
-    private void fetchFeatureJobUrl() {
-        urlList.clear();
-        urlList.add("http://square.github.io/picasso/static/sample.png");
-        urlList.add("http://www.keenthemes.com/preview/metronic/theme/assets/global/plugins/jcrop/demos/demo_files/image1.jpg");
-        urlList.add("http://assets3.parliament.uk/iv/main-large//ImageVault/Images/id_7382/scope_0/ImageVaultHandler.aspx.jpg");
-    }
-
-    //all buttons re-use a single listener
-    private void createOnClickListener() {
-        btnOnTouchListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //loop through buttons and identify using tags
-                btnEnum btnTag = (btnEnum) v.getTag();
-                String text = "onTouch button " + btnTag.toString();
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-                context.getApplicationContext();
-                BrowsePageView browsePageView = new BrowsePageView();
-                ((Activity) context).getIntent().putExtra("Cat", btnTag.toString());
-                browsePageView.setArguments(((Activity) context).getIntent().getExtras());
-                updateFragment(browsePageView, "Browse Page View");
+    private void fetchJobs() {
+        if (dbHelper.isTableExists()) {
+            if (dbHelper.numberOfRows() > 0) {
+                List<JobModel> jobList = dbHelper.getAllJobs();
+                modelList.clear();
+                backupModelList.clear();
+                for (JobModel model : jobList) {
+                    modelList.add(model);
+                }
+                backupModelList.addAll(modelList);
+            } else {
+                callShowJob();
             }
-        };
+        }
+
+        //Log.e(BrowseCategories.class.getSimpleName(), "fetchJobs, modelList: " + modelList.size());
+        pullRefreshLayout.setRefreshing(false);
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void generateCategoriesImageBtn() {
-        int dpWidth = Utilities.getDp(context, 48);
-        int margin = 20;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpWidth);
-        params.setMargins(0, 0, margin, margin);
+    private void callShowJob() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("searchType", "LocationSearch");
+            jsonObject.put("searchString", "Boston,,");
+        } catch (JSONException e) {
+            Log.e(BrowseCategories.class.getSimpleName(), "Json string invalid format");
+        }
 
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.find_icon);
-        ImageButton fnbBtn = new ImageButton(context);
-        fnbBtn.setImageBitmap(bitmap);
-        fnbBtn.setBackgroundColor(Color.parseColor("#FFf08c78"));
-        fnbBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        fnbBtn.setLayoutParams(params);
-        fnbBtn.setTag(btnEnum.fnbBtn);
-        fnbBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(fnbBtn);
+        RetrofitJiffyAPI retrofitJiffyAPI = new RetrofitJiffyAPI();
+        retrofitJiffyAPI.showJob(jsonObject.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<JobModel>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-        ImageButton officeBtn = new ImageButton(context);
-        officeBtn.setImageBitmap(bitmap);
-        officeBtn.setBackgroundColor(Color.parseColor("#FFfd8e2f"));
-        officeBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        officeBtn.setLayoutParams(params);
-        officeBtn.setTag(btnEnum.officeBtn);
-        officeBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(officeBtn);
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(BrowseCategories.class.getSimpleName(), e.getMessage());
+                    }
 
-        ImageButton hotelBtn = new ImageButton(context);
-        hotelBtn.setImageBitmap(bitmap);
-        hotelBtn.setBackgroundColor(Color.parseColor("#FFbab3b2"));
-        hotelBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        hotelBtn.setLayoutParams(params);
-        hotelBtn.setTag(btnEnum.hotelBtn);
-        hotelBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(hotelBtn);
-
-        ImageButton mediaBtn = new ImageButton(context);
-        mediaBtn.setImageBitmap(bitmap);
-        mediaBtn.setBackgroundColor(Color.parseColor("#FFb78d78"));
-        mediaBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mediaBtn.setLayoutParams(params);
-        mediaBtn.setTag(btnEnum.mediaBtn);
-        mediaBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(mediaBtn);
-
-        //implement selector in xml to set imagebuton behavior
-        categoriesLeftLayout.addView(fnbBtn);
-        categoriesLeftLayout.addView(officeBtn);
-        categoriesLeftLayout.addView(hotelBtn);
-        categoriesLeftLayout.addView(mediaBtn);
-
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpWidth);
-        params2.setMargins(0, 0, 0, margin);
-
-        ImageButton entertainmentBtn = new ImageButton(context);
-        entertainmentBtn.setImageBitmap(bitmap);
-        entertainmentBtn.setBackgroundColor(Color.parseColor("#FF93d6c3"));
-        entertainmentBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        entertainmentBtn.setLayoutParams(params2);
-        entertainmentBtn.setTag(btnEnum.entertainmentBtn);
-        entertainmentBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(entertainmentBtn);
-
-        ImageButton serviceBtn = new ImageButton(context);
-        serviceBtn.setImageBitmap(bitmap);
-        serviceBtn.setBackgroundColor(Color.parseColor("#FFa4d3ee"));
-        serviceBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        serviceBtn.setLayoutParams(params2);
-        serviceBtn.setTag(btnEnum.serviceBtn);
-        serviceBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(serviceBtn);
-
-        ImageButton saleBtn = new ImageButton(context);
-        saleBtn.setImageBitmap(bitmap);
-        saleBtn.setBackgroundColor(Color.parseColor("#FFfbdb65"));
-        saleBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        saleBtn.setLayoutParams(params2);
-        saleBtn.setTag(btnEnum.saleBtn);
-        saleBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(saleBtn);
-
-        ImageButton healthCareBtn = new ImageButton(context);
-        healthCareBtn.setImageBitmap(bitmap);
-        healthCareBtn.setBackgroundColor(Color.parseColor("#FFff8da1"));
-        healthCareBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        healthCareBtn.setLayoutParams(params2);
-        healthCareBtn.setTag(btnEnum.healthCareBtn);
-        healthCareBtn.setOnClickListener(btnOnTouchListener);
-        imageButtonList.add(healthCareBtn);
-
-        categoriesRightLayout.addView(entertainmentBtn);
-        categoriesRightLayout.addView(serviceBtn);
-        categoriesRightLayout.addView(saleBtn);
-        categoriesRightLayout.addView(healthCareBtn);
+                    @Override
+                    public void onNext(List<JobModel> jobModelList) {
+                        new SyncJobModelAsync().execute(jobModelList);
+                    }
+                });
     }
 
-    private void updateFragment(Fragment fragment, String title) {
-        ((Activity) context).setTitle(title);
-
-        FragmentTransaction transaction = ((Activity) context).getFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.fragment_container, fragment);
-
-        // Commit the transaction
-        transaction.commit();
+    private void updateStarred() {
+        Fragment fragment = getFragmentManager().findFragmentByTag(TopNaviController.topNaviTag);
+        if (fragment instanceof BrowseTopNaviFragment) {
+            ((BrowseTopNaviFragment) fragment).setIsStarred(isShowStarred);
+        }
     }
 
-    private enum btnEnum {fnbBtn, officeBtn, hotelBtn, mediaBtn, entertainmentBtn, serviceBtn, saleBtn, healthCareBtn}
+    private TreeMap retrieveUserLocation() {
+        TreeMap addressMap;
+        Context context = getActivity();
+        Location userLocation = userLocationService.getLocation();
+        if (userLocation != null) {
+            GeocoderService geocoderService = new GeocoderService(context);
+            Address address = geocoderService.getAddress(userLocation.getLongitude(), userLocation.getLatitude());
+            addressMap = geocoderService.getAddressMap(address);
+        } else {
+            SharedPreferences settings = context.getSharedPreferences(String.valueOf(R.string.prefs_name), 0);
+            float longitude = settings.getFloat("long", 0);
+            float latitude = settings.getFloat("lat", 0);
+            GeocoderService geocoderService = new GeocoderService(context);
+            Address address = geocoderService.getAddress(longitude, latitude);
+            addressMap = geocoderService.getAddressMap(address);
+        }
+        return addressMap;
+    }
 
-    private List<String> urlList = new ArrayList<>();
-    private ViewPagerAdapter viewPagerAdapter;
-    private View.OnClickListener btnOnTouchListener;
-    private List<ImageButton> imageButtonList = new ArrayList<ImageButton>();
-    private View view;
-    private Context context;
-    private LinearLayout categoriesLeftLayout;
-    private LinearLayout categoriesRightLayout;
+    //Fetch feature jobs
+    private void fetchFeatureJobUrl() {
+        featureUrlList.clear();
+        featureUrlList.add("http://www.nimblylabs.com/jjws/gphotos/generic_fnb5.jpg");
+        featureUrlList.add("http://www.nimblylabs.com/jjws/gphotos/generic_fnb3.jpg");
+        featureUrlList.add("http://www.nimblylabs.com/jjws/gphotos/generic_fnb1.jpg");
+    }
+
+    private void fetchFeatureJobs() {
+        featureJobService = new FeatureJobService();
+        /*featureJobService.subscribe(this);*/
+    }
+
+    public void onEvent(ShowStarredEvent event) {
+        isShowStarred = event.isShowStarred();
+        if (event.isShowStarred()) {
+            List<JobModel> tempList = new ArrayList<>();
+            for (JobModel model : modelList) {
+                if (model.IsStarred) {
+                    tempList.add(model);
+                }
+            }
+            modelList.clear();
+            modelList.add(0, new JobModel());
+            modelList.addAll(tempList);
+        } else {
+            modelList.clear();
+            modelList.addAll(backupModelList);
+        }
+        recyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    private class UpdateDbAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            if (dbHelper.numberOfRows() == 0) {
+                dbHelper.insertJobList(modelList);
+            } else {
+                dbHelper.updateJobList(modelList);
+            }
+            return null;
+        }
+    }
+
+    /**
+     * Provide new jobModel list into async method, call by CallShowJob()
+     */
+    private class SyncJobModelAsync extends AsyncTask<List<JobModel>, Void, List<JobModel>> {
+
+        @Override
+        protected List<JobModel> doInBackground(List<JobModel>... params) {
+            List<JobModel> newJobModelList = params[0];
+            for (JobModel newModel : newJobModelList) {
+                if (newModel.JobID != null) {
+                    JobModel oldModel = findModelByJobId(newModel.JobID);
+                    if (oldModel != null) {
+                        newModel.IsStarred = oldModel.IsStarred;
+                    }
+                }
+            }
+            return newJobModelList;
+        }
+
+        @Override
+        protected void onPostExecute(List<JobModel> jobModelList) {
+            super.onPostExecute(jobModelList);
+            if (jobModelList != null && jobModelList.size() > 0) {
+                modelList.clear();
+                backupModelList.clear();
+                modelList.add(0, new JobModel());
+                for (JobModel model : jobModelList) {
+                    modelList.add(model);
+                }
+                backupModelList.addAll(modelList);
+            }
+            //Log.e(BrowseCategories.class.getSimpleName(), "SyncJobModelAsync, modelList: " + modelList.size());
+            pullRefreshLayout.setRefreshing(false);
+            recyclerViewAdapter.notifyDataSetChanged();
+            isShowStarred = false;
+            updateStarred();
+        }
+
+        /**
+         * Find old model by ID
+         *
+         * @param jobId
+         * @return
+         */
+        private JobModel findModelByJobId(String jobId) {
+            for (JobModel model : modelList) {
+                if (model.JobID != null && model.JobID.equalsIgnoreCase(jobId)) {
+                    return model;
+                }
+            }
+            return null;
+        }
+    }
+
+    private SharedPreferences lastScrollPreference;
+    public static final String LAST_SCROLL_POSITION = "LAST_SCROLL_POSITION";
+    private static boolean isShowStarred = false;
+
+    private List<JobModel> backupModelList = new ArrayList<>();
+    private List<JobModel> modelList = new ArrayList<>();
+    private List<String> featureUrlList = new ArrayList<>();
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private DBHelper dbHelper;
+
+    private UserLocationService userLocationService;
+    private FeatureJobService featureJobService;
+    private PullRefreshLayout pullRefreshLayout;
 }

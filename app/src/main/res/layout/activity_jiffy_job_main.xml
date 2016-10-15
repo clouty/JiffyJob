@@ -5,11 +5,23 @@
     android:layout_height="match_parent"
     tools:context="com.jiffyjob.nimblylabs.main.JiffyJobMainActivity">
 
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--Top navigation-->
+        <FrameLayout
+            android:id="@+id/top_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <!-- The main content view -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <!-- The navigation drawer -->
     <ListView
@@ -17,7 +29,7 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background_floating_material_light"
+        android:background="@color/text_white"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp" />

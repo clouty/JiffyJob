@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/background_floating_material_light">
+    android:layout_height="fill_parent">
 
     <LinearLayout
         android:id="@+id/itemLayout"
@@ -11,102 +10,175 @@
         android:layout_alignParentLeft="true"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/drawerSelection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:visibility="visible">
 
+            <View
+                android:id="@+id/menuItemHighlight"
+                android:layout_width="5dp"
+                android:layout_height="55dp"
+                android:background="@color/jj_green"
+                android:visibility="gone" />
+
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:id="@+id/menuItemLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp">
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/drawer_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/find_icon" />
+                    android:background="@drawable/translucent_ripple_white" />
 
                 <TextView
                     android:id="@+id/drawer_itemName"
+                    style="@style/TextAppearance.Black.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:text="asdasdasdasdads"
-                    android:textAppearance="?android:attr/textAppearanceListItem"
-                    android:textColor="@color/accent_material_light"
-                    android:textSize="14dp" />
+                    android:text="" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@android:color/holo_green_dark" />
-        </LinearLayout>
+                android:layout_below="@+id/menuItemLayout"
+                android:layout_marginRight="50dp"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/userInfoLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/accent_material_light"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp">
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp" />
+
+                <ImageView
+                    android:id="@+id/userInfoBgIV"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/background_green"
+                    android:scaleType="fitXY"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/userInfoFilter"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/transparent_light_gradient_shape"
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/userImageView"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_centerInParent="true"
-                    android:background="@color/accent_material_light"
-                    android:src="@drawable/swagdog2" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/transparent" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp">
-
-                    <TextView
-                        android:id="@+id/nickNameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="asd"
-                        android:textSize="8pt" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toRightOf="@+id/userImageView">
 
                     <TextView
                         android:id="@+id/userNameTextView"
+                        style="@style/TextAppearance.Black.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/nickNameTextView"
-                        android:text="123"
-                        android:textSize="5pt" />
+                        android:layout_marginLeft="5dp"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/NameTextView"
+                        style="@style/TextAppearance.Black.Large"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/userNameTextView"
+                        android:layout_marginLeft="5dp"
+                        android:maxLines="3"
+                        android:maxWidth="210dp"
+                        android:text="Your name" />
+
+                    <RelativeLayout
+                        android:id="@+id/NameTextLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/NameTextView">
+
+                        <ImageView
+                            android:id="@+id/locationImageView"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_place_green_48dp" />
+
+                        <TextView
+                            android:id="@+id/locationTextView"
+                            style="@style/TextAppearance.Green.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/locationImageView"
+                            android:maxLines="2"
+                            android:maxWidth="210dp"
+                            android:text="Singapore" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/NameTextLayout">
+
+                        <ImageView
+                            android:id="@+id/ratingImageView"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_grade_white" />
+
+                        <TextView
+                            android:id="@+id/ratingTextView"
+                            style="@style/TextAppearance.Green.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/ratingImageView"
+                            android:text="9.2" />
+                    </RelativeLayout>
                 </RelativeLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:visibility="invisible"
-                android:background="@android:color/holo_green_dark" />
+                android:layout_gravity="left"
+                android:layout_marginRight="50dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,80 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="5dp"
-    android:orientation="vertical"
-    android:weightSum="0.8"
-    tools:context="com.jiffyjob.nimblylabs.browseCategories.BrowseCategories">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/pullRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/featureJobTV"
-            style="@android:style/TextAppearance.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Featured Jobs"
-            android:textColor="@color/text_green" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/featureJobVP"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/featureJobTV" />
-
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/featureJobCI"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0.55"
-        android:orientation="vertical">
-
-        <TextView
-            style="@android:style/TextAppearance.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Categories"
-            android:textColor="@color/text_green" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <LinearLayout
+        <!--    <RelativeLayout
+                android:id="@+id/topLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="150dp">
 
-                <LinearLayout
-                    android:id="@+id/categoriesLeftLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="0.275"
-                    android:orientation="vertical" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/featureJobVP"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp" />
 
-                <LinearLayout
-                    android:id="@+id/categoriesRightLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="0.275"
-                    android:orientation="vertical" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-</LinearLayout>
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/featureJobCI"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.baoyz.widget.PullRefreshLayout>
+
+</RelativeLayout>

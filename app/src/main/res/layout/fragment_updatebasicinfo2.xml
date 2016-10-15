@@ -141,7 +141,7 @@
                 android:layout_below="@id/descriptionET"
                 android:layout_toLeftOf="@id/wordCountTV"
                 android:text="ErrorMsg"
-                android:textColor="@color/red"
+                android:textColor="@color/text_red"
                 android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>

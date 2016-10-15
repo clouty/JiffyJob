@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "699527314966",
+    "firebase_url": "https://evocative-maker-89208.firebaseio.com",
+    "project_id": "evocative-maker-89208",
+    "storage_bucket": "evocative-maker-89208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699527314966:android:07e72aeac5532d67",
+        "android_client_info": {
+          "package_name": "com.jiffyjob.nimblylabs.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699527314966-rt0cmks6i9obrpe3smass3pftfoklh0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jiffyjob.nimblylabs.app",
+            "certificate_hash": "B60A999693A7591F377E705E017B09564B77C619"
+          }
+        },
+        {
+          "client_id": "699527314966-8l0l34ke6k7qm4cn60qgpjqq50sqlt4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2NdX_-qfBmG7uc6byvkmNABYRLGEd1f4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

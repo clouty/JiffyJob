@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white">
+
+    <ListView
+        android:id="@+id/confirmLV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp" />
+
+    <LinearLayout
+        android:id="@+id/calendarLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--       <CalendarView
+                   android:id="@+id/calendarView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" />-->
+
+        <com.squareup.timessquare.CalendarPickerView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="320dp" />
+
+        <TextView
+            android:id="@+id/calenderInfo"
+            style="@style/TextAppearance.Green.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="Nike road show, Orchard Ion \nDate: 25 - 31 Sept"
+            android:textColor="@color/jj_green" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +20,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.jiffyjob.nimblylabs.BeforeLoginActivityV2;
 import com.jiffyjob.nimblylabs.app.R;
+import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
 import com.jiffyjob.nimblylabs.browseIndividual.Event.JobApplyEvent;
 import com.jiffyjob.nimblylabs.browsePage.BrowsePageModel;
+import com.jiffyjob.nimblylabs.commonUtilities.StringHelper;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.httpServices.PostHttpService;
+import com.jiffyjob.nimblylabs.httpServices.RetrofitJiffyAPI;
 import com.nineoldandroids.animation.Animator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by himur on 1/31/2016.
@@ -41,6 +54,7 @@ public class ApplyDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context = activity.getApplicationContext();
+        prefs = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
     }
 
     @Override
@@ -69,7 +83,7 @@ public class ApplyDialogFragment extends DialogFragment {
         this.isApplied = isApplied;
     }
 
-    public void setModel(BrowsePageModel model) {
+    public void setModel(JobModel model) {
         this.model = model;
     }
 
@@ -138,8 +152,24 @@ public class ApplyDialogFragment extends DialogFragment {
                             })
                             .duration(Utilities.getAnimationFast())
                             .playOn(selfIntroLayout);
-                    applyJob();
-
+                    String shortCV = selfIntroET.getText().toString();
+                    String fbID = prefs.getString(BeforeLoginActivityV2.FACEBOOK_ID, null);
+                    String linkedID = prefs.getString(BeforeLoginActivityV2.LINKEDIN_ID, null);
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        if (fbID != null) {
+                            jsonObject.put("UserID", fbID);
+                        } else if (linkedID != null) {
+                            jsonObject.put("UserID", linkedID);
+                        }
+                        jsonObject.put("JobID", model.JobID);
+                        jsonObject.put("ShortCV", shortCV);
+                        if (!(fbID == null && linkedID == null)) {
+                            applyJob(jsonObject);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     View resultDialogLayout = view.findViewById(R.id.rootDialog);
                     YoYo.with(Techniques.SlideOutLeft)
@@ -174,21 +204,48 @@ public class ApplyDialogFragment extends DialogFragment {
     /**
      * JobApplyEvent will be posted when httpServices call back. This event is handle by BrowseIndividualView
      */
-    private void applyJob() {
+    private void applyJobDep() {
         JobApplyEvent event = new JobApplyEvent();
+        //http://www.nimblylabs.com/jjws/applications/newJobApplication.ph
         String url = context.getResources().getString(R.string.jobApply_service);
 
         //form JSONObject
         JSONObject applyJobJson = new JSONObject();
         try {
             applyJobJson.put("UserID", "123456789");
-            applyJobJson.put("JobID", model.getId2());
+            applyJobJson.put("JobID", model.JobID);
             applyJobJson.put("ShortCV", selfIntroET.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         PostHttpService postHttpService = new PostHttpService(url, event);
         postHttpService.execute(applyJobJson);
+    }
+
+    private void applyJob(JSONObject jsonObject) {
+        RetrofitJiffyAPI retrofitJiffyAPI = new RetrofitJiffyAPI();
+        Call<ResponseBody> call = retrofitJiffyAPI.applyJob(jsonObject.toString());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String body = StringHelper.getStringFromInputStream(response.body().byteStream());
+                if (body != null) {
+                    if (body.contains("success")) {
+                        Toast.makeText(context, "Job applied successful", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "Job applied failed", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    String error = StringHelper.getStringFromInputStream(response.errorBody().byteStream());
+                    Log.e(ApplyDialogFragment.class.getSimpleName(), "Error: " + error);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(ApplyDialogFragment.class.getSimpleName(), "Error: " + t.getMessage());
+            }
+        });
     }
 
     private void updateIntroWordCount() {
@@ -207,9 +264,8 @@ public class ApplyDialogFragment extends DialogFragment {
     }
 
     private Context context;
-    private static final String userID = ""; //TODO: change this generic userID
 
-    private BrowsePageModel model;
+    private JobModel model;
     private TextView errorTV;
     private EditText selfIntroET;
     private TextView wordCountTV;
@@ -218,6 +274,5 @@ public class ApplyDialogFragment extends DialogFragment {
 
     private boolean isApplied = false;
     private View view;
-
-    private PostHttpService postHttpService;
+    private SharedPreferences prefs;
 }

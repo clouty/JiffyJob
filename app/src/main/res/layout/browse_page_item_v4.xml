@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow_132451">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_green"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/companyIV"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/jiffyjob" />
+
+            <TextView
+                android:id="@+id/companyNameTV"
+                style="@style/TextAppearance.Green.Large"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/companyIV"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:maxWidth="200dp"
+                android:text="Company name" />
+
+            <TextView
+                android:id="@+id/postDateTV"
+                style="@style/TextAppearance.Black.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/starredCB"
+                android:maxWidth="70dp"
+                android:text="posted date"
+                android:textColor="@color/text_grey"
+                android:textStyle="italic" />
+
+            <CheckBox
+                android:id="@+id/starredCB"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/companyNameTV"
+                android:layout_centerVertical="true"
+                android:button="@drawable/btn_state_starred_green"
+                android:checked="false" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/jobTitle"
+            style="@style/TextAppearance.Black.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:maxHeight="50dp"
+            android:maxLines="3"
+            android:text="Job Title" />
+
+        <ImageView
+            android:id="@+id/jobIV"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/background_grey"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/bottomInfoLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/dateLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/dateIV"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/ic_event_note_green_48dp" />
+
+                    <TextView
+                        android:id="@+id/dateTV"
+                        style="@style/TextAppearance.Grey.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/dateIV"
+                        android:lines="1"
+                        android:maxWidth="160dp"
+                        android:text="11 July 2015 - 25 July 2015" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dateLayout"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/timeIV"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/dateIV"
+                        android:src="@drawable/ic_schedule_green_48dp" />
+
+                    <TextView
+                        android:id="@+id/timeTV"
+                        style="@style/TextAppearance.Grey.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dateTV"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/timeIV"
+                        android:lines="1"
+                        android:maxWidth="160dp"
+                        android:text="8pm - 2am Daily" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/locationLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/timeLayout"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/locationIV"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/dateIV"
+                        android:src="@drawable/ic_place_green_48dp" />
+
+                    <TextView
+                        android:id="@+id/locationTV"
+                        style="@style/TextAppearance.Grey.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dateTV"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/timeIV"
+                        android:lines="1"
+                        android:maxWidth="160dp"
+                        android:text="Central" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/payoutTV"
+                style="@style/TextAppearance.Green.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/bottomInfoLayout"
+                android:layout_toStartOf="@+id/payoutTypeTV"
+                android:text="$XX"
+                android:textSize="35sp" />
+
+            <TextView
+                android:id="@+id/payoutTypeTV"
+                style="@style/TextAppearance.Green.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/bottomInfoLayout"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:text="/hr" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

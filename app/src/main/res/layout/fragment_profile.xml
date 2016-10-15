@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/summaryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <ImageView
+            android:id="@+id/profileBgIV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/profileIV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/circle_background"
+            android:padding="2dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/jiffyjob" />
+
+        <RelativeLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profileIV"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/nameTV"
+                style="@style/TextAppearance.Green.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="LastName, FirstName" />
+
+            <TextView
+                android:id="@+id/ageGenderTV"
+                style="@style/TextAppearance.Grey.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/nameTV"
+                android:background="@drawable/round_green_bg"
+                android:paddingEnd="5dp"
+                android:paddingStart="3dp"
+                android:text="17/M"
+                android:textColor="#FFFFFFFF" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/statusLocationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameLayout"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/rankIV"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_grade_white" />
+
+            <TextView
+                android:id="@+id/rankTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toEndOf="@+id/rankIV"
+                android:text="Rookie"
+                android:textColor="@color/text_white" />
+
+            <ImageView
+                android:id="@+id/locationIV"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toRightOf="@+id/rankTV"
+                android:src="@drawable/ic_place_green_48dp" />
+
+            <TextView
+                android:id="@+id/locationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/locationIV"
+                android:text="Singapore"
+                android:textColor="@color/text_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/horizontalDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/statusLocationLayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/background_grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontalDivider"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <!--JobsDone-->
+            <LinearLayout
+                android:id="@+id/jobDoneLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/jobDoneIV"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/jobs_done" />
+
+                <TextView
+                    android:id="@+id/jobDoneTVNum"
+                    style="@style/TextAppearance.Grey.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JOBS DONE"
+                    android:textColor="@color/text_white"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/jobDoneMargin"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/jobDoneLayout"
+                android:background="@color/background_grey" />
+
+            <!--Badges-->
+            <LinearLayout
+                android:id="@+id/badgesLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0.25"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/badgeIV"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/badges" />
+
+                <TextView
+                    android:id="@+id/badgesTVNum"
+                    style="@style/TextAppearance.Grey.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BADGES"
+                    android:textColor="@color/text_white"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/badgesMargin"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/badgesLayout"
+                android:background="@color/background_grey" />
+
+            <!--Trusted-->
+            <LinearLayout
+                android:id="@+id/trustedLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/trustedIV"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/trusted" />
+
+                <TextView
+                    android:id="@+id/trustedTVNum"
+                    style="@style/TextAppearance.Grey.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TRUSTED"
+                    android:textColor="@color/text_white"
+                    android:textSize="8sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/trustedMargin"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/trustedLayout"
+                android:background="@color/background_grey" />
+
+            <!--Jiffy points-->
+            <LinearLayout
+                android:id="@+id/jiffyPointsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0.25"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/jiffyPointsIV"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/jiffy_point" />
+
+                <TextView
+                    android:id="@+id/jiffyPointsTVNum"
+                    style="@style/TextAppearance.Grey.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/text_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JIFFY POINTS"
+                    android:textColor="@color/text_white"
+                    android:textSize="8sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/questionnairLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/summaryLayout"
+        android:background="@drawable/ripple_green"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/questionnairIV"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/questionnair_white" />
+
+        <TextView
+            android:id="@+id/questionnairTV"
+            style="@style/TextAppearance.Grey.Small"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/questionnairIV"
+            android:text="Answer more questionnaires to increase chances of getting hired!"
+            android:textColor="@color/text_white" />
+
+        <RelativeLayout
+            android:id="@+id/questionnairDivider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/questionnairTV"
+            android:background="@color/background_grey" />
+
+        <ImageView
+            android:id="@+id/questionnairBtn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/questionnairDivider"
+            android:scaleType="centerCrop"
+            android:src="@drawable/right_full_arrow_white" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/detailLV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/questionnairLayout"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:clickable="false"
+        android:divider="@color/transparent"
+        android:dividerHeight="5dp" />
+</RelativeLayout>

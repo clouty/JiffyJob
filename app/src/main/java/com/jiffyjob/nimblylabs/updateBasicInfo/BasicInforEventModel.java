@@ -78,6 +78,15 @@ public class BasicInforEventModel {
         this.description = description;
     }
 
+    public List<Integer> getBadgeList() {
+        return badgeList;
+    }
+
+    public void setBadgeList(List<Integer> badgeList) {
+        this.badgeList = badgeList;
+    }
+
+    private List<Integer> badgeList;
     private Bitmap userImage;
     private String firstName;
     private String lastName;

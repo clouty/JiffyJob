@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/jj_green"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:id="@+id/searchIV"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/search_white" />
+
+        <EditText
+            android:id="@+id/searchET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/searchIV"
+            android:background="@color/transparent"
+            android:hint="Search"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/lightgrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/searchIV"
+            android:layout_marginTop="15dp"
+            android:background="@color/text_white" />
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/manageBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ripple_green"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/briefcase_white" />
+
+    <CheckBox
+        android:id="@+id/starredBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:button="@drawable/btn_state_starred_white"
+        android:checked="false"
+        android:gravity="center" />
+
+</LinearLayout>

@@ -7,6 +7,7 @@ import java.util.Observable;
  * Created by NimblyLabs on 15/3/2015.
  */
 public class BrowsePageModel extends Observable {
+
     public String getId1() {
         return id1;
     }
@@ -255,6 +256,14 @@ public class BrowsePageModel extends Observable {
         this.bitmapUri = bitmapUri;
     }
 
+    public boolean isStarred() {
+        return isStarred;
+    }
+
+    public void setStarred(boolean starred) {
+        isStarred = starred;
+    }
+
     //Model properties
     //incrementalID, JobID, CreatorID
     private String id1, id2, id3;
@@ -278,6 +287,7 @@ public class BrowsePageModel extends Observable {
     private int jobStatus;
     private boolean isPostBoosted;
     private Date lastModified;
+    private boolean isStarred;
 
     //Image uri
     private String bitmapUri;

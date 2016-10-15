@@ -2,25 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
     android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_check_green_48dp" />
 
     <TextView
         android:id="@+id/text1"
-        style="@style/TextAppearance.AppCompat.Medium"
+        style="@style/TextAppearance.Grey.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/imageView"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/imageView"
         android:gravity="center_vertical"
-        android:minHeight="38dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:minHeight="20dp"
         android:text="Item 1" />
 
 </RelativeLayout>
