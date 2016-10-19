@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,17 +61,6 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemObject> {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //resetHighLight();
-                    TextView tv = (TextView) v.findViewById(R.id.drawer_itemName);
-                    tv.setTextColor(getContext().getResources().getColor(R.color.jj_green));
-
-                 /*   View view = v.findViewById(R.id.menuItemHighlight);
-                    view.setVisibility(View.VISIBLE);
-                    YoYo.with(Techniques.StandUp).duration(Utilities.getAnimationNormal()).playOn(view);*/
-
-                    ImageButton imageViewIcon = (ImageButton) v.findViewById(R.id.drawer_icon);
-                    imageViewIcon.setEnabled(false);
-
                     Pair<Integer, MenuItemEnum> tag = (Pair<Integer, MenuItemEnum>) v.getTag();
                     createFragment(tag.second);
                 }
@@ -88,6 +78,7 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemObject> {
         TextView textViewName = (TextView) convertView.findViewById(R.id.drawer_itemName);
         imageViewIcon.setBackground(drawItem.iconDrawable);
         textViewName.setText(drawItem.menuItem.toString());
+
         //set either user info or menu item
         RelativeLayout drawerSelection = (RelativeLayout) convertView.findViewById(R.id.drawerSelection);
         LinearLayout userInfoLayout = (LinearLayout) convertView.findViewById(R.id.userInfoLayout);
@@ -140,6 +131,12 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerItemObject> {
             if (((Pair<Integer, MenuItemEnum>) v.getTag()).second == menuItemEnum) {
                 View view = v.findViewById(R.id.menuItemHighlight);
                 view.setVisibility(View.VISIBLE);
+
+                TextView tv = (TextView) v.findViewById(R.id.drawer_itemName);
+                tv.setTextColor(ContextCompat.getColor(context, R.color.jj_green));
+
+                ImageButton imageViewIcon = (ImageButton) v.findViewById(R.id.drawer_icon);
+                imageViewIcon.setEnabled(false);
             }
         }
    /*int position = menuItemEnum.getValue();

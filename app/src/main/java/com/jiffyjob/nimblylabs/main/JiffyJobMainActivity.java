@@ -121,8 +121,9 @@ public class JiffyJobMainActivity extends Activity {
     private void init() {
         this.setTitle("JiffyJob");
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         //Create control for top navigation
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawerLayout != null) {
             topNaviController = new TopNaviController(getFragmentManager(), mDrawerLayout);
             topNaviController.createBrowseTopNavi();

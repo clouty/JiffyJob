@@ -9,6 +9,7 @@ import com.google.firebase.messaging.RemoteMessage;
  * Created by NielPC on 9/3/2016.
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(TAG, "FCM Message Id: " + remoteMessage.getMessageId());
@@ -21,7 +22,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String msg = remoteMessage.getNotification().getBody();
             jjNotificationManager.smallNotification(title, msg);
         }
-
         //TODO: show notifcation from data content
     }
 

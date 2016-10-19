@@ -10,14 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.daimajia.easing.linear.Linear;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browsePage.BrowsePageModel;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
@@ -29,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
-import it.carlom.stikkyheader.core.animator.AnimatorBuilder;
-import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
 
 /**
  * Created by NielPC on 8/22/2016.

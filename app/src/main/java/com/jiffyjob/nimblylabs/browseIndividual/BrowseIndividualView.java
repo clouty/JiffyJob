@@ -3,17 +3,21 @@ package com.jiffyjob.nimblylabs.browseIndividual;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,18 +28,30 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonArray;
+import com.google.gson.annotations.JsonAdapter;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
 import com.jiffyjob.nimblylabs.browseIndividual.Event.JobApplyEvent;
-import com.jiffyjob.nimblylabs.browseIndividual.Event.JobModelStickyEvent;
+import com.jiffyjob.nimblylabs.commonUtilities.ScalingUtilities;
+import com.jiffyjob.nimblylabs.commonUtilities.StringHelper;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.database.DBHelper;
 import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
 import com.jiffyjob.nimblylabs.topNavigation.Event.TopNavigationChangedEvent;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -102,20 +118,25 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
         super.onDestroy();
     }
 
+    public JobModel getJobModel() {
+        return jobModel;
+    }
+
     private void init() {
         View view = getView();
         MapFragment mapFragment = MapFragment.newInstance();
-        //MapFragment mapFragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.map, mapFragment, mapFragTag);
-            fragmentTransaction.commit();
-            mapFragment.getMapAsync(this);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map, mapFragment, mapFragTag);
+        fragmentTransaction.commit();
+        mapFragment.getMapAsync(this);
+
+        if (view == null) {
+            return;
         }
-        ImageView userIV = (ImageView) view.findViewById(R.id.userIV);
-        TextView companyNameTV = (TextView) view.findViewById(R.id.companyNameTV);
-        RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
-        ImageButton shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
+
+        ImageView employerIV = (ImageView) view.findViewById(R.id.employerIV);
+        TextView employerTV = (TextView) view.findViewById(R.id.employerTV);
+        /*RatingBar ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);*/
         TextView datePostedTV = (TextView) view.findViewById(R.id.datePostedTV);
         TextView jobTitleTV = (TextView) view.findViewById(R.id.jobTitleTV);
         TextView calenderTV = (TextView) view.findViewById(R.id.calenderTV);
@@ -124,7 +145,6 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
         TextView paymentTV = (TextView) view.findViewById(R.id.paymentTV);
         TextView recruitmentTV = (TextView) view.findViewById(R.id.recruitmentTV);
 
-        ratingBar.setMax(5);
         //TODO: set rating bar
         try {
             String dateStr = jobModel.DatePosted;
@@ -145,6 +165,13 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
 
         }
 
+        //set employer logo
+        Glide.with(context)
+                .load(R.drawable.jiffyjob)
+                .fitCenter()
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(employerIV);
+
         //adding friends icons
         ImageView friendIV = new ImageView(context);
         friendIV.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -159,7 +186,7 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
         friendIconLL = (LinearLayout) view.findViewById(R.id.friendIconLL);
         friendIconLL.addView(friendIV);
 
-        companyNameTV.setText(jobModel.CompanyName);
+        employerTV.setText(jobModel.CompanyName);
         jobTitleTV.setText(jobModel.JobTitle);
 
         String scopes = jobModel.Scope;
@@ -173,8 +200,8 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
             scopeListLL.addView(scopeView);
         }*/
 
-        TextView scopeTV = (TextView) view.findViewById(R.id.scopeTV);
-        scopeTV.setText(scopes);
+        ExpandableTextView expand_text_view = (ExpandableTextView) view.findViewById(R.id.expand_text_view);
+        expand_text_view.setText(scopes);
 
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -229,22 +256,30 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
         this.googleMap = googleMap;
         // We will provide our own zoom controls.
         this.googleMap.getUiSettings().setZoomControlsEnabled(false);
+        this.googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.mapstyle));
 
         if (jobModel != null && checkMapReady()) {
             String markerStr = String.format("%s, %s", jobModel.State, jobModel.City);
             double longitude = jobModel.Lng;
             double latitude = jobModel.Lat;
             CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude))
-                    .zoom(15.5f)
+                    .zoom(13.5f)
                     .bearing(0)
                     .tilt(25)
                     .build();
+
             this.googleMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("green_marker_fill", 100, 100)))
                     .draggable(false)
                     .position(new LatLng(latitude, longitude))
                     .title(markerStr));
             this.googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), duration, null);
         }
+    }
+
+    public Bitmap resizeMapIcons(String iconName, int width, int height) {
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(iconName, "drawable", context.getPackageName()));
+        return ScalingUtilities.createScaledBitmap(imageBitmap, width, height, ScalingUtilities.ScalingLogic.FIT);
     }
 
     /**
@@ -261,8 +296,6 @@ public class BrowseIndividualView extends Fragment implements OnMapReadyCallback
 
     public void setAttributes(JobModel jobModel) {
         this.jobModel = jobModel;
-        //Allow top navi to know which job model to that is currently in view
-        EventBus.getDefault().postSticky(new JobModelStickyEvent(jobModel));
     }
 
     //Event handlers

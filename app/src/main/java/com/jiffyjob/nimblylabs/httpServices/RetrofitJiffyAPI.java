@@ -2,8 +2,8 @@ package com.jiffyjob.nimblylabs.httpServices;
 
 import android.support.annotation.NonNull;
 
-import com.android.volley.Response;
 import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
+import com.jiffyjob.nimblylabs.managePost.model.AppliedJobModel;
 
 import java.util.List;
 
@@ -34,6 +34,11 @@ public class RetrofitJiffyAPI {
     public Call<ResponseBody> applyJob(@NonNull String jsonStr) {
         IRetrofitJiffyAPI retrofitJiffyAPI = retrofit.create(IRetrofitJiffyAPI.class);
         return retrofitJiffyAPI.applyJob(jsonStr);
+    }
+
+    public Observable<List<AppliedJobModel>> getAppliedJobs(@NonNull String jsonStr) {
+        IRetrofitJiffyAPI retrofitJiffyAPI = retrofit.create(IRetrofitJiffyAPI.class);
+        return retrofitJiffyAPI.getAppliedJobs(jsonStr);
     }
 
     private Retrofit retrofit;

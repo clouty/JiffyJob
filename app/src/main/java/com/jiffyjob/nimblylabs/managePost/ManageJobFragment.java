@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
 import com.jiffyjob.nimblylabs.managePost.confirmJob.ConfirmJobFragment;
+import com.jiffyjob.nimblylabs.managePost.confirmJob.ConfirmJobFragmentV2;
 import com.jiffyjob.nimblylabs.managePost.historyJob.HistoryJobFragment;
 import com.jiffyjob.nimblylabs.managePost.pendingJob.PendingJobFragment;
 
@@ -23,7 +24,7 @@ public class ManageJobFragment {
     public void createConfirmJobFragment() {
         FragmentManager fragmentManager = this.activity.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ConfirmJobFragment confirmJobFragment = new ConfirmJobFragment();
+        ConfirmJobFragmentV2 confirmJobFragment = new ConfirmJobFragmentV2();
         if (!confirmJobFragment.isAdded()) {
             fragmentTransaction.replace(R.id.fragment_container, confirmJobFragment, JiffyJobMainActivity.FRAG_CONTAINER_TAG);
             fragmentTransaction.commitAllowingStateLoss();

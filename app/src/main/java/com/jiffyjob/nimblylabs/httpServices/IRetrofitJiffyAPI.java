@@ -1,6 +1,7 @@
 package com.jiffyjob.nimblylabs.httpServices;
 
 import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
+import com.jiffyjob.nimblylabs.managePost.model.AppliedJobModel;
 
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface IRetrofitJiffyAPI {
     @FormUrlEncoded
     @POST("jobService/applyJob")
     Call<ResponseBody> applyJob(@Field("content") String jsonStr);
+
+    @FormUrlEncoded
+    @POST("jobService/appliedJobs")
+    Observable<List<AppliedJobModel>> getAppliedJobs(@Field("content") String jsonStr);
 }

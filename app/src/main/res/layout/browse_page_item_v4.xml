@@ -10,67 +10,70 @@
         android:background="@color/background_green"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="8dp"
         android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/companyIV"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/jiffyjob" />
-
             <TextView
-                android:id="@+id/companyNameTV"
+                android:id="@+id/jobTitle"
                 style="@style/TextAppearance.Green.Large"
-                android:layout_width="200dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/companyIV"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:maxWidth="200dp"
-                android:text="Company name" />
-
-            <TextView
-                android:id="@+id/postDateTV"
-                style="@style/TextAppearance.Black.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:layout_toStartOf="@+id/starredCB"
-                android:maxWidth="70dp"
-                android:text="posted date"
-                android:textColor="@color/text_grey"
-                android:textStyle="italic" />
+                android:text="Job title" />
 
             <CheckBox
                 android:id="@+id/starredCB"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/companyNameTV"
                 android:layout_centerVertical="true"
                 android:button="@drawable/btn_state_starred_green"
                 android:checked="false" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/jobTitle"
-            style="@style/TextAppearance.Black.Small"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:maxHeight="50dp"
-            android:maxLines="3"
-            android:text="Job Title" />
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/companyIV"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/jiffyjob" />
+
+            <TextView
+                android:id="@+id/companyNameTV"
+                style="@style/TextAppearance.Grey.Small"
+                android:layout_width="0dp"
+                android:layout_height="23dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="0.7"
+                android:gravity="center_vertical"
+                android:maxHeight="50dp"
+                android:maxLines="3"
+                android:text="Company name" />
+
+            <TextView
+                android:id="@+id/postDateTV"
+                style="@style/TextAppearance.Grey.Small"
+                android:layout_width="0dp"
+                android:layout_height="23dp"
+                android:layout_gravity="end"
+                android:layout_weight="0.3"
+                android:gravity="end|center_vertical"
+                android:text="posted date"
+                android:textStyle="italic" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/jobIV"
@@ -88,8 +91,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -179,13 +180,23 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/currencyTV"
+                style="@style/TextAppearance.Green.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/payoutTV"
+                android:layout_toStartOf="@+id/payoutTV"
+                android:text="$" />
+
+            <TextView
                 android:id="@+id/payoutTV"
                 style="@style/TextAppearance.Green.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/bottomInfoLayout"
-                android:layout_toStartOf="@+id/payoutTypeTV"
-                android:text="$XX"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="23dp"
+                android:text="XX"
                 android:textSize="35sp" />
 
             <TextView
@@ -193,8 +204,8 @@
                 style="@style/TextAppearance.Green.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/bottomInfoLayout"
                 android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/payoutTV"
                 android:gravity="end"
                 android:text="/hr" />
         </RelativeLayout>

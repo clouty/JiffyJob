@@ -205,16 +205,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public JobModel getJobByJobID(int jobID) {
+    public JobModel getJobByJobID(String jobID) {
         JobModel model = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = String.format("SELECT * FROM %s WHERE jobID = %s", TABLE_NAME, jobID);
-        Cursor res = db.rawQuery(query, null);
-        while (!res.isAfterLast()) {
-            model = getModel(res);
-            res.moveToNext();
+        String query = String.format("SELECT * FROM %s WHERE JobID = '%s'", TABLE_NAME, jobID);
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            model = getModel(cursor);
+            cursor.moveToNext();
         }
-        res.close();
+        cursor.close();
         return model;
     }
 

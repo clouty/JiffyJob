@@ -25,7 +25,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.Event.ShowStarredEvent;
 import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
-import com.jiffyjob.nimblylabs.browseIndividual.Event.JobModelStickyEvent;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.database.DBHelper;
 import com.jiffyjob.nimblylabs.httpServices.FeatureJobService;

@@ -18,9 +18,10 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.jiffyjob.nimblylabs.app.R;
 import com.jiffyjob.nimblylabs.browseCategories.Model.JobModel;
-import com.jiffyjob.nimblylabs.browseIndividual.Event.JobModelStickyEvent;
+import com.jiffyjob.nimblylabs.browseIndividual.BrowseIndividualView;
 import com.jiffyjob.nimblylabs.commonUtilities.Utilities;
 import com.jiffyjob.nimblylabs.database.DBHelper;
+import com.jiffyjob.nimblylabs.main.JiffyJobMainActivity;
 import com.nineoldandroids.animation.Animator;
 
 import de.greenrobot.event.EventBus;
@@ -65,20 +66,28 @@ public class BrowseIndividualTopNaviFragment extends Fragment {
     private void init() {
         View view = getView();
         if (view != null) {
+            Fragment fragment = getFragmentManager().findFragmentByTag(JiffyJobMainActivity.FRAG_CONTAINER_TAG);
+            if (fragment instanceof BrowseIndividualView) {
+                model = ((BrowseIndividualView) fragment).getJobModel();
+            }
+
             hamburgerBtn = (ImageButton) view.findViewById(R.id.hamburgerBtn);
             CheckBox starredCB = (CheckBox) view.findViewById(R.id.starredCB);
             ImageButton shareBtn = (ImageButton) view.findViewById(R.id.shareBtn);
 
+            if (model != null && model.IsStarred) {
+                starredCB.setChecked(true);
+            } else {
+                starredCB.setChecked(false);
+            }
+
             starredCB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JobModelStickyEvent event = EventBus.getDefault().getStickyEvent(JobModelStickyEvent.class);
-                    JobModel model = event.getJobModel();
                     if (model != null) {
                         boolean isChecked = ((CheckBox) v).isChecked();
                         model.IsStarred = isChecked;
                         dbHelper.updateJob(model);
-                        EventBus.getDefault().removeStickyEvent(JobModelStickyEvent.class);
                     }
                 }
             });
@@ -92,7 +101,7 @@ public class BrowseIndividualTopNaviFragment extends Fragment {
      */
     private void changeHamburgerBtn() {
         Context context = getActivity();
-        View view = getView();
+        final View view = getView();
         if (context != null && hamburgerBtn != null && view != null) {
          /*   RelativeLayout navigationRL = (RelativeLayout) view.findViewById(R.id.navigationRL);
             navigationRL.setVisibility(View.GONE);*/
@@ -136,6 +145,7 @@ public class BrowseIndividualTopNaviFragment extends Fragment {
         }
     }
 
+    private JobModel model = null;
     private DBHelper dbHelper;
     private ImageButton hamburgerBtn;
     private DrawerLayout drawerLayout;
